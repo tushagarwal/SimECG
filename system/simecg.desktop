@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=simECG
+Comment=ECG simulator
+Exec=simecg
+Icon=simecg.png
+Terminal=false
+Type=Application
+Categories=Education;Science
+Name[en_US]=simecg.desktop
