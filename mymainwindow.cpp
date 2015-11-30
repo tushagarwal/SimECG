@@ -35,17 +35,36 @@ myMainWindow::myMainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // General names for QSettings and others
+    QCoreApplication::setOrganizationName("simECG");
+    QCoreApplication::setOrganizationDomain("simecg.sourceforge.net");
+    QCoreApplication::setApplicationName("ECG simulator");
+
     //
     // Command menu signals
     //
 
-    connect(ui->actionBackgroundPaper, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setEcgBackground(bool)));
+    // ECG Calibration speed (25 or 50 mm/s)
+    // TODO: Implement the connector when the method exists
+
+    // ECG Calibration amplitude (5 or 10 mm/mV)
+    // TODO: Implement the connector when the method exists
+
+    // ECG noise filter (ON or OFF)
     connect(ui->actionFilterOn, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setNoiseFilter(bool)));
+
+    // ECG display (static or rolling)
+    // TODO: Implement the connector when the method exists
+
+    // ECG background paper/monitor
+    connect(ui->actionBackgroundPaper, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setEcgBackground(bool)));
+
+    // Load the previously saved preferences
+    loadPreferences();
 
     //
     // Presets
     //
-
     connect(ui->presetR0C0, SIGNAL(clicked(bool)),
             ui->ECGplot, SLOT(presetSinusRhythm(bool)));
     connect(ui->presetR0C1, SIGNAL(clicked(bool)),
@@ -151,6 +170,8 @@ myMainWindow::myMainWindow(QWidget *parent)
 
 myMainWindow::~myMainWindow()
 {
+    savePreferences();
+
     delete ui;
 }
 
@@ -160,12 +181,14 @@ QList<QAbstractButton *> myMainWindow::getPresetsButtons() {
 }
 
 
+// When the user presses Exit on file menu
 void myMainWindow::on_action_Exit_triggered()
 {
     close();
 }
 
 
+// When the user presses About on the Help menu
 void myMainWindow::on_action_About_triggered()
 {
     AboutDialog dialog(this);
@@ -173,6 +196,8 @@ void myMainWindow::on_action_About_triggered()
     dialog.exec();
 }
 
+
+// When the user change tab
 void myMainWindow::optionsTabChanged(int newTab)
 {
     // Check if assessment is running
@@ -258,4 +283,78 @@ void myMainWindow::changeTWavePositiveness(int currentIndex)
     } else {
         ui->ECGplot->setPositive_T_wave(false);
     }
+}
+
+
+// Load user preferences when application starts
+void myMainWindow::loadPreferences()
+{
+    QSettings preferences;
+    Q_ASSERT(preferences.status() == QSettings::NoError);
+
+    qDebug("Loading preferences ...");
+
+    // Main window
+    QSize windowSize = preferences.value("mainwindow/size").toSize();
+    // If we have a valid value, ok, otherwise, accept the default of the window itself
+    if (windowSize.isValid()) {
+        qDebug("Window size is (%i, %i)", windowSize.width(), windowSize.height());
+        resize(windowSize);
+    }
+    // move(preferences.value("pos", QPoint(200, 200)).toPoint());
+
+    // ECG Calibration speed (25 or 50 mm/s)
+    // TODO: To implement
+
+    // ECG Calibration amplitude (5 or 10 mm/mV)
+    // TODO: To implement
+
+    // ECG noise filter (ON or OFF)
+    // This is an ECG property. It may be changed during program execution, but
+    //      not saved under preferences
+
+    // ECG display (Static or Rolling)
+    // TODO: To implement
+
+    // ECG background paper/monitor
+    qDebug("ECG background is %s", preferences.value("ECG/Background").toString().toLatin1().constData());
+    if (preferences.value("ECG/Background", QString("Paper")) == "Paper") {
+        ui->actionBackgroundPaper->setChecked(true);
+        ui->actionBackgroundMonitor->setChecked(false);
+        ui->ECGplot->setEcgBackground(true);
+    } else {
+        ui->actionBackgroundPaper->setChecked(false);
+        ui->actionBackgroundMonitor->setChecked(true);
+        ui->ECGplot->setEcgBackground(false);
+    }
+}
+
+
+// Saves user preferences when application closes
+void myMainWindow::savePreferences()
+{
+    QSettings preferences;
+
+    qDebug("Saving preferences ...");
+
+    // Main window
+    qDebug("Saving window size of (%i, %i)", size().width(), size().height());
+    preferences.setValue("mainwindow/size", size());
+
+    // ECG Calibration speed (25 or 50 mm/s)
+    // TODO: To implement
+
+    // ECG Calibration amplitude (5 or 10 mm/mV)
+    // TODO: To implement
+
+    // ECG noise filter (ON or OFF)
+    // This is an ECG property. It may be changed during program execution, but
+    //      not saved under preferences
+
+    // ECG display (Static or Rolling)
+    // TODO: To implement
+
+    // ECG background paper/monitor
+    qDebug("ECG background is %s", ui->ECGplot->ecgBackground().toLatin1().constData());
+    preferences.setValue("ECG/Background", ui->ECGplot->ecgBackground());
 }

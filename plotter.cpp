@@ -95,6 +95,7 @@ void Plotter::setDisplayData(bool status)
     update();
 }
 
+// This is the setter for the ECG background preference
 void Plotter::setEcgBackground(const bool &status)
 {
     QPalette myPalette;
@@ -111,6 +112,21 @@ void Plotter::setEcgBackground(const bool &status)
     setPalette(myPalette);
     update();
 }
+
+
+// This method is the access to ECG background paper preference
+QString Plotter::ecgBackground()
+{
+    QString background;
+
+    if (displayGrid) {
+        background = "Paper";
+    } else {
+        background = "Monitor";
+    }
+    return background;
+}
+
 
 // Here we actually replace the current pixmap with a new one
 void Plotter::paintEvent(QPaintEvent * /* event */)

@@ -31,6 +31,7 @@
 
 #include <QtWidgets/QtWidgets>
 #include <QtWidgets/QAbstractButton>
+#include <QSettings>
 
 #define PRESETSTAB      0
 #define CUSTOMTAB       1
@@ -50,20 +51,25 @@ public:
     ~myMainWindow();
     QList<QAbstractButton *> getPresetsButtons();
 
+public slots:
+    void changePWavePositiveness(int);
+    void changeTWavePositiveness(int);
+
 private:
     Ui::myMainWindowClass *ui;
     ECGmemory otherMemory;
     AssessmentFrame *assessment;
     int currentTab;
+    QString m_sPreferencesFile;
+
+private:
+    void loadPreferences();
+    void savePreferences();
 
 private slots:
     void on_action_About_triggered();
     void on_action_Exit_triggered();
     void optionsTabChanged(int);
-
-public slots:
-    void changePWavePositiveness(int);
-    void changeTWavePositiveness(int);
 };
 
 #endif

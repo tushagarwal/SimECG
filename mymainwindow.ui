@@ -53,8 +53,6 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionLoad_preferences"/>
-    <addaction name="actionSave_Technical_Specifications_As"/>
     <addaction name="actionLoad_Training_Settings_as_Preset"/>
     <addaction name="actionSave_as_Preset"/>
     <addaction name="action_Exit"/>
@@ -77,8 +75,8 @@
       <property name="title">
        <string>&amp;Amplitude</string>
       </property>
-      <addaction name="actionAmplitude10mm"/>
       <addaction name="actionAmplitude5mm"/>
+      <addaction name="actionAmplitude10mm"/>
      </widget>
      <widget class="QMenu" name="menuSpeed">
       <property name="title">
@@ -200,7 +198,7 @@
           <rect>
            <x>1</x>
            <y>1</y>
-           <width>892</width>
+           <width>899</width>
            <height>131</height>
           </rect>
          </property>
@@ -219,7 +217,7 @@
              <string comment="Toottip">Displays a sinus rythm strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Sinus Rhythm</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">Si&amp;nus Rhythm</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -243,7 +241,7 @@
              <string comment="Toottip">Displays a junctional rhythm strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Junctional Rhythm</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;Junctional Rhythm</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -267,7 +265,7 @@
              <string comment="Toottip">Displays a sinus rythm strip with isolated premature atrial contraction</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Isolated PAC</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;Isolated PAC</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -288,7 +286,7 @@
              <string comment="Toottip">Displays a sinus rhythm strip with a 1st degree atrio-ventricular block</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">1st degree AV block</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;1st degree AV block</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -354,7 +352,7 @@
              <string comment="Toottip">Displays an accelerated junctional rhythm strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Accel. Junctional Rhythm</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;Accel. Junctional Rhythm</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -402,7 +400,7 @@
              <string comment="Toottip">Displays a strip in sinus rhythm with a type I 2nd degree atrio-ventricular block</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Type I 2nd degree AV block</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">T&amp;ype I 2nd degree AV block</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -489,7 +487,7 @@
              <string comment="Toottip">Displays a supraventricular tachycardia strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Supraventricular Tachycardia</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">S&amp;upraventricular Tachycardia</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -513,7 +511,7 @@
              <string comment="Toottip">Displays a sinus rhythm strip with a type II 2nd degree atrio-ventricular block</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Type II 2nd degree AV block</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">Type II 2nd degree AV bloc&amp;k</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -534,7 +532,7 @@
              <string comment="Toottip">Displays a monomorphic ventricular tachycardia strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Monomorphic VT</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;Monomorphic VT</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -627,7 +625,7 @@
              <string comment="Toottip">Displays a 2nd degree atrio-ventricular block (2:1) strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">2nd degree AV block (2:1)</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;2nd degree AV block (2:1)</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -651,7 +649,7 @@
              <string comment="Toottip">Displays a polymorphic ventricular tachycardia strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Polymorphic VT</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">Po&amp;lymorphic VT</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -723,7 +721,7 @@
              <string comment="Toottip">Displays a strip with atrio-ventricular dissociation</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">AV dissociation</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">AV &amp;dissociation</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -747,7 +745,7 @@
              <string comment="Toottip">Displays a ventricular fibrillation strip</string>
             </property>
             <property name="text">
-             <string comment=" (must be exactly the same as in ECGPlotter)">Ventricular Fibrillation</string>
+             <string comment=" (must be exactly the same as in ECGPlotter)">&amp;Ventricular Fibrillation</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">presetsButtonGroup</string>
@@ -1139,7 +1137,7 @@ Inactive when AF is checked.</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>331</width>
+           <width>337</width>
            <height>121</height>
           </rect>
          </property>
@@ -1293,7 +1291,7 @@ Inactive when AF is checked.</string>
              </font>
             </property>
             <property name="text">
-             <string comment="Do not translate P">P Wave</string>
+             <string comment="Do not translate P">P Wa&amp;ve</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1451,7 +1449,7 @@ Inactive when AF is checked.</string>
              </font>
             </property>
             <property name="text">
-             <string comment="Do not translate QRS">QRS </string>
+             <string comment="Do not translate QRS">&amp;QRS </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1875,9 +1873,6 @@ Inactive when AF is checked.</string>
   </action>
   <action name="actionBackgroundPaper">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="enabled">

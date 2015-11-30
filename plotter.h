@@ -79,6 +79,7 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     inline void setHeartRate(const int &rate) { heartRate = rate; }
+    QString ecgBackground();
 
 public slots:
     void setDisplayData(bool status);
