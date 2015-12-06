@@ -27,7 +27,7 @@
 #define MYMAINWINDOW_H
 
 #include "assessmentframe.h"
-#include "ecgmemory.h"
+#include "ecgpreset.h"
 
 #include <QtWidgets/QtWidgets>
 #include <QtWidgets/QAbstractButton>
@@ -57,7 +57,7 @@ public slots:
 
 private:
     Ui::myMainWindowClass *ui;
-    ECGmemory otherMemory;
+    ECGpreset otherMemory;
     AssessmentFrame *assessment;
     int currentTab;
     QString m_sPreferencesFile;

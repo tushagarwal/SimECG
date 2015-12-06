@@ -33,7 +33,7 @@
 
 #include "plotter.h"
 #include "qvectorplus.h"
-#include "ecgmemory.h"
+#include "ecgpresetlist.h"
 
 #define PI 3.14159265359
 #define SQUARE(x) ((x) * (x))
@@ -48,10 +48,11 @@ class ECGplotter : public Plotter
 
 public:
     ECGplotter(QWidget *parent = 0);
-    void saveSettings(ECGmemory &other);
-    void loadSettings(const ECGmemory &other);
+    void saveSettings(ECGpreset &other);
+    void loadSettings(const ECGpreset &other);
 
-    ECGmemory displaySettings;
+    // TODO: Remove this after the new ECGpresetList is implemented
+    ECGpreset displaySettings;
 
 public slots:
     void setHeartRate(const int &);
@@ -83,10 +84,22 @@ public slots:
     void setDuration_U_wave(const double &);
     void setInterval_U_wave(const double &);
 
-    //void customSignal(const ECGmemory *);
+private:
+    void generateSignal();
+    //void customSignal(const ECGpreset *);
 
     // Presets
     void presetSignalByName(const QString &);
+
+    void generate_P_wave();
+    void generate_QRS_wave();
+    void generate_Q_wave();
+    void generate_S_wave();
+    void generate_T_wave();
+    void generate_U_wave();
+
+private:
+    // TODO: Old presets. To REMOVE!
     void presetSinusRhythm(bool);
     void presetSinusBradycardia(bool);
     void presetSinusTachycardia(bool);
@@ -112,18 +125,8 @@ public slots:
     void presetTwoOneAVBlock(bool);
     void presetDissociation(bool);
 
-private:
-    void generateSignal();
-
-    // ECG memories
-    //QHash<QString, ECGmemory> memoryStore;
-
-    void generate_P_wave();
-    void generate_QRS_wave();
-    void generate_Q_wave();
-    void generate_S_wave();
-    void generate_T_wave();
-    void generate_U_wave();
+    // All preset signals in a QMap
+    ECGpresetList presets;
 
     // Sine wave for testing purposes
     const QVector<QPointF> &generate_Sine_wave();

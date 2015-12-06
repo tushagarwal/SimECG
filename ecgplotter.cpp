@@ -25,7 +25,7 @@
 
 #include "ecgplotter.h"
 #include "qvectorplus.h"
-#include "ecgmemory.h"
+#include "ecgpreset.h"
 
 #include <QtGlobal>
 #include <QtWidgets/QInputDialog>
@@ -33,6 +33,7 @@
 #include <QtWidgets/QMessageBox>
 
 #include <cmath>
+
 
 ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
 {
@@ -57,12 +58,271 @@ ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
     generateSignal();
 }
 
-// Displays a custom signal using an ECGmemory object
-/*void ECGplotter::customSignal(const ECGmemory *customSignal)
+
+void ECGplotter::generateSignal()
+{
+    qDebug("ECG regeneration has been requested ...");
+
+    if (displaySettings.getDisplayPWave()) {
+        generate_P_wave();
+    } else {
+        pwave.resize(XELEMENTS);
+        pwave.fill(0.0);
+    }
+    if (displaySettings.getDisplayQWave()) {
+        generate_Q_wave();
+    } else {
+        qwave.resize(XELEMENTS);
+        qwave.fill(0.0);
+    }
+    if (displaySettings.getDisplayQRSWave()) {
+        generate_QRS_wave();
+    } else {
+        qrswave.resize(XELEMENTS);
+        qrswave.fill(0.0);
+    }
+    if (displaySettings.getDisplaySWave()) {
+        generate_S_wave();
+    } else {
+        swave.resize(XELEMENTS);
+        swave.fill(0.0);
+    }
+    if (displaySettings.getDisplayTWave()) {
+        generate_T_wave();
+    } else {
+        twave.resize(XELEMENTS);
+        twave.fill(0.0);
+    }
+    if (displaySettings.getDisplayUWave()) {
+        generate_U_wave();
+    } else {
+        uwave.resize(XELEMENTS);
+        uwave.fill(0.0);
+    }
+
+    // For testing only
+    // setCurveData(1, generate_Sine_wave());
+
+    // Add all matrixes into one
+    double result;
+    for (int i = 0; i < XELEMENTS; i++) {
+        result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
+        if (!displaySettings.getNoiseFilter()) {
+            // Initialize pseudo random number generator
+            // Generate noise as a percentage of the signal
+             double noise = (qrand() % (int)(MAXNOISE * 10000)) / 10000.0;
+            // double noise = ((qrand() % (int)(MAXNOISE * result * 100.0)) / 100.0);
+            // Noise can be positive or negative
+            // noise -= MAXNOISE * result / 2.0;
+            // Add noise
+            // qDebug("Noise is %f", noise);
+            result += noise;
+        }
+        ecg[i] = QPointF(base_data[i], result);
+    }
+
+    // update heart rate display
+    Plotter::setHeartRate(displaySettings.getHeartRate());
+
+    setCurveData(0, ecg);
+
+    /*
+    // In case there is the need for a second signal
+    QVector<QPointF> ecg1;
+    ecg1.resize(XELEMENTS);
+    for (int i = 0; i < XELEMENTS; i++) {
+        ecg1[i] = QPointF(base_data[i], qwave[i]);
+    }
+    setCurveData(1, ecg1);
+    */
+}
+
+
+void ECGplotter::setHeartRate(const int &value)
+{
+    displaySettings.setHeartRate(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setNoiseFilter(const bool &status)
+{
+    displaySettings.setNoiseFilter(status);
+    generateSignal();
+}
+
+
+void ECGplotter::setAmplitude_P_wave(const double &value)
+{
+    displaySettings.setAmplitude_P_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setDuration_P_wave(const double &value)
+{
+    displaySettings.setDuration_P_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setInterval_P_wave(const double &value)
+{
+    displaySettings.setInterval_P_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setPositive_P_wave(const bool &status)
+{
+    displaySettings.setPositive_P_wave(status);
+    generateSignal();
+}
+
+
+void ECGplotter::setAmplitude_Q_wave(const double &value)
+{
+    displaySettings.setAmplitude_Q_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setDuration_Q_wave(const double &value)
+{
+    displaySettings.setDuration_Q_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setInterval_Q_wave(const double &value)
+{
+    displaySettings.setInterval_Q_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setAmplitude_QRS_wave(const double &value)
+{
+    displaySettings.setAmplitude_QRS_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setDuration_QRS_wave(const double &value)
+{
+    displaySettings.setDuration_QRS_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setPositive_QRS_wave(const bool &status)
+{
+    displaySettings.setPositive_QRS_wave(status);
+    generateSignal();
+}
+
+
+void ECGplotter::setAmplitude_S_wave(const double &value)
+{
+    displaySettings.setAmplitude_S_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setDuration_S_wave(const double &value)
+{
+    displaySettings.setDuration_S_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setInterval_S_wave(const double &value)
+{
+    displaySettings.setInterval_S_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setAmplitude_T_wave(const double &value)
+{
+    displaySettings.setAmplitude_T_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setDuration_T_wave(const double &value)
+{
+    displaySettings.setDuration_T_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setInterval_T_wave(const double &value)
+{
+    displaySettings.setInterval_T_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setPositive_T_wave(const bool &status)
+{
+    displaySettings.setPositive_T_wave(status);
+    generateSignal();
+}
+
+
+void ECGplotter::setAmplitude_U_wave(const double &value)
+{
+    displaySettings.setAmplitude_U_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setDuration_U_wave(const double &value)
+{
+    displaySettings.setDuration_U_wave(value);
+    generateSignal();
+}
+
+
+void ECGplotter::setInterval_U_wave(const double &value)
+{
+    displaySettings.setInterval_U_wave(value);
+    generateSignal();
+}
+
+
+//
+// Other methods
+//
+
+
+//
+// Saves all configuration parameters to otherMemory
+//
+void ECGplotter::saveSettings(ECGpreset &other)
+{
+    other = displaySettings;
+}
+
+
+//
+// Loads all configuration parameters from memory
+//
+void ECGplotter::loadSettings(const ECGpreset &other)
+{
+    displaySettings = other;
+    generateSignal();
+}
+
+
+// Displays a custom signal using an ECGpreset object
+/*void ECGpresetList::customSignal(const ECGpreset *customSignal)
 {
     // TODO:
 }
 */
+
 
 // Displays a custom signal specified by his name
 void ECGplotter::presetSignalByName(const QString &presetName)
@@ -171,7 +431,7 @@ void ECGplotter::presetSignalByName(const QString &presetName)
 
 void ECGplotter::presetSinusRhythm(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.sinusRhythm();
     loadSettings(settings);
@@ -179,7 +439,7 @@ void ECGplotter::presetSinusRhythm(bool)
 
 void ECGplotter::presetSinusBradycardia(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.sinusBradycardia();
     loadSettings(settings);
@@ -187,7 +447,7 @@ void ECGplotter::presetSinusBradycardia(bool)
 
 void ECGplotter::presetSinusTachycardia(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.sinusTachycardia();
     loadSettings(settings);
@@ -195,7 +455,7 @@ void ECGplotter::presetSinusTachycardia(bool)
 
 void ECGplotter::presetAtrialFibrillation(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.atrialFibrillation();
     loadSettings(settings);
@@ -203,7 +463,7 @@ void ECGplotter::presetAtrialFibrillation(bool)
 
 void ECGplotter::presetFastAtrialFibrillation(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.fastAtrialFibrillation();
     loadSettings(settings);
@@ -211,7 +471,7 @@ void ECGplotter::presetFastAtrialFibrillation(bool)
 
 void ECGplotter::presetIsolatedSVE(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.isolatedSVE();
     loadSettings(settings);
@@ -219,7 +479,7 @@ void ECGplotter::presetIsolatedSVE(bool)
 
 void ECGplotter::presetPairedSVE(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.pairedSVE();
     loadSettings(settings);
@@ -227,7 +487,7 @@ void ECGplotter::presetPairedSVE(bool)
 
 void ECGplotter::presetSupraventricularTachychardia(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.supraventricularTachychardia();;
     loadSettings(settings);
@@ -235,7 +495,7 @@ void ECGplotter::presetSupraventricularTachychardia(bool)
 
 void ECGplotter::presetSinusPause(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.sinusPause();
     loadSettings(settings);
@@ -243,7 +503,7 @@ void ECGplotter::presetSinusPause(bool)
 
 void ECGplotter::presetJunctionalRhythm(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.junctionalRhythm();
     loadSettings(settings);
@@ -251,7 +511,7 @@ void ECGplotter::presetJunctionalRhythm(bool)
 
 void ECGplotter::presetAcceleratedJunctionalRhythm(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.acceleratedJunctionalRhythm();
     loadSettings(settings);
@@ -259,7 +519,7 @@ void ECGplotter::presetAcceleratedJunctionalRhythm(bool)
 
 void ECGplotter::presetIdioventricularRhythm(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.idioventricularRhythm();
     loadSettings(settings);
@@ -267,7 +527,7 @@ void ECGplotter::presetIdioventricularRhythm(bool)
 
 void ECGplotter::presetAcceleratedIdioventricularRhythm(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.acceleratedIdioventricularRhythm();
     loadSettings(settings);
@@ -275,7 +535,7 @@ void ECGplotter::presetAcceleratedIdioventricularRhythm(bool)
 
 void ECGplotter::presetSinoAtrialBlock(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.sinoAtrialBlock();
     loadSettings(settings);
@@ -283,7 +543,7 @@ void ECGplotter::presetSinoAtrialBlock(bool)
 
 void ECGplotter::presetIsolatedMonoVE(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.isolatedMonoVE();
     loadSettings(settings);
@@ -291,7 +551,7 @@ void ECGplotter::presetIsolatedMonoVE(bool)
 
 void ECGplotter::presetIsolatedPolyVE(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.isolatedPolyVE();
     loadSettings(settings);
@@ -299,7 +559,7 @@ void ECGplotter::presetIsolatedPolyVE(bool)
 
 void ECGplotter::presetMonomorphicVT(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.monomorphicVT();
     loadSettings(settings);
@@ -307,7 +567,7 @@ void ECGplotter::presetMonomorphicVT(bool)
 
 void ECGplotter::presetPolymorphicVT(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.polymorphicVT();
     loadSettings(settings);
@@ -315,7 +575,7 @@ void ECGplotter::presetPolymorphicVT(bool)
 
 void ECGplotter::presetVentricularFibrillation(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.ventricularFibrillation();
     loadSettings(settings);
@@ -323,7 +583,7 @@ void ECGplotter::presetVentricularFibrillation(bool)
 
 void ECGplotter::presetFirstDegreeAVBlock(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.firstDegreeAVBlock();
     loadSettings(settings);
@@ -331,7 +591,7 @@ void ECGplotter::presetFirstDegreeAVBlock(bool)
 
 void ECGplotter::presetType1AVBlock(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.type1AVBlock();
     loadSettings(settings);
@@ -339,7 +599,7 @@ void ECGplotter::presetType1AVBlock(bool)
 
 void ECGplotter::presetType2AVBlock(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.type2AVBlock();
     loadSettings(settings);
@@ -347,253 +607,17 @@ void ECGplotter::presetType2AVBlock(bool)
 
 void ECGplotter::presetTwoOneAVBlock(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
     settings.twoOneAVBlock();
     loadSettings(settings);
 }
 
 void ECGplotter::presetDissociation(bool)
 {
-    ECGmemory settings;
+    ECGpreset settings;
 
     settings.dissociation();
     loadSettings(settings);
-}
-
-
-void ECGplotter::generateSignal()
-{
-    qDebug("ECG regeneration has been requested ...");
-
-    if (displaySettings.getDisplayPWave()) {
-        generate_P_wave();
-    } else {
-        pwave.resize(XELEMENTS);
-        pwave.fill(0.0);
-    }
-    if (displaySettings.getDisplayQWave()) {
-        generate_Q_wave();
-    } else {
-        qwave.resize(XELEMENTS);
-        qwave.fill(0.0);
-    }
-    if (displaySettings.getDisplayQRSWave()) {
-        generate_QRS_wave();
-    } else {
-        qrswave.resize(XELEMENTS);
-        qrswave.fill(0.0);
-    }
-    if (displaySettings.getDisplaySWave()) {
-        generate_S_wave();
-    } else {
-        swave.resize(XELEMENTS);
-        swave.fill(0.0);
-    }
-    if (displaySettings.getDisplayTWave()) {
-        generate_T_wave();
-    } else {
-        twave.resize(XELEMENTS);
-        twave.fill(0.0);
-    }
-    if (displaySettings.getDisplayUWave()) {
-        generate_U_wave();
-    } else {
-        uwave.resize(XELEMENTS);
-        uwave.fill(0.0);
-    }
-
-    // For testing only
-    // setCurveData(1, generate_Sine_wave());
-
-    // Add all matrixes into one
-    double result;
-    for (int i = 0; i < XELEMENTS; i++) {
-        result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
-        if (!displaySettings.getNoiseFilter()) {
-            // Initialize pseudo random number generator
-            // Generate noise as a percentage of the signal
-             double noise = (qrand() % (int)(MAXNOISE * 10000)) / 10000.0;
-            // double noise = ((qrand() % (int)(MAXNOISE * result * 100.0)) / 100.0);
-            // Noise can be positive or negative
-            // noise -= MAXNOISE * result / 2.0;
-            // Add noise
-            // qDebug("Noise is %f", noise);
-            result += noise;
-        }
-        ecg[i] = QPointF(base_data[i], result);
-    }
-
-    // update heart rate display
-    Plotter::setHeartRate(displaySettings.getHeartRate());
-
-    setCurveData(0, ecg);
-
-    /*
-    // In case there is the need for a second signal
-    QVector<QPointF> ecg1;
-    ecg1.resize(XELEMENTS);
-    for (int i = 0; i < XELEMENTS; i++) {
-        ecg1[i] = QPointF(base_data[i], qwave[i]);
-    }
-    setCurveData(1, ecg1);
-    */
-}
-
-
-void ECGplotter::setHeartRate(const int &value)
-{
-    displaySettings.setHeartRate(value);
-    generateSignal();
-}
-
-void ECGplotter::setNoiseFilter(const bool &status)
-{
-    displaySettings.setNoiseFilter(status);
-    generateSignal();
-}
-
-void ECGplotter::setAmplitude_P_wave(const double &value)
-{
-    displaySettings.setAmplitude_P_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setDuration_P_wave(const double &value)
-{
-    displaySettings.setDuration_P_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setInterval_P_wave(const double &value)
-{
-    displaySettings.setInterval_P_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setPositive_P_wave(const bool &status)
-{
-    displaySettings.setPositive_P_wave(status);
-    generateSignal();
-}
-
-void ECGplotter::setAmplitude_Q_wave(const double &value)
-{
-    displaySettings.setAmplitude_Q_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setDuration_Q_wave(const double &value)
-{
-    displaySettings.setDuration_Q_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setInterval_Q_wave(const double &value)
-{
-    displaySettings.setInterval_Q_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setAmplitude_QRS_wave(const double &value)
-{
-    displaySettings.setAmplitude_QRS_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setDuration_QRS_wave(const double &value)
-{
-    displaySettings.setDuration_QRS_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setPositive_QRS_wave(const bool &status)
-{
-    displaySettings.setPositive_QRS_wave(status);
-    generateSignal();
-}
-
-void ECGplotter::setAmplitude_S_wave(const double &value)
-{
-    displaySettings.setAmplitude_S_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setDuration_S_wave(const double &value)
-{
-    displaySettings.setDuration_S_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setInterval_S_wave(const double &value)
-{
-    displaySettings.setInterval_S_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setAmplitude_T_wave(const double &value)
-{
-    displaySettings.setAmplitude_T_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setDuration_T_wave(const double &value)
-{
-    displaySettings.setDuration_T_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setInterval_T_wave(const double &value)
-{
-    displaySettings.setInterval_T_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setPositive_T_wave(const bool &status)
-{
-    displaySettings.setPositive_T_wave(status);
-    generateSignal();
-}
-
-void ECGplotter::setAmplitude_U_wave(const double &value)
-{
-    displaySettings.setAmplitude_U_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setDuration_U_wave(const double &value)
-{
-    displaySettings.setDuration_U_wave(value);
-    generateSignal();
-}
-
-void ECGplotter::setInterval_U_wave(const double &value)
-{
-    displaySettings.setInterval_U_wave(value);
-    generateSignal();
-}
-
-
-//
-// Other methods
-//
-
-
-//
-// Saves all configuration parameters to otherMemory
-//
-void ECGplotter::saveSettings(ECGmemory &other)
-{
-    other = displaySettings;
-}
-
-
-//
-// Loads all configuration parameters from memory
-//
-void ECGplotter::loadSettings(const ECGmemory &other)
-{
-    displaySettings = other;
-    generateSignal();
 }
 
 

@@ -23,19 +23,24 @@
 **
 ****************************************************************************/
 
-#ifndef ECGMEMORY_H
-#define ECGMEMORY_H
+#ifndef ECGPRESET_H
+#define ECGPRESET_H
 
 #include <QObject>
 
 #define MAXNOISE 0.05             // Maximum allowable noise percentage (10%)
 
-class ECGmemory : public QObject
+class ECGpreset : public QObject
 {
 public:
-    ECGmemory();
+    ECGpreset();
 
     // GET methods
+    inline const QString &getName() { return name; }
+    inline const QString &getDescription() { return description; }
+    inline const bool &getRemoveable() { return removeable; }
+    inline const bool &getDisabled() { return disabled; }
+
     inline const int &getHeartRate() { return heartRate; }
     inline const bool &getNoiseFilter() { return noiseFilter; }
 
@@ -73,6 +78,11 @@ public:
     inline const double &getInterval_U_wave() { return t_uwave; }
 
     // SET methods
+    inline void setName(const QString &newName) { name = newName; }
+    inline void setDescription(const QString &newDescription) { description = newDescription; }
+    inline void setRemoveable(const bool &newRemoveable) { removeable = newRemoveable; }
+    inline void setDisabled(const bool &newDisabled) { disabled = newDisabled; }
+
     inline void setHeartRate(const int &hr) { heartRate = hr; }
     inline void setNoiseFilter(const bool &status) { noiseFilter = status; }
 
@@ -117,7 +127,10 @@ public:
     void setDuration_U_wave(const double &d) { d_uwave = d; }
     void setInterval_U_wave(const double &t) { t_uwave = t; }
 
+    //
     // Preset signals
+    //
+
     void sinusRhythm();
     void sinusBradycardia();
     void sinusTachycardia();
@@ -143,9 +156,14 @@ public:
     void dissociation();
     void ventricularFibrillation();
 
-    ECGmemory & operator=(const ECGmemory &);
+    ECGpreset & operator=(const ECGpreset &);
 
 private:
+
+    QString name;           // The short name for the signal
+    QString description;    // The long name for the signal (to be used in tooltips)
+    bool removeable;        // The preset can/cannot be removed by the user
+    bool disabled;          // The preset is disabled (due to lack of implementation)
 
     //
     // Wave variables
@@ -192,6 +210,9 @@ private:
     double a_uwave;         // U wave amplitude
     double d_uwave;         // U wave duration
     double t_uwave;         // U wave interval
+
+private:
+    void setCommonValues();
 };
 
-#endif // ECGMEMORY_H
+#endif // ECGPRESET_H

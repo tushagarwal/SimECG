@@ -23,9 +23,19 @@
 **
 ****************************************************************************/
 
-#include "ecgmemory.h"
+#include "ecgpreset.h"
 
-ECGmemory::ECGmemory()
+
+ECGpreset::ECGpreset()
+{
+    setCommonValues();
+}
+
+
+// This method sets common values for the ECG signal properties
+// These values DOES NOT include the name of the signal
+// or the signal description
+void ECGpreset::setCommonValues()
 {
     heartRate = 70;
     noiseFilter = true;
@@ -63,96 +73,171 @@ ECGmemory::ECGmemory()
     t_uwave = 0.433;
 }
 
+
 //
 // Preset signals
 //
 
-void ECGmemory::sinusRhythm()
+
+void ECGpreset::sinusRhythm()
 {
-    ECGmemory();
+    name = tr("Sinus Rhythm");
+    description = tr("Displays a sinus rythm strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
 }
 
-void ECGmemory::sinusBradycardia()
+
+void ECGpreset::sinusBradycardia()
 {
-    ECGmemory();
+    name = tr("Sinus Bradycardia");
+    description = tr("Displays a sinus bradycardia strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 50;
 }
 
-void ECGmemory::sinusTachycardia()
+
+void ECGpreset::sinusTachycardia()
 {
-    ECGmemory();
+    name = tr("Sinus Tachycardia");
+    description = tr("Displays a sinus bradycardia strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 110;
 }
+
 
 // TODO: Not implemented yet
 // Atrial Fibrilation:
 // Freq = 70; Without p-wave; qrs normal but irregular;
-void ECGmemory::atrialFibrillation()
+void ECGpreset::atrialFibrillation()
 {
+    name = tr("Atrial Fibrillation");
+    description = tr("Displays an atrial fibrillation strip");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
+
 
 // TODO: Not implemented yet
 // Rapid Atrial Fibrilation:
 // Same as atrial fibrilation but with fast rate (120);
-void ECGmemory::fastAtrialFibrillation()
+void ECGpreset::fastAtrialFibrillation()
 {
+    name = tr("Fast Atrial Fibrillation");
+    description = tr("Displays an atrial fibrillation with fast ventricular response strip");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
+
 
 // TODO: Not implemented yet
 // Isolated PAC (premature atrial contraction):
 // Without P-wave; QRS must be premature;
-void ECGmemory::isolatedSVE()
+void ECGpreset::isolatedSVE()
 {
+    name = tr("Isolated PAC");
+    description = tr("Displays a sinus rythm strip with isolated premature atrial contraction");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
+
 
 // TODO: Not implemented yet
 // Paired PAC:
 // Double premature QRS; coupling interval 300ms;
-void ECGmemory::pairedSVE()
+void ECGpreset::pairedSVE()
 {
+    name = tr("Paired PAC");
+    description = tr("Displays a sinus rythm strip with paired premature atrial contractions");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
-void ECGmemory::supraventricularTachychardia()
+
+void ECGpreset::supraventricularTachychardia()
 {
-    ECGmemory();
+    name = tr("Supraventricular Tachycardia");
+    description = tr("Displays a supraventricular tachycardia strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     showPWave = false;
     heartRate = 180;
 }
 
+
 // TODO: Not implemented yet
 // Introduce a pause between the 2 qrs complexes; > 2000ms; freq = 70;
-void ECGmemory::sinusPause()
+void ECGpreset::sinusPause()
 {
+    name = tr("Sinus Pause");
+    description = tr("Displays a sinus pause strip");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
-void ECGmemory::junctionalRhythm()
-{
-    ECGmemory();
 
+void ECGpreset::junctionalRhythm()
+{
+    name = tr("Junctional Rhythm");
+    description = tr("Displays a junctional rhythm strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 47;
     showPWave = false;
     showQWave = false;
 }
 
-void ECGmemory::acceleratedJunctionalRhythm()
-{
-    ECGmemory();
 
+void ECGpreset::acceleratedJunctionalRhythm()
+{
+    name = tr("Accel. Junctional Rhythm");
+    description = tr("Displays an accelerated junctional rhythm strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 80;
     t_pwave = 0.12;
     showQWave = false;
     positive_pwave = false;
 }
 
-void ECGmemory::idioventricularRhythm()
-{
-    ECGmemory();
 
+void ECGpreset::idioventricularRhythm()
+{
+    name = tr("Idioventricular Rhythm");
+    description = tr("Displays an idioventricular rhythm strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 35;
     showPWave = false;
     showQWave = false;
@@ -160,10 +245,15 @@ void ECGmemory::idioventricularRhythm()
     positive_twave = false;
 }
 
-void ECGmemory::acceleratedIdioventricularRhythm()
-{
-    ECGmemory();
 
+void ECGpreset::acceleratedIdioventricularRhythm()
+{
+    name = tr("Accel. Idiovent. Rhythm");
+    description = tr("Displays an accelerated idioventricular rhythm strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 65;
     showPWave = false;
     showQWave = false;
@@ -171,28 +261,54 @@ void ECGmemory::acceleratedIdioventricularRhythm()
     positive_twave = false;
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::sinoAtrialBlock()
+void ECGpreset::sinoAtrialBlock()
 {
+    name = tr("Type II 2nd degree SA block");
+    description = tr("Displays a type I 2nd degree sino-atrial block");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::isolatedMonoVE()
+void ECGpreset::isolatedMonoVE()
 {
+    name = tr("Isolated monomorphic PVC");
+    description = tr("Displays a sinus rythm strip with isolated premature ventricular contractions (single form)");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::isolatedPolyVE()
+void ECGpreset::isolatedPolyVE()
 {
+    name = tr("Isolated polymorphic PVC");
+    description = tr("Displays a sinus rythm strip with isolated premature ventricular contractions (multiple forms)");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
-void ECGmemory::monomorphicVT()
-{
-    ECGmemory();
 
+void ECGpreset::monomorphicVT()
+{
+    name = tr("Monomorphic VT");
+    description = tr("Displays a monomorphic ventricular tachycardia strip");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 195;
     t_pwave = 0.08;
     a_pwave = 0;
@@ -204,52 +320,100 @@ void ECGmemory::monomorphicVT()
     positive_twave = false;
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::polymorphicVT()
+void ECGpreset::polymorphicVT()
 {
+    name = tr("Polymorphic VT");
+    description = tr("Displays a polymorphic ventricular tachycardia strip");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::ventricularFibrillation()
+void ECGpreset::ventricularFibrillation()
 {
+    name = tr("Ventricular Fibrillation");
+    description = tr("Displays a ventricular fibrillation strip");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
-void ECGmemory::firstDegreeAVBlock()
-{
-    ECGmemory();
 
+void ECGpreset::firstDegreeAVBlock()
+{
+    name = tr("1st degree AV block");
+    description = tr("Displays a sinus rhythm strip with a 1st degree atrio-ventricular block");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     heartRate = 62;
     showQWave = false;
     t_pwave = 0.3;
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::type1AVBlock()
+void ECGpreset::type1AVBlock()
 {
+    name = tr("Type I 2nd degree AV block");
+    description = tr("Displays a strip in sinus rhythm with a type I 2nd degree atrio-ventricular block");
+    removeable = false;
+    disabled = false;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::type2AVBlock()
+void ECGpreset::type2AVBlock()
 {
+    name = tr("Type II 2nd degree AV block");
+    description = tr("Displays a sinus rhythm strip with a type II 2nd degree atrio-ventricular block");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::twoOneAVBlock()
+void ECGpreset::twoOneAVBlock()
 {
+    name = tr("2nd degree AV block (2:1)");
+    description = tr("Displays a 2nd degree atrio-ventricular block (2:1) strip");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
+
 // TODO: Not implemented yet
-void ECGmemory::dissociation()
+void ECGpreset::dissociation()
 {
+    name = tr("AV dissociation");
+    description = tr("Displays a strip with atrio-ventricular dissociation");
+    removeable = false;
+    disabled = true;
+
+    setCommonValues();
     Q_ASSERT(false);
 }
 
-ECGmemory &ECGmemory::operator=(const ECGmemory &other)
+
+ECGpreset &ECGpreset::operator=(const ECGpreset &other)
 {
     heartRate = other.heartRate;
     noiseFilter = other.noiseFilter;

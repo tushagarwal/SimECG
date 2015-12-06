@@ -12,22 +12,28 @@ TARGET = simecg
 # Input
 HEADERS += aboutdialog.h \
            assessmentframe.h \
-           ecgmemory.h \
+           ecgpreset.h \
            ecgplotter.h \
            mymainwindow.h \
            plotter.h \
            qvectorplus.h \
-           version.h
+           version.h \
+    ecgpresetlist.h
+
 FORMS += aboutdialog.ui assessmentframe.ui mymainwindow.ui
+
 SOURCES += aboutdialog.cpp \
            assessmentframe.cpp \
-           ecgmemory.cpp \
+           ecgpreset.cpp \
            ecgplotter.cpp \
            main.cpp \
            mymainwindow.cpp \
            plotter.cpp \
-           qvectorplus.cpp
+           qvectorplus.cpp \
+    ecgpresetlist.cpp
+
 RESOURCES += icons.qrc
+
 TRANSLATIONS += simecg_de.ts simecg_es.ts simecg_fr.ts simecg_pt.ts
 
 OTHER_FILES += \
