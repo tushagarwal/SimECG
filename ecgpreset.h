@@ -30,52 +30,52 @@
 
 #define MAXNOISE 0.05             // Maximum allowable noise percentage (10%)
 
-class ECGpreset : public QObject
+class ECGpreset
 {
 public:
     ECGpreset();
 
     // GET methods
-    inline const QString &getName() { return name; }
-    inline const QString &getDescription() { return description; }
-    inline const bool &getRemoveable() { return removeable; }
-    inline const bool &getDisabled() { return disabled; }
+    inline const QString &getName() const { return name; }
+    inline const QString &getDescription() const { return description; }
+    inline const bool &isRemoveable() const { return removeable; }
+    inline const bool &isDisabled() const { return disabled; }
 
-    inline const int &getHeartRate() { return heartRate; }
-    inline const bool &getNoiseFilter() { return noiseFilter; }
+    inline const int &getHeartRate() const { return heartRate; }
+    inline const bool &getNoiseFilter() const { return noiseFilter; }
 
     // P wave
-    inline const bool &getDisplayPWave() { return showPWave; }
-    inline const double &getAmplitude_P_wave() { return a_pwave; }
-    inline const double &getDuration_P_wave() { return d_pwave; }
-    inline const double &getInterval_P_wave() { return t_pwave; }
-    inline const bool &getPositive_P_wave() { return positive_pwave; }
+    inline const bool &getDisplayPWave() const { return showPWave; }
+    inline const double &getAmplitude_P_wave() const { return a_pwave; }
+    inline const double &getDuration_P_wave() const { return d_pwave; }
+    inline const double &getInterval_P_wave() const { return t_pwave; }
+    inline const bool &getPositive_P_wave() const { return positive_pwave; }
     // Q wave
-    inline const bool &getDisplayQWave() { return showQWave; }
-    inline const double &getAmplitude_Q_wave() { return a_qwave; }
-    inline const double &getDuration_Q_wave() { return d_qwave; }
-    inline const double &getInterval_Q_wave() { return t_qwave; }
+    inline const bool &getDisplayQWave() const { return showQWave; }
+    inline const double &getAmplitude_Q_wave() const { return a_qwave; }
+    inline const double &getDuration_Q_wave() const { return d_qwave; }
+    inline const double &getInterval_Q_wave() const { return t_qwave; }
     // QRS wave
-    inline const bool &getDisplayQRSWave() { return showQRSWave; }
-    inline const double &getAmplitude_QRS_wave() { return a_qrswave; }
-    inline const double &getDuration_QRS_wave() { return d_qrswave; }
-    inline const bool &getPositive_QRS_wave() { return positive_qrswave; }
+    inline const bool &getDisplayQRSWave() const { return showQRSWave; }
+    inline const double &getAmplitude_QRS_wave() const { return a_qrswave; }
+    inline const double &getDuration_QRS_wave() const { return d_qrswave; }
+    inline const bool &getPositive_QRS_wave() const { return positive_qrswave; }
     // S wave
-    inline const bool &getDisplaySWave() { return showSWave; }
-    inline const double &getAmplitude_S_wave() { return a_swave; }
-    inline const double &getDuration_S_wave() { return d_swave; }
-    inline const double &getInterval_S_wave() { return t_swave; }
+    inline const bool &getDisplaySWave() const { return showSWave; }
+    inline const double &getAmplitude_S_wave() const { return a_swave; }
+    inline const double &getDuration_S_wave() const { return d_swave; }
+    inline const double &getInterval_S_wave() const { return t_swave; }
     // T wave
-    inline const bool &getDisplayTWave() { return showTWave; }
-    inline const double &getAmplitude_T_wave() { return a_twave; }
-    inline const double &getDuration_T_wave() { return d_twave; }
-    inline const double &getInterval_T_wave() { return t_twave; }
-    inline const bool &getPositive_T_wave() { return positive_twave; }
+    inline const bool &getDisplayTWave() const { return showTWave; }
+    inline const double &getAmplitude_T_wave() const { return a_twave; }
+    inline const double &getDuration_T_wave() const { return d_twave; }
+    inline const double &getInterval_T_wave() const { return t_twave; }
+    inline const bool &getPositive_T_wave() const { return positive_twave; }
     // U wave
-    inline const bool &getDisplayUWave() { return showUWave; }
-    inline const double &getAmplitude_U_wave() { return a_uwave; }
-    inline const double &getDuration_U_wave() { return d_uwave; }
-    inline const double &getInterval_U_wave() { return t_uwave; }
+    inline const bool &getDisplayUWave() const { return showUWave; }
+    inline const double &getAmplitude_U_wave() const { return a_uwave; }
+    inline const double &getDuration_U_wave() const { return d_uwave; }
+    inline const double &getInterval_U_wave() const { return t_uwave; }
 
     // SET methods
     inline void setName(const QString &newName) { name = newName; }
@@ -156,9 +156,8 @@ public:
     void dissociation();
     void ventricularFibrillation();
 
-    ECGpreset & operator=(const ECGpreset &);
-
 private:
+    void setCommonValues();
 
     QString name;           // The short name for the signal
     QString description;    // The long name for the signal (to be used in tooltips)
@@ -210,9 +209,6 @@ private:
     double a_uwave;         // U wave amplitude
     double d_uwave;         // U wave duration
     double t_uwave;         // U wave interval
-
-private:
-    void setCommonValues();
 };
 
 #endif // ECGPRESET_H

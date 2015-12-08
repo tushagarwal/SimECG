@@ -26,6 +26,6 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define BUILDVERSION "1.273"
+#define BUILDVERSION "1.318"
 
 #endif // VERSION_H

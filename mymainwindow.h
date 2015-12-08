@@ -49,7 +49,8 @@ class myMainWindow : public QMainWindow
 public:
     myMainWindow(QWidget *parent = 0);
     ~myMainWindow();
-    QList<QAbstractButton *> getPresetsButtons();
+    // TODO: Remove this
+    // QList<QAbstractButton *> getPresetsButtons();
 
 public slots:
     void changePWavePositiveness(int);
@@ -57,7 +58,11 @@ public slots:
 
 private:
     Ui::myMainWindowClass *ui;
-    ECGpreset otherMemory;
+    // All preset ECG signals
+    ECGpresetList presets;
+    // Temporary preset when the user changed tabs
+    ECGpreset tempECGPreset;
+    // The assessment frame
     AssessmentFrame *assessment;
     int currentTab;
     QString m_sPreferencesFile;

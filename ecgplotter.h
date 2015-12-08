@@ -30,10 +30,11 @@
 #include <QVector>
 #include <QString>
 #include <cmath>
+#include <QListWidget>
 
 #include "plotter.h"
 #include "qvectorplus.h"
-#include "ecgpresetlist.h"
+#include "ecgpreset.h"
 
 #define PI 3.14159265359
 #define SQUARE(x) ((x) * (x))
@@ -48,11 +49,12 @@ class ECGplotter : public Plotter
 
 public:
     ECGplotter(QWidget *parent = 0);
-    void saveSettings(ECGpreset &other);
-    void loadSettings(const ECGpreset &other);
+    ECGpreset currentECGPlotted();
+    void setCurrentECGPlotted(const ECGpreset &newECG);
 
-    // TODO: Remove this after the new ECGpresetList is implemented
-    ECGpreset displaySettings;
+    // The ECG signal that is being rendered to the user
+    // TODO: Should change this to private member
+    ECGpreset currentECG;
 
 public slots:
     void setHeartRate(const int &);
@@ -89,7 +91,8 @@ private:
     //void customSignal(const ECGpreset *);
 
     // Presets
-    void presetSignalByName(const QString &);
+    // TODO: Remove
+    // void presetSignalByName(const QString &);
 
     void generate_P_wave();
     void generate_QRS_wave();
@@ -100,6 +103,7 @@ private:
 
 private:
     // TODO: Old presets. To REMOVE!
+/*
     void presetSinusRhythm(bool);
     void presetSinusBradycardia(bool);
     void presetSinusTachycardia(bool);
@@ -124,9 +128,7 @@ private:
     void presetType2AVBlock(bool);
     void presetTwoOneAVBlock(bool);
     void presetDissociation(bool);
-
-    // All preset signals in a QMap
-    ECGpresetList presets;
+*/
 
     // Sine wave for testing purposes
     const QVector<QPointF> &generate_Sine_wave();

@@ -103,6 +103,46 @@ ECGpresetList::ECGpresetList(QObject *parent) : QObject(parent)
     presetList.insert(preset->getName(), preset);
 }
 
+
+// Fills a list widget with all the existing presets
+void ECGpresetList::populatePresetListWidget(QListWidget *listWidget)
+{
+    QMapIterator<QString, ECGpreset *> i(presetList);
+    while (i.hasNext()) {
+        i.next();
+        QListWidgetItem *newItem = new QListWidgetItem(i.key(), listWidget);
+        if (i.value()->isDisabled()) {
+            newItem->setBackground(QBrush(Qt::lightGray));
+        }
+        newItem->setToolTip(i.value()->getDescription());
+    }
+}
+
+
+// Returns the number of ECG preset signals
+int ECGpresetList::size() const
+{
+    return presetList.size();
+}
+
+
+// Returns the name of the ECG signal in a certain index position
+const ECGpreset &ECGpresetList::at(const int &position)
+{
+    int pos=0;
+
+    // Make sure the requested position is valid
+    Q_ASSERT(position < presetList.size());
+
+    QMapIterator<QString, ECGpreset *> i(presetList);
+    while (i.hasNext() && pos < position) {
+        i.next();
+        pos++;
+    }
+    return *i.value();
+}
+
+
 // TODO: Not implemented yet
 // Creates a new preset signal
 int ECGpresetList::createPreset(ECGpreset *newPreset)

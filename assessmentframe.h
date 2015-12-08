@@ -26,6 +26,8 @@
 #ifndef ASSESSMENTFRAME_H
 #define ASSESSMENTFRAME_H
 
+#include "ecgpresetlist.h"
+
 #include <QtWidgets/QtWidgets>
 #include <QTimer>
 #include <QtWidgets/QAbstractButton>
@@ -48,8 +50,8 @@ public:
     void resetScore();
     void endAssessment();
     inline bool isAssessmentRunning() { return started; }
-    inline void setAssessmentAnswers(QList<QAbstractButton *> answersButtonList) {
-        answerList = answersButtonList; }
+    inline void setAssessmentAnswers(ECGpresetList *presets) {
+        answerList = presets; }
 
 public slots:
     void startAssessment();
@@ -65,7 +67,7 @@ protected:
 private:
     Ui::AssessmentFrame *m_ui;
     void chooseQuestions();
-    QList<QAbstractButton *> answerList;
+    ECGpresetList *answerList;
 
     QTimer *timer;
     bool started;                   // Is an assessment running ?

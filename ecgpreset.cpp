@@ -81,8 +81,8 @@ void ECGpreset::setCommonValues()
 
 void ECGpreset::sinusRhythm()
 {
-    name = tr("Sinus Rhythm");
-    description = tr("Displays a sinus rythm strip");
+    name = QObject::QObject::tr("Sinus Rhythm");
+    description = QObject::QObject::tr("Displays a sinus rythm strip");
     removeable = false;
     disabled = false;
 
@@ -92,8 +92,8 @@ void ECGpreset::sinusRhythm()
 
 void ECGpreset::sinusBradycardia()
 {
-    name = tr("Sinus Bradycardia");
-    description = tr("Displays a sinus bradycardia strip");
+    name = QObject::tr("Sinus Bradycardia");
+    description = QObject::tr("Displays a sinus bradycardia strip");
     removeable = false;
     disabled = false;
 
@@ -104,8 +104,8 @@ void ECGpreset::sinusBradycardia()
 
 void ECGpreset::sinusTachycardia()
 {
-    name = tr("Sinus Tachycardia");
-    description = tr("Displays a sinus bradycardia strip");
+    name = QObject::tr("Sinus Tachycardia");
+    description = QObject::tr("Displays a sinus bradycardia strip");
     removeable = false;
     disabled = false;
 
@@ -119,8 +119,8 @@ void ECGpreset::sinusTachycardia()
 // Freq = 70; Without p-wave; qrs normal but irregular;
 void ECGpreset::atrialFibrillation()
 {
-    name = tr("Atrial Fibrillation");
-    description = tr("Displays an atrial fibrillation strip");
+    name = QObject::tr("Atrial Fibrillation");
+    description = QObject::tr("Displays an atrial fibrillation strip");
     removeable = false;
     disabled = true;
 
@@ -134,8 +134,8 @@ void ECGpreset::atrialFibrillation()
 // Same as atrial fibrilation but with fast rate (120);
 void ECGpreset::fastAtrialFibrillation()
 {
-    name = tr("Fast Atrial Fibrillation");
-    description = tr("Displays an atrial fibrillation with fast ventricular response strip");
+    name = QObject::tr("Fast Atrial Fibrillation");
+    description = QObject::tr("Displays an atrial fibrillation with fast ventricular response strip");
     removeable = false;
     disabled = true;
 
@@ -149,8 +149,8 @@ void ECGpreset::fastAtrialFibrillation()
 // Without P-wave; QRS must be premature;
 void ECGpreset::isolatedSVE()
 {
-    name = tr("Isolated PAC");
-    description = tr("Displays a sinus rythm strip with isolated premature atrial contraction");
+    name = QObject::tr("Isolated PAC");
+    description = QObject::tr("Displays a sinus rythm strip with isolated premature atrial contraction");
     removeable = false;
     disabled = true;
 
@@ -164,8 +164,8 @@ void ECGpreset::isolatedSVE()
 // Double premature QRS; coupling interval 300ms;
 void ECGpreset::pairedSVE()
 {
-    name = tr("Paired PAC");
-    description = tr("Displays a sinus rythm strip with paired premature atrial contractions");
+    name = QObject::tr("Paired PAC");
+    description = QObject::tr("Displays a sinus rythm strip with paired premature atrial contractions");
     removeable = false;
     disabled = true;
 
@@ -176,8 +176,8 @@ void ECGpreset::pairedSVE()
 
 void ECGpreset::supraventricularTachychardia()
 {
-    name = tr("Supraventricular Tachycardia");
-    description = tr("Displays a supraventricular tachycardia strip");
+    name = QObject::tr("Supraventricular Tachycardia");
+    description = QObject::tr("Displays a supraventricular tachycardia strip");
     removeable = false;
     disabled = false;
 
@@ -191,8 +191,8 @@ void ECGpreset::supraventricularTachychardia()
 // Introduce a pause between the 2 qrs complexes; > 2000ms; freq = 70;
 void ECGpreset::sinusPause()
 {
-    name = tr("Sinus Pause");
-    description = tr("Displays a sinus pause strip");
+    name = QObject::tr("Sinus Pause");
+    description = QObject::tr("Displays a sinus pause strip");
     removeable = false;
     disabled = true;
 
@@ -203,8 +203,8 @@ void ECGpreset::sinusPause()
 
 void ECGpreset::junctionalRhythm()
 {
-    name = tr("Junctional Rhythm");
-    description = tr("Displays a junctional rhythm strip");
+    name = QObject::tr("Junctional Rhythm");
+    description = QObject::tr("Displays a junctional rhythm strip");
     removeable = false;
     disabled = false;
 
@@ -217,8 +217,8 @@ void ECGpreset::junctionalRhythm()
 
 void ECGpreset::acceleratedJunctionalRhythm()
 {
-    name = tr("Accel. Junctional Rhythm");
-    description = tr("Displays an accelerated junctional rhythm strip");
+    name = QObject::tr("Accel. Junctional Rhythm");
+    description = QObject::tr("Displays an accelerated junctional rhythm strip");
     removeable = false;
     disabled = false;
 
@@ -232,8 +232,8 @@ void ECGpreset::acceleratedJunctionalRhythm()
 
 void ECGpreset::idioventricularRhythm()
 {
-    name = tr("Idioventricular Rhythm");
-    description = tr("Displays an idioventricular rhythm strip");
+    name = QObject::tr("Idioventricular Rhythm");
+    description = QObject::tr("Displays an idioventricular rhythm strip");
     removeable = false;
     disabled = false;
 
@@ -248,8 +248,8 @@ void ECGpreset::idioventricularRhythm()
 
 void ECGpreset::acceleratedIdioventricularRhythm()
 {
-    name = tr("Accel. Idiovent. Rhythm");
-    description = tr("Displays an accelerated idioventricular rhythm strip");
+    name = QObject::tr("Accel. Idiovent. Rhythm");
+    description = QObject::tr("Displays an accelerated idioventricular rhythm strip");
     removeable = false;
     disabled = false;
 
@@ -265,8 +265,8 @@ void ECGpreset::acceleratedIdioventricularRhythm()
 // TODO: Not implemented yet
 void ECGpreset::sinoAtrialBlock()
 {
-    name = tr("Type II 2nd degree SA block");
-    description = tr("Displays a type I 2nd degree sino-atrial block");
+    name = QObject::tr("Type II 2nd degree SA block");
+    description = QObject::tr("Displays a type I 2nd degree sino-atrial block");
     removeable = false;
     disabled = true;
 
@@ -278,8 +278,8 @@ void ECGpreset::sinoAtrialBlock()
 // TODO: Not implemented yet
 void ECGpreset::isolatedMonoVE()
 {
-    name = tr("Isolated monomorphic PVC");
-    description = tr("Displays a sinus rythm strip with isolated premature ventricular contractions (single form)");
+    name = QObject::tr("Isolated monomorphic PVC");
+    description = QObject::tr("Displays a sinus rythm strip with isolated premature ventricular contractions (single form)");
     removeable = false;
     disabled = true;
 
@@ -291,8 +291,8 @@ void ECGpreset::isolatedMonoVE()
 // TODO: Not implemented yet
 void ECGpreset::isolatedPolyVE()
 {
-    name = tr("Isolated polymorphic PVC");
-    description = tr("Displays a sinus rythm strip with isolated premature ventricular contractions (multiple forms)");
+    name = QObject::tr("Isolated polymorphic PVC");
+    description = QObject::tr("Displays a sinus rythm strip with isolated premature ventricular contractions (multiple forms)");
     removeable = false;
     disabled = true;
 
@@ -303,8 +303,8 @@ void ECGpreset::isolatedPolyVE()
 
 void ECGpreset::monomorphicVT()
 {
-    name = tr("Monomorphic VT");
-    description = tr("Displays a monomorphic ventricular tachycardia strip");
+    name = QObject::tr("Monomorphic VT");
+    description = QObject::tr("Displays a monomorphic ventricular tachycardia strip");
     removeable = false;
     disabled = false;
 
@@ -324,8 +324,8 @@ void ECGpreset::monomorphicVT()
 // TODO: Not implemented yet
 void ECGpreset::polymorphicVT()
 {
-    name = tr("Polymorphic VT");
-    description = tr("Displays a polymorphic ventricular tachycardia strip");
+    name = QObject::tr("Polymorphic VT");
+    description = QObject::tr("Displays a polymorphic ventricular tachycardia strip");
     removeable = false;
     disabled = true;
 
@@ -337,8 +337,8 @@ void ECGpreset::polymorphicVT()
 // TODO: Not implemented yet
 void ECGpreset::ventricularFibrillation()
 {
-    name = tr("Ventricular Fibrillation");
-    description = tr("Displays a ventricular fibrillation strip");
+    name = QObject::tr("Ventricular Fibrillation");
+    description = QObject::tr("Displays a ventricular fibrillation strip");
     removeable = false;
     disabled = true;
 
@@ -349,8 +349,8 @@ void ECGpreset::ventricularFibrillation()
 
 void ECGpreset::firstDegreeAVBlock()
 {
-    name = tr("1st degree AV block");
-    description = tr("Displays a sinus rhythm strip with a 1st degree atrio-ventricular block");
+    name = QObject::tr("1st degree AV block");
+    description = QObject::tr("Displays a sinus rhythm strip with a 1st degree atrio-ventricular block");
     removeable = false;
     disabled = false;
 
@@ -364,8 +364,8 @@ void ECGpreset::firstDegreeAVBlock()
 // TODO: Not implemented yet
 void ECGpreset::type1AVBlock()
 {
-    name = tr("Type I 2nd degree AV block");
-    description = tr("Displays a strip in sinus rhythm with a type I 2nd degree atrio-ventricular block");
+    name = QObject::tr("Type I 2nd degree AV block");
+    description = QObject::tr("Displays a strip in sinus rhythm with a type I 2nd degree atrio-ventricular block");
     removeable = false;
     disabled = false;
 
@@ -377,8 +377,8 @@ void ECGpreset::type1AVBlock()
 // TODO: Not implemented yet
 void ECGpreset::type2AVBlock()
 {
-    name = tr("Type II 2nd degree AV block");
-    description = tr("Displays a sinus rhythm strip with a type II 2nd degree atrio-ventricular block");
+    name = QObject::tr("Type II 2nd degree AV block");
+    description = QObject::tr("Displays a sinus rhythm strip with a type II 2nd degree atrio-ventricular block");
     removeable = false;
     disabled = true;
 
@@ -390,8 +390,8 @@ void ECGpreset::type2AVBlock()
 // TODO: Not implemented yet
 void ECGpreset::twoOneAVBlock()
 {
-    name = tr("2nd degree AV block (2:1)");
-    description = tr("Displays a 2nd degree atrio-ventricular block (2:1) strip");
+    name = QObject::tr("2nd degree AV block (2:1)");
+    description = QObject::tr("Displays a 2nd degree atrio-ventricular block (2:1) strip");
     removeable = false;
     disabled = true;
 
@@ -403,52 +403,11 @@ void ECGpreset::twoOneAVBlock()
 // TODO: Not implemented yet
 void ECGpreset::dissociation()
 {
-    name = tr("AV dissociation");
-    description = tr("Displays a strip with atrio-ventricular dissociation");
+    name = QObject::tr("AV dissociation");
+    description = QObject::tr("Displays a strip with atrio-ventricular dissociation");
     removeable = false;
     disabled = true;
 
     setCommonValues();
     Q_ASSERT(false);
-}
-
-
-ECGpreset &ECGpreset::operator=(const ECGpreset &other)
-{
-    heartRate = other.heartRate;
-    noiseFilter = other.noiseFilter;
-
-    showPWave = other.showPWave;
-    a_pwave = other.a_pwave;
-    d_pwave = other.d_pwave;
-    t_pwave = other.t_pwave;
-    positive_pwave = other.positive_pwave;
-
-    showQWave = other.showQWave;
-    a_qwave = other.a_qwave;
-    d_qwave = other.d_qwave;
-    t_qwave = other.t_qwave;
-
-    showQRSWave = other.showQRSWave;
-    a_qrswave = other.a_qrswave;
-    d_qrswave = other.d_qrswave;
-    positive_qrswave = other.positive_qrswave;
-
-    showSWave = other.showSWave;
-    a_swave = other.a_swave;
-    d_swave = other.d_swave;
-    t_swave = other.t_swave;
-
-    showTWave = other.showTWave;
-    a_twave = other.a_twave;
-    d_twave = other.d_twave;
-    t_twave = other.t_twave;
-    positive_twave = other.positive_twave;
-
-    showUWave = other.showUWave;
-    a_uwave = other.a_uwave;
-    d_uwave = other.d_uwave;
-    t_uwave = other.t_uwave;
-
-    return *this;
 }

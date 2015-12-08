@@ -63,37 +63,37 @@ void ECGplotter::generateSignal()
 {
     qDebug("ECG regeneration has been requested ...");
 
-    if (displaySettings.getDisplayPWave()) {
+    if (currentECG.getDisplayPWave()) {
         generate_P_wave();
     } else {
         pwave.resize(XELEMENTS);
         pwave.fill(0.0);
     }
-    if (displaySettings.getDisplayQWave()) {
+    if (currentECG.getDisplayQWave()) {
         generate_Q_wave();
     } else {
         qwave.resize(XELEMENTS);
         qwave.fill(0.0);
     }
-    if (displaySettings.getDisplayQRSWave()) {
+    if (currentECG.getDisplayQRSWave()) {
         generate_QRS_wave();
     } else {
         qrswave.resize(XELEMENTS);
         qrswave.fill(0.0);
     }
-    if (displaySettings.getDisplaySWave()) {
+    if (currentECG.getDisplaySWave()) {
         generate_S_wave();
     } else {
         swave.resize(XELEMENTS);
         swave.fill(0.0);
     }
-    if (displaySettings.getDisplayTWave()) {
+    if (currentECG.getDisplayTWave()) {
         generate_T_wave();
     } else {
         twave.resize(XELEMENTS);
         twave.fill(0.0);
     }
-    if (displaySettings.getDisplayUWave()) {
+    if (currentECG.getDisplayUWave()) {
         generate_U_wave();
     } else {
         uwave.resize(XELEMENTS);
@@ -107,7 +107,7 @@ void ECGplotter::generateSignal()
     double result;
     for (int i = 0; i < XELEMENTS; i++) {
         result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
-        if (!displaySettings.getNoiseFilter()) {
+        if (!currentECG.getNoiseFilter()) {
             // Initialize pseudo random number generator
             // Generate noise as a percentage of the signal
              double noise = (qrand() % (int)(MAXNOISE * 10000)) / 10000.0;
@@ -122,7 +122,7 @@ void ECGplotter::generateSignal()
     }
 
     // update heart rate display
-    Plotter::setHeartRate(displaySettings.getHeartRate());
+    Plotter::setHeartRate(currentECG.getHeartRate());
 
     setCurveData(0, ecg);
 
@@ -140,154 +140,154 @@ void ECGplotter::generateSignal()
 
 void ECGplotter::setHeartRate(const int &value)
 {
-    displaySettings.setHeartRate(value);
+    currentECG.setHeartRate(value);
     generateSignal();
 }
 
 
 void ECGplotter::setNoiseFilter(const bool &status)
 {
-    displaySettings.setNoiseFilter(status);
+    currentECG.setNoiseFilter(status);
     generateSignal();
 }
 
 
 void ECGplotter::setAmplitude_P_wave(const double &value)
 {
-    displaySettings.setAmplitude_P_wave(value);
+    currentECG.setAmplitude_P_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setDuration_P_wave(const double &value)
 {
-    displaySettings.setDuration_P_wave(value);
+    currentECG.setDuration_P_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setInterval_P_wave(const double &value)
 {
-    displaySettings.setInterval_P_wave(value);
+    currentECG.setInterval_P_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setPositive_P_wave(const bool &status)
 {
-    displaySettings.setPositive_P_wave(status);
+    currentECG.setPositive_P_wave(status);
     generateSignal();
 }
 
 
 void ECGplotter::setAmplitude_Q_wave(const double &value)
 {
-    displaySettings.setAmplitude_Q_wave(value);
+    currentECG.setAmplitude_Q_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setDuration_Q_wave(const double &value)
 {
-    displaySettings.setDuration_Q_wave(value);
+    currentECG.setDuration_Q_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setInterval_Q_wave(const double &value)
 {
-    displaySettings.setInterval_Q_wave(value);
+    currentECG.setInterval_Q_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setAmplitude_QRS_wave(const double &value)
 {
-    displaySettings.setAmplitude_QRS_wave(value);
+    currentECG.setAmplitude_QRS_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setDuration_QRS_wave(const double &value)
 {
-    displaySettings.setDuration_QRS_wave(value);
+    currentECG.setDuration_QRS_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setPositive_QRS_wave(const bool &status)
 {
-    displaySettings.setPositive_QRS_wave(status);
+    currentECG.setPositive_QRS_wave(status);
     generateSignal();
 }
 
 
 void ECGplotter::setAmplitude_S_wave(const double &value)
 {
-    displaySettings.setAmplitude_S_wave(value);
+    currentECG.setAmplitude_S_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setDuration_S_wave(const double &value)
 {
-    displaySettings.setDuration_S_wave(value);
+    currentECG.setDuration_S_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setInterval_S_wave(const double &value)
 {
-    displaySettings.setInterval_S_wave(value);
+    currentECG.setInterval_S_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setAmplitude_T_wave(const double &value)
 {
-    displaySettings.setAmplitude_T_wave(value);
+    currentECG.setAmplitude_T_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setDuration_T_wave(const double &value)
 {
-    displaySettings.setDuration_T_wave(value);
+    currentECG.setDuration_T_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setInterval_T_wave(const double &value)
 {
-    displaySettings.setInterval_T_wave(value);
+    currentECG.setInterval_T_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setPositive_T_wave(const bool &status)
 {
-    displaySettings.setPositive_T_wave(status);
+    currentECG.setPositive_T_wave(status);
     generateSignal();
 }
 
 
 void ECGplotter::setAmplitude_U_wave(const double &value)
 {
-    displaySettings.setAmplitude_U_wave(value);
+    currentECG.setAmplitude_U_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setDuration_U_wave(const double &value)
 {
-    displaySettings.setDuration_U_wave(value);
+    currentECG.setDuration_U_wave(value);
     generateSignal();
 }
 
 
 void ECGplotter::setInterval_U_wave(const double &value)
 {
-    displaySettings.setInterval_U_wave(value);
+    currentECG.setInterval_U_wave(value);
     generateSignal();
 }
 
@@ -298,32 +298,26 @@ void ECGplotter::setInterval_U_wave(const double &value)
 
 
 //
-// Saves all configuration parameters to otherMemory
+// Returns a preset of the currently displayed ECG
 //
-void ECGplotter::saveSettings(ECGpreset &other)
+ECGpreset ECGplotter::currentECGPlotted()
 {
-    other = displaySettings;
+    return currentECG;
 }
 
 
 //
-// Loads all configuration parameters from memory
+// Loads all configuration parameters from a preset
 //
-void ECGplotter::loadSettings(const ECGpreset &other)
+void ECGplotter::setCurrentECGPlotted(const ECGpreset &newECG)
 {
-    displaySettings = other;
+    currentECG = newECG;
     generateSignal();
 }
 
 
-// Displays a custom signal using an ECGpreset object
-/*void ECGpresetList::customSignal(const ECGpreset *customSignal)
-{
-    // TODO:
-}
-*/
-
-
+// TODO: Remove this
+/*
 // Displays a custom signal specified by his name
 void ECGplotter::presetSignalByName(const QString &presetName)
 {
@@ -429,212 +423,236 @@ void ECGplotter::presetSignalByName(const QString &presetName)
     Q_ASSERT(false);
 }
 
+
 void ECGplotter::presetSinusRhythm(bool)
 {
     ECGpreset settings;
 
     settings.sinusRhythm();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetSinusBradycardia(bool)
 {
     ECGpreset settings;
 
     settings.sinusBradycardia();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetSinusTachycardia(bool)
 {
     ECGpreset settings;
 
     settings.sinusTachycardia();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetAtrialFibrillation(bool)
 {
     ECGpreset settings;
 
     settings.atrialFibrillation();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetFastAtrialFibrillation(bool)
 {
     ECGpreset settings;
 
     settings.fastAtrialFibrillation();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetIsolatedSVE(bool)
 {
     ECGpreset settings;
 
     settings.isolatedSVE();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetPairedSVE(bool)
 {
     ECGpreset settings;
 
     settings.pairedSVE();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetSupraventricularTachychardia(bool)
 {
     ECGpreset settings;
 
     settings.supraventricularTachychardia();;
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetSinusPause(bool)
 {
     ECGpreset settings;
 
     settings.sinusPause();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetJunctionalRhythm(bool)
 {
     ECGpreset settings;
 
     settings.junctionalRhythm();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetAcceleratedJunctionalRhythm(bool)
 {
     ECGpreset settings;
 
     settings.acceleratedJunctionalRhythm();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetIdioventricularRhythm(bool)
 {
     ECGpreset settings;
 
     settings.idioventricularRhythm();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetAcceleratedIdioventricularRhythm(bool)
 {
     ECGpreset settings;
 
     settings.acceleratedIdioventricularRhythm();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetSinoAtrialBlock(bool)
 {
     ECGpreset settings;
 
     settings.sinoAtrialBlock();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetIsolatedMonoVE(bool)
 {
     ECGpreset settings;
 
     settings.isolatedMonoVE();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetIsolatedPolyVE(bool)
 {
     ECGpreset settings;
 
     settings.isolatedPolyVE();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetMonomorphicVT(bool)
 {
     ECGpreset settings;
 
     settings.monomorphicVT();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetPolymorphicVT(bool)
 {
     ECGpreset settings;
 
     settings.polymorphicVT();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetVentricularFibrillation(bool)
 {
     ECGpreset settings;
 
     settings.ventricularFibrillation();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetFirstDegreeAVBlock(bool)
 {
     ECGpreset settings;
 
     settings.firstDegreeAVBlock();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetType1AVBlock(bool)
 {
     ECGpreset settings;
 
     settings.type1AVBlock();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetType2AVBlock(bool)
 {
     ECGpreset settings;
 
     settings.type2AVBlock();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetTwoOneAVBlock(bool)
 {
     ECGpreset settings;
     settings.twoOneAVBlock();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
+
 
 void ECGplotter::presetDissociation(bool)
 {
     ECGpreset settings;
 
     settings.dissociation();
-    loadSettings(settings);
+    loadCurrentECG(settings);
 }
-
+*/
 
 void ECGplotter::generate_P_wave()
 {
-    double li = 30 / (double)displaySettings.getHeartRate();
-    double b = (2.0 * li) / displaySettings.getDuration_P_wave();
+    double li = 30 / (double)currentECG.getHeartRate();
+    double b = (2.0 * li) / currentECG.getDuration_P_wave();
     //double p1 = 1.0 / li;
     double p1 = 0;
-    int signal = displaySettings.getPositive_P_wave() ? 1 : -1;
+    int signal = currentECG.getPositive_P_wave() ? 1 : -1;
 
     // p2 is a matrix [1, 200] holding calculated values (initialized with zeroes)
     QVectorPlus p2(XELEMENTS, 0.0);
     QVectorPlus x(base_data);
 
     // Matrix add operation (all values are added with t_pwav)
-    x.uniMatrixAdd(displaySettings.getInterval_P_wave());
+    x.uniMatrixAdd(currentECG.getInterval_P_wave());
 
     for (int i = 1; i <= ITERATIONS; i++) {
         // Each value from x matrix is calculated using the formula bellow, resulting in a 1x200 matrix
@@ -648,14 +666,14 @@ void ECGplotter::generate_P_wave()
 
     // Matrix multiply operation (all values are multiplied by a_pwav)
     // Matrix add operation (all values in matrix p2 are added with p1)
-    pwave = (p2.uniMatrixAdd(p1)).uniMatrixMultiply(displaySettings.getAmplitude_P_wave());
+    pwave = (p2.uniMatrixAdd(p1)).uniMatrixMultiply(currentECG.getAmplitude_P_wave());
 }
 
 
 void ECGplotter::generate_QRS_wave()
 {
-    double li = 30 / (double)displaySettings.getHeartRate();
-    double b = (2.0 * li) / displaySettings.getDuration_QRS_wave();
+    double li = 30 / (double)currentECG.getHeartRate();
+    double b = (2.0 * li) / currentECG.getDuration_QRS_wave();
     //double qrs1 = (a_qrswave / (2.0 * b)) * (2.0 - b);
     double qrs1 = 0;
     // TODO: wave could be positive or negative
@@ -667,7 +685,7 @@ void ECGplotter::generate_QRS_wave()
     for (int i = 1; i <= ITERATIONS; i++) {
         // Each value from x matrix is calculated using the formula bellow, resulting in a 1x200 matrix
         for (int counter = 0; counter < XELEMENTS; counter++) {
-            qrs2[counter] = qrs2[counter] + (((2 * b * displaySettings.getAmplitude_QRS_wave()) / (SQUARE(i) * SQUARE(PI))) *
+            qrs2[counter] = qrs2[counter] + (((2 * b * currentECG.getAmplitude_QRS_wave()) / (SQUARE(i) * SQUARE(PI))) *
                     (1 - cos((i * PI) / b))) * cos((i * PI * base_data[counter]) / li);
         }
     }
@@ -677,8 +695,8 @@ void ECGplotter::generate_QRS_wave()
 
 void ECGplotter::generate_Q_wave()
 {
-    double li = 30 / (double)displaySettings.getHeartRate();
-    double b = (2.0 * li) / displaySettings.getDuration_Q_wave();
+    double li = 30 / (double)currentECG.getHeartRate();
+    double b = (2.0 * li) / currentECG.getDuration_Q_wave();
     //double q1 = (a_qwave / (2.0 * b)) * (2.0 - b);
     double q1 = 0;
 
@@ -687,12 +705,12 @@ void ECGplotter::generate_Q_wave()
     QVectorPlus x(base_data);
 
     // Matrix add operation (all values are added with t_pwav)
-    x.uniMatrixAdd(displaySettings.getInterval_Q_wave());
+    x.uniMatrixAdd(currentECG.getInterval_Q_wave());
 
     for (int i = 1; i <= ITERATIONS; i++) {
         // Each value from x matrix is calculated using the formula bellow, resulting in a 1x200 matrix
         for (int counter = 0; counter < XELEMENTS; counter++) {
-            q2[counter] = q2[counter] + (((2 * b * displaySettings.getAmplitude_Q_wave()) / (SQUARE(i) * SQUARE(PI))) * (1 - cos((i * PI) / b)))
+            q2[counter] = q2[counter] + (((2 * b * currentECG.getAmplitude_Q_wave()) / (SQUARE(i) * SQUARE(PI))) * (1 - cos((i * PI) / b)))
                     * cos((i * PI * x[counter]) / li);
         }
     }
@@ -702,8 +720,8 @@ void ECGplotter::generate_Q_wave()
 
 void ECGplotter::generate_S_wave()
 {
-    double li = 30 / (double)displaySettings.getHeartRate();
-    double b = (2.0 * li) / displaySettings.getDuration_S_wave();
+    double li = 30 / (double)currentECG.getHeartRate();
+    double b = (2.0 * li) / currentECG.getDuration_S_wave();
     //double s1 = (a_swave / (2.0 * b)) * (2.0 - b);
     double s1 = 0;
 
@@ -712,12 +730,12 @@ void ECGplotter::generate_S_wave()
     QVectorPlus x(base_data);
 
     // Matrix add operation (all values are added with t_pwav)
-    x.uniMatrixSubtract(displaySettings.getInterval_S_wave());
+    x.uniMatrixSubtract(currentECG.getInterval_S_wave());
 
     for (int i = 1; i <= ITERATIONS; i++) {
         // Each value from x matrix is calculated using the formula bellow, resulting in a 1x200 matrix
         for (int counter = 0; counter < XELEMENTS; counter++) {
-            s2[counter] = s2[counter] + (((2 * b * displaySettings.getAmplitude_S_wave()) / (SQUARE(i) * SQUARE(PI))) * (1 - cos((i * PI) / b))) *
+            s2[counter] = s2[counter] + (((2 * b * currentECG.getAmplitude_S_wave()) / (SQUARE(i) * SQUARE(PI))) * (1 - cos((i * PI) / b))) *
                   cos((i * PI * x[counter]) / li);
         }
     }
@@ -727,17 +745,17 @@ void ECGplotter::generate_S_wave()
 
 void ECGplotter::generate_T_wave()
 {
-    double li = 30 / (double)displaySettings.getHeartRate();
-    double b = (2.0 * li) / displaySettings.getDuration_T_wave();
+    double li = 30 / (double)currentECG.getHeartRate();
+    double b = (2.0 * li) / currentECG.getDuration_T_wave();
     //double t1 = 1.0 / li;
     double t1 = 0;
-    int signal = displaySettings.getPositive_T_wave() ? 1 : -1;
+    int signal = currentECG.getPositive_T_wave() ? 1 : -1;
 
     QVectorPlus t2(XELEMENTS, 0.0);
     QVectorPlus x(base_data);
 
     // Matrix add operation (all values are added with t_pwav)
-    x.uniMatrixSubtract(displaySettings.getInterval_T_wave() - 0.045);
+    x.uniMatrixSubtract(currentECG.getInterval_T_wave() - 0.045);
 
     for (int i = 1; i <= ITERATIONS; i++) {
         // Each value from x matrix is calculated using the formula bellow, resulting in a 1x200 matrix
@@ -746,14 +764,14 @@ void ECGplotter::generate_T_wave()
                           * (b + (2 * i)))) / (b + (2 * i))) * (2 / PI)) * signal * cos((i * PI * x[counter]) / li);
         }
     }
-    twave = (t2.uniMatrixAdd(t1)).uniMatrixMultiply(displaySettings.getAmplitude_T_wave());
+    twave = (t2.uniMatrixAdd(t1)).uniMatrixMultiply(currentECG.getAmplitude_T_wave());
 }
 
 
 void ECGplotter::generate_U_wave()
 {
-    double li = 30 / (double)displaySettings.getHeartRate();
-    double b = (2.0 * li) / displaySettings.getDuration_U_wave();
+    double li = 30 / (double)currentECG.getHeartRate();
+    double b = (2.0 * li) / currentECG.getDuration_U_wave();
     //double u1 = 1.0 / li;
     double u1 = 0;
 
@@ -762,7 +780,7 @@ void ECGplotter::generate_U_wave()
     QVectorPlus x(base_data);
 
     // Matrix add operation (all values are added with t_pwav)
-    x.uniMatrixSubtract(displaySettings.getInterval_U_wave());
+    x.uniMatrixSubtract(currentECG.getInterval_U_wave());
 
     for (int i = 1; i <= ITERATIONS; i++) {
         // Each value from x matrix is calculated using the formula bellow, resulting in a 1x200 matrix
@@ -772,7 +790,7 @@ void ECGplotter::generate_U_wave()
         }
     }
 
-    uwave = (u2.uniMatrixAdd(u1)).uniMatrixMultiply(displaySettings.getAmplitude_U_wave());
+    uwave = (u2.uniMatrixAdd(u1)).uniMatrixMultiply(currentECG.getAmplitude_U_wave());
 }
 
 

@@ -27,6 +27,7 @@
 #include "ui_mymainwindow.h"
 #include "aboutdialog.h"
 #include "version.h"
+#include "ecgpresetlist.h"
 
 #include <QtWidgets/QtWidgets>
 
@@ -63,107 +64,64 @@ myMainWindow::myMainWindow(QWidget *parent)
     loadPreferences();
 
     //
-    // Presets
+    // Presets (tab)
     //
-    connect(ui->presetR0C0, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetSinusRhythm(bool)));
-    connect(ui->presetR0C1, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetJunctionalRhythm(bool)));
-    connect(ui->presetR0C2, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetIsolatedSVE(bool)));
-    connect(ui->presetR0C3, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetFirstDegreeAVBlock(bool)));
-    connect(ui->presetR0C4, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetIsolatedMonoVE(bool)));
-    connect(ui->presetR1C0, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetSinusBradycardia(bool)));
-    connect(ui->presetR1C1, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetAcceleratedJunctionalRhythm(bool)));
-    connect(ui->presetR1C2, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetPairedSVE(bool)));
-    connect(ui->presetR1C3, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetType1AVBlock(bool)));
-    connect(ui->presetR1C4, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetIsolatedPolyVE(bool)));
-    connect(ui->presetR2C0, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetSinusTachycardia(bool)));
-    connect(ui->presetR2C1, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetIdioventricularRhythm(bool)));
-    connect(ui->presetR2C2, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetSupraventricularTachychardia(bool)));
-    connect(ui->presetR2C3, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetType2AVBlock(bool)));
-    connect(ui->presetR2C4, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetMonomorphicVT(bool)));
-    connect(ui->presetR3C0, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetAtrialFibrillation(bool)));
-    connect(ui->presetR3C1, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetAcceleratedIdioventricularRhythm(bool)));
-    connect(ui->presetR3C2, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetSinusPause(bool)));
-    connect(ui->presetR3C3, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetTwoOneAVBlock(bool)));
-    connect(ui->presetR3C4, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetPolymorphicVT(bool)));
-    connect(ui->presetR4C0, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetFastAtrialFibrillation(bool)));
-    // R4C1 is emtpy
-    connect(ui->presetR4C2, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetSinoAtrialBlock(bool)));
-    connect(ui->presetR4C3, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetDissociation(bool)));
-    connect(ui->presetR4C4, SIGNAL(clicked(bool)),
-            ui->ECGplot, SLOT(presetVentricularFibrillation(bool)));
+
+    // Populates all the presets in the List Widget
+    presets.populatePresetListWidget(ui->presetListWidget);
 
     connect(ui->ECGoptions, SIGNAL(currentChanged(int)),
             this, SLOT(optionsTabChanged(int)));
 
     //
-    // Custom settings
+    // Custom settings (tab)
     //
 
     // heart rate
-    ui->heartratespinBox->setValue(ui->ECGplot->displaySettings.getHeartRate());
+    ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
     connect(ui->heartratespinBox, SIGNAL(valueChanged(int)), ui->ECGplot, SLOT(setHeartRate(int)));
 
     // P wave
-    ui->pwaveamplitude->setValue(ui->ECGplot->displaySettings.getAmplitude_P_wave());
+    ui->pwaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_P_wave());
     connect(ui->pwaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_P_wave(double)));
-    ui->pwaveduration->setValue(ui->ECGplot->displaySettings.getDuration_P_wave());
+    ui->pwaveduration->setValue(ui->ECGplot->currentECG.getDuration_P_wave());
     connect(ui->pwaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_P_wave(double)));
-    ui->prduration->setValue(ui->ECGplot->displaySettings.getInterval_P_wave());
+    ui->prduration->setValue(ui->ECGplot->currentECG.getInterval_P_wave());
     connect(ui->prduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setInterval_P_wave(double)));
-    ui->pwavepositiveness->setCurrentIndex(ui->ECGplot->displaySettings.getPositive_P_wave() ? 0 : 1);
+    ui->pwavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_P_wave() ? 0 : 1);
     connect(ui->pwavepositiveness, SIGNAL(currentIndexChanged(int)), this, SLOT(changePWavePositiveness(int)));
 
     // QRS wave
-    ui->qrsamplitude->setValue(ui->ECGplot->displaySettings.getAmplitude_QRS_wave());
+    ui->qrsamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_QRS_wave());
     connect(ui->qrsamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_QRS_wave(double)));
-    ui->qrsduration->setValue(ui->ECGplot->displaySettings.getDuration_QRS_wave());
+    ui->qrsduration->setValue(ui->ECGplot->currentECG.getDuration_QRS_wave());
     connect(ui->qrsduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_QRS_wave(double)));
     //qrspositiveness
 
     // T wave
-    ui->twaveamplitude->setValue(ui->ECGplot->displaySettings.getAmplitude_T_wave());
+    ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
     connect(ui->twaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_T_wave(double)));
-    ui->twaveduration->setValue(ui->ECGplot->displaySettings.getDuration_T_wave());
+    ui->twaveduration->setValue(ui->ECGplot->currentECG.getDuration_T_wave());
     connect(ui->twaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_T_wave(double)));
-    ui->twavepositiveness->setCurrentIndex(ui->ECGplot->displaySettings.getPositive_T_wave() ? 0 : 1);
+    ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
     connect(ui->twavepositiveness, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTWavePositiveness(int)));
 
-    // Attach assessment class to assessment tab
-    assessment = new AssessmentFrame(ui->ECGoptions->widget(2));
-    // Give the assessment class the reference to the list of preset buttons
-    // that contain the textual names of the presets
-    assessment->setAssessmentAnswers(ui->presetsButtonGroup->buttons());
+    //
+    // Assessment (tab)
+    //
+
+    // Attach assessment class to the assessment tab
+    assessment = new AssessmentFrame(ui->ECGoptions->widget(ASSESSMENTTAB));
+    // Give the assessment class the reference to the list of ECG presets
+    assessment->setAssessmentAnswers(&presets);
 
     // Connect assessment to ECG plotter, so that when a question changes, the signal also changes
-    connect(assessment, SIGNAL(questionChanged(QString)), ui->ECGplot, SLOT(presetSignalByName(QString)));
+    connect(assessment, SIGNAL(questionChanged(QString)), ui->ECGplot, SLOT(setCurrentECGPlotted(QString)));
     // Connect assessment to ECG plotter so that ECG is displayed only during the assessment
     connect(assessment, SIGNAL(assessmentRunning(bool)), ui->ECGplot, SLOT(setDisplayData(bool)));
 
-    // Starting tab must be the custom settings
-    currentTab = 1;
+    // "custom settings" must be the default starting tab
+    currentTab = CUSTOMTAB;
     ui->ECGoptions->setCurrentIndex(currentTab);
 }
 
@@ -175,10 +133,12 @@ myMainWindow::~myMainWindow()
     delete ui;
 }
 
-
+// TODO: Remove this
+/*
 QList<QAbstractButton *> myMainWindow::getPresetsButtons() {
     return ui->presetsButtonGroup->buttons();
 }
+*/
 
 
 // When the user presses Exit on file menu
@@ -197,7 +157,7 @@ void myMainWindow::on_action_About_triggered()
 }
 
 
-// When the user change tab
+// When the user moves to a new tab
 void myMainWindow::optionsTabChanged(int newTab)
 {
     // Check if assessment is running
@@ -229,13 +189,14 @@ void myMainWindow::optionsTabChanged(int newTab)
         case PRESETSTAB:
             if (currentTab == CUSTOMTAB) {
                 // Saves settings
-                ui->ECGplot->saveSettings(otherMemory);
+                tempECGPreset = ui->ECGplot->currentECGPlotted();
             } else if (currentTab == ASSESSMENTTAB) {
                ui->ECGplot->setDisplayData(true);
              }
             // Set Preset Button
             // Changes the ECG signal to match preset button
-            ui->presetsButtonGroup->checkedButton()->click();
+            // TODO: Something is wrong about here
+            // ui->presetsButtonGroup->checkedButton()->click();
             currentTab = PRESETSTAB;
             break;
         // Custom tab selected
@@ -244,14 +205,14 @@ void myMainWindow::optionsTabChanged(int newTab)
             if (currentTab == ASSESSMENTTAB) {
                ui->ECGplot->setDisplayData(true);
              }
-            ui->ECGplot->loadSettings(otherMemory);
+            ui->ECGplot->setCurrentECGPlotted(tempECGPreset);
             currentTab = CUSTOMTAB;
             break;
         // Assessment tab selected
         case ASSESSMENTTAB:
             if (currentTab == CUSTOMTAB) {
                 // Saves settings
-                ui->ECGplot->saveSettings(otherMemory);
+                tempECGPreset = ui->ECGplot->currentECGPlotted();
             }
             ui->ECGplot->setDisplayData(false);
             currentTab = ASSESSMENTTAB;

@@ -4,12 +4,16 @@
 #include "ecgpreset.h"
 
 #include <QMap>
+#include <QListWidget>
 
 class ECGpresetList : public QObject
 {
     Q_OBJECT
 public:
     explicit ECGpresetList(QObject *parent = 0);
+    void populatePresetListWidget(QListWidget *listWidget);
+    int size() const;
+    const ECGpreset &at(const int &);
 
 signals:
 
@@ -18,11 +22,13 @@ public slots:
     int removePreset(const QString &oldPreset);
 
 private:
-    // ECG memories
+    // ECG presets
     QMap<QString, ECGpreset *> presetList;
 
 private:
+    // Save all presets to permanent storage
     int savePresets();
+    // load all presets from permanent storage
     int loadPresets();
 };
 

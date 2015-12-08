@@ -29,6 +29,7 @@
 #include <QtGlobal>
 #include <QtWidgets/QMessageBox>
 
+
 AssessmentFrame::AssessmentFrame(QWidget *parent) : QFrame(parent),
     m_ui(new Ui::AssessmentFrame)
 {
@@ -45,10 +46,12 @@ AssessmentFrame::AssessmentFrame(QWidget *parent) : QFrame(parent),
     resetScore();
 }
 
+
 AssessmentFrame::~AssessmentFrame()
 {
     delete m_ui;
 }
+
 
 void AssessmentFrame::changeEvent(QEvent *e)
 {
@@ -61,6 +64,7 @@ void AssessmentFrame::changeEvent(QEvent *e)
         break;
     }
 }
+
 
 void AssessmentFrame::startAssessment()
 {
@@ -105,6 +109,7 @@ void AssessmentFrame::updateTimer()
     }
 }
 
+
 void AssessmentFrame::endAssessment()
 {
     int score = correctAnswers * timeRemaining;
@@ -126,6 +131,7 @@ void AssessmentFrame::endAssessment()
 
     resetScore();
 }
+
 
 void AssessmentFrame::nextQuestion()
 {
@@ -157,7 +163,7 @@ void AssessmentFrame::nextQuestion()
     } else {
         qDebug("(%d/%d) The answer was wrong. Correct was %s.",
                answeredQuestions, TOTALQUESTIONS,
-               answerList.at(correctAnswer)->text().toLatin1().constData());
+               answerList->at(correctAnswer).getName().toLatin1().constData());
     }
 
     // Update progress bar
@@ -182,6 +188,7 @@ void AssessmentFrame::nextQuestion()
         chooseQuestions();
     }
 }
+
 
 void AssessmentFrame::resetScore()
 {
@@ -214,7 +221,7 @@ void AssessmentFrame::resetScore()
     m_ui->lcdTimeCounter->display(TOTALTIME);
 }
 
-///////////////////////////////////////////////////////////////////////////////
+
 //
 // Choose 3 questions from the set of available ECG preset signals
 //
@@ -226,19 +233,19 @@ void AssessmentFrame::chooseQuestions()
     //qsrand(midnight.secsTo(QTime::currentTime()));
 
     do {
-        question1 = qrand() % answerList.size();
-    } while (!answerList.at(question1)->isEnabled());
-    m_ui->radioAnswer1->setText(answerList.at(question1)->text());
+        question1 = qrand() % answerList->size();
+    } while (answerList->at(question1).isDisabled());
+    m_ui->radioAnswer1->setText(answerList->at(question1).getName());
 
     do {
-        question2 = qrand() % answerList.size();
-    } while (question2 == question1 || !answerList.at(question2)->isEnabled());
-    m_ui->radioAnswer2->setText(answerList.at(question2)->text());
+        question2 = qrand() % answerList->size();
+    } while (question2 == question1 || answerList->at(question2).isDisabled());
+    m_ui->radioAnswer2->setText(answerList->at(question2).getName());
 
     do {
-        question3 = qrand() % answerList.size();
-    } while (question3 == question2 || question3 == question1 || !answerList.at(question3)->isEnabled());
-    m_ui->radioAnswer3->setText(answerList.at(question3)->text());
+        question3 = qrand() % answerList->size();
+    } while (question3 == question2 || question3 == question1 || answerList->at(question3).isDisabled());
+    m_ui->radioAnswer3->setText(answerList->at(question3).getName());
 
     // Choose the question that will be correct answer
     int random = qrand() % 3;
@@ -256,7 +263,7 @@ void AssessmentFrame::chooseQuestions()
             Q_ASSERT(false);
     }
     // display the correct ECG signal
-    emit questionChanged(answerList.at(correctAnswer)->text());
+    emit questionChanged(answerList->at(correctAnswer).getName());
 
     // Use only for testing purposes
     /*
