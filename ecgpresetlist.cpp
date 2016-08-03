@@ -129,16 +129,25 @@ int ECGpresetList::size() const
 // Returns the name of the ECG signal in a certain index position
 const ECGpreset &ECGpresetList::at(const int &position)
 {
-    int pos=0;
+    int pos=-1;
+
+	
 
     // Make sure the requested position is valid
     Q_ASSERT(position < presetList.size());
 
     QMapIterator<QString, ECGpreset *> i(presetList);
+	/*if (position == 0) {
+		i.next();
+		return *(i.value());
+	}*/
     while (i.hasNext() && pos < position) {
         i.next();
         pos++;
     }
+	//qDebug("Preset Changed");
+	//qDebug(&((i.value())-getName));
+	//const ECGpreset * temp = i.value();
     return *i.value();
 }
 
@@ -161,8 +170,8 @@ int ECGpresetList::removePreset(const QString &oldPreset)
     int retCode;
 
     //Make sure that this preset is removeable and not disabled
-    Q_ASSERT(presetList.value(oldPreset)->getDisabled() == false);
-    Q_ASSERT(presetList.value(oldPreset)->getRemoveable() == true);
+    //Q_ASSERT(presetList.value(oldPreset)->getDisabled() == false);
+    //Q_ASSERT(presetList.value(oldPreset)->getRemoveable() == true);
     retCode = presetList.remove(oldPreset);
     switch (retCode) {
         case 0 :

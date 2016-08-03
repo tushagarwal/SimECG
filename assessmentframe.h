@@ -27,7 +27,7 @@
 #define ASSESSMENTFRAME_H
 
 #include "ecgpresetlist.h"
-
+#include "ecgplotter.h"
 #include <QtWidgets/QtWidgets>
 #include <QTimer>
 #include <QtWidgets/QAbstractButton>
@@ -46,7 +46,7 @@ class AssessmentFrame : public QFrame {
 public:
     explicit AssessmentFrame(QWidget *parent = 0);
     virtual ~AssessmentFrame();
-
+	void setECGplot(ECGplotter * ecg);
     void resetScore();
     void endAssessment();
     inline bool isAssessmentRunning() { return started; }
@@ -68,7 +68,7 @@ private:
     Ui::AssessmentFrame *m_ui;
     void chooseQuestions();
     ECGpresetList *answerList;
-
+	ECGplotter * ECGplot;
     QTimer *timer;
     bool started;                   // Is an assessment running ?
     int answeredQuestions;          // Number of answers given so far

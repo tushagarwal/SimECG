@@ -26,6 +26,7 @@
 #include "ecgplotter.h"
 #include "qvectorplus.h"
 #include "ecgpreset.h"
+#include "ecgpresetlist.h"
 
 #include <QtGlobal>
 #include <QtWidgets/QInputDialog>
@@ -39,14 +40,18 @@ ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
 {
     // base_data is a vector [1, XELEMENTS] with values ranging from 0.01 to 2 in 0.01 steps
     base_data.reserve(XELEMENTS);
-    double step = (double)(XEND - XSTART) / XELEMENTS;
-    double value = XSTART;
+    //double step = (double)(plotSettings.maxX - plotSettings.minX) / XELEMENTS;
+    //double value = plotSettings.minX;
+	double step = 0.01;
+	double value = plotSettings.minX;
 
     for (int i = 0; i < XELEMENTS; i++) {
         base_data.append(value);
         value += step;
     }
-
+	timer = new QTimer(this);
+	speed = 1;//default is 25mm
+	connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
     // Prepare ECG waves
     pwave.reserve(XELEMENTS);
     qrswave.reserve(XELEMENTS);
@@ -58,10 +63,38 @@ ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
     generateSignal();
 }
 
+void ECGplotter::timeout()
+{
+	//TODO: NOT WORKING
+	//scroll(10, 0);
+	//update();
+	//qDebug("Timeout");
+	if (moving) {
+		//moveBaseData(10);
+		if(speed)//25mm/s
+			plotSettings.scroll(1, 0);
+		else//50mm/s
+			plotSettings.scroll(2, 0);
+		//double step = (double)(plotSettings.maxX - plotSettings.minX) / XELEMENTS;
+		//double value = plotSettings.minX;
+		double step = 0.01;
+		double value = plotSettings.minX;
+		for (int i = 0; i < XELEMENTS; i++) {
+			base_data[i] = (value);
+			value += step;
+		}
+		generateSignal();
+	}
+}
+
+void ECGplotter::setRollingSpeed(const bool &rollingSpeed) {
+	speed = rollingSpeed;
+}
 
 void ECGplotter::generateSignal()
 {
-    qDebug("ECG regeneration has been requested ...");
+	if(!moving)   
+		qDebug("ECG regeneration has been requested ...");
 
     if (currentECG.getDisplayPWave()) {
         generate_P_wave();
@@ -151,6 +184,20 @@ void ECGplotter::setNoiseFilter(const bool &status)
     generateSignal();
 }
 
+void ECGplotter::setDisplayStatic(const bool &status)
+{
+	if (status) {
+		qDebug("Static View");
+		moving = false;
+		timer->stop();
+	}
+	else {
+		qDebug("Rolling View");
+		moving = true;
+		//if (speed)
+			timer->start(40);//80 means 0.08 sec resulting into 12.5 frames/sec
+	}
+}
 
 void ECGplotter::setAmplitude_P_wave(const double &value)
 {
@@ -315,329 +362,6 @@ void ECGplotter::setCurrentECGPlotted(const ECGpreset &newECG)
     generateSignal();
 }
 
-
-// TODO: Remove this
-/*
-// Displays a custom signal specified by his name
-void ECGplotter::presetSignalByName(const QString &presetName)
-{
-    if (presetName == QString(tr("Sinus Rhythm"))) {
-        presetSinusRhythm(true);
-        return;
-    }
-    if (presetName == QString(tr("Junctional Rhythm"))) {
-        presetJunctionalRhythm(true);
-        return;
-    }
-    if (presetName == QString(tr("Isolated PAC"))) {
-        presetIsolatedSVE(true);
-        return;
-    }
-    if (presetName == QString(tr("1st degree AV block"))) {
-        presetFirstDegreeAVBlock(true);
-        return;
-    }
-    if (presetName == QString(tr("Isolated monomorphic PVC"))) {
-        presetIsolatedMonoVE(true);
-        return;
-    }
-    if (presetName == QString(tr("Sinus Bradycardia"))) {
-        presetSinusBradycardia(true);
-        return;
-    }
-    if (presetName == QString(tr("Accel. Junctional Rhythm"))) {
-        presetAcceleratedJunctionalRhythm(true);
-        return;
-    }
-    if (presetName == QString(tr("Paired PAC"))) {
-        presetPairedSVE(true);
-        return;
-    }
-    if (presetName == QString(tr("Type I 2nd degree AV block"))) {
-        presetType1AVBlock(true);
-        return;
-    }
-    if (presetName == QString(tr("Isolated polymorphic PVC"))) {
-        presetIsolatedPolyVE(true);
-        return;
-    }
-    if (presetName == QString(tr("Sinus Tachycardia"))) {
-        presetSinusTachycardia(true);
-        return;
-    }
-    if (presetName == QString(tr("Idioventricular Rhythm"))) {
-        presetIdioventricularRhythm(true);
-        return;
-    }
-    if (presetName == QString(tr("Supraventricular Tachycardia"))) {
-        presetSupraventricularTachychardia(true);
-        return;
-    }
-    if (presetName == QString(tr("Type II 2nd degree AV block"))) {
-        presetType2AVBlock(true);
-        return;
-    }
-    if (presetName == QString(tr("Monomorphic VT"))) {
-        presetMonomorphicVT(true);
-        return;
-    }
-    if (presetName == QString(tr("Atrial Fibrillation"))) {
-        presetAtrialFibrillation(true);
-        return;
-    }
-    if (presetName == QString(tr("Accel. Idiovent. Rhythm"))) {
-        presetAcceleratedIdioventricularRhythm(true);
-        return;
-    }
-    if (presetName == QString(tr("Sinus Pause"))) {
-        presetSinusPause(true);
-        return;
-    }
-    if (presetName == QString(tr("2nd degree AV block (2:1)"))) {
-        presetTwoOneAVBlock(true);
-        return;
-    }
-    if (presetName == QString(tr("Polymorphic VT"))) {
-        presetPolymorphicVT(true);
-        return;
-    }
-    if (presetName == QString(tr("Fast Atrial Fibrillation"))) {
-        presetFastAtrialFibrillation(true);
-        return;
-    }
-    if (presetName == QString(tr("Type II 2nd degree SA block"))) {
-        presetType2AVBlock(true);
-        return;
-    }
-    if (presetName == QString(tr("AV dissociation"))) {
-        presetDissociation(true);
-        return;
-    }
-    if (presetName == QString(tr("Ventricular Fibrillation"))) {
-        presetVentricularFibrillation(true);
-        return;
-    }
-
-    // The program flow should never reach here!
-    qDebug("Requested signal name should change to %s, but it does not exist.", presetName.toLatin1().constData());
-    Q_ASSERT(false);
-}
-
-
-void ECGplotter::presetSinusRhythm(bool)
-{
-    ECGpreset settings;
-
-    settings.sinusRhythm();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetSinusBradycardia(bool)
-{
-    ECGpreset settings;
-
-    settings.sinusBradycardia();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetSinusTachycardia(bool)
-{
-    ECGpreset settings;
-
-    settings.sinusTachycardia();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetAtrialFibrillation(bool)
-{
-    ECGpreset settings;
-
-    settings.atrialFibrillation();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetFastAtrialFibrillation(bool)
-{
-    ECGpreset settings;
-
-    settings.fastAtrialFibrillation();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetIsolatedSVE(bool)
-{
-    ECGpreset settings;
-
-    settings.isolatedSVE();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetPairedSVE(bool)
-{
-    ECGpreset settings;
-
-    settings.pairedSVE();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetSupraventricularTachychardia(bool)
-{
-    ECGpreset settings;
-
-    settings.supraventricularTachychardia();;
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetSinusPause(bool)
-{
-    ECGpreset settings;
-
-    settings.sinusPause();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetJunctionalRhythm(bool)
-{
-    ECGpreset settings;
-
-    settings.junctionalRhythm();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetAcceleratedJunctionalRhythm(bool)
-{
-    ECGpreset settings;
-
-    settings.acceleratedJunctionalRhythm();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetIdioventricularRhythm(bool)
-{
-    ECGpreset settings;
-
-    settings.idioventricularRhythm();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetAcceleratedIdioventricularRhythm(bool)
-{
-    ECGpreset settings;
-
-    settings.acceleratedIdioventricularRhythm();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetSinoAtrialBlock(bool)
-{
-    ECGpreset settings;
-
-    settings.sinoAtrialBlock();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetIsolatedMonoVE(bool)
-{
-    ECGpreset settings;
-
-    settings.isolatedMonoVE();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetIsolatedPolyVE(bool)
-{
-    ECGpreset settings;
-
-    settings.isolatedPolyVE();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetMonomorphicVT(bool)
-{
-    ECGpreset settings;
-
-    settings.monomorphicVT();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetPolymorphicVT(bool)
-{
-    ECGpreset settings;
-
-    settings.polymorphicVT();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetVentricularFibrillation(bool)
-{
-    ECGpreset settings;
-
-    settings.ventricularFibrillation();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetFirstDegreeAVBlock(bool)
-{
-    ECGpreset settings;
-
-    settings.firstDegreeAVBlock();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetType1AVBlock(bool)
-{
-    ECGpreset settings;
-
-    settings.type1AVBlock();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetType2AVBlock(bool)
-{
-    ECGpreset settings;
-
-    settings.type2AVBlock();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetTwoOneAVBlock(bool)
-{
-    ECGpreset settings;
-    settings.twoOneAVBlock();
-    loadCurrentECG(settings);
-}
-
-
-void ECGplotter::presetDissociation(bool)
-{
-    ECGpreset settings;
-
-    settings.dissociation();
-    loadCurrentECG(settings);
-}
-*/
 
 void ECGplotter::generate_P_wave()
 {
@@ -804,3 +528,4 @@ const QVector<QPointF> &ECGplotter::generate_Sine_wave()
     }
     return *sinewave;
 }
+

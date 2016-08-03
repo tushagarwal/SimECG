@@ -47,6 +47,7 @@ myMainWindow::myMainWindow(QWidget *parent)
 
     // ECG Calibration speed (25 or 50 mm/s)
     // TODO: Implement the connector when the method exists
+	connect(ui->actionSpeed25mm, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setRollingSpeed(bool)));
 
     // ECG Calibration amplitude (5 or 10 mm/mV)
     // TODO: Implement the connector when the method exists
@@ -56,6 +57,7 @@ myMainWindow::myMainWindow(QWidget *parent)
 
     // ECG display (static or rolling)
     // TODO: Implement the connector when the method exists
+	connect(ui->actionBackStatic, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setDisplayStatic(bool)));
 
     // ECG background paper/monitor
     connect(ui->actionBackgroundPaper, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setEcgBackground(bool)));
@@ -69,6 +71,7 @@ myMainWindow::myMainWindow(QWidget *parent)
 
     // Populates all the presets in the List Widget
     presets.populatePresetListWidget(ui->presetListWidget);
+	connect(ui->presetListWidget, SIGNAL(currentRowChanged(int)), this, SLOT(selectPreset(int)) );
 
     connect(ui->ECGoptions, SIGNAL(currentChanged(int)),
             this, SLOT(optionsTabChanged(int)));
@@ -140,6 +143,10 @@ QList<QAbstractButton *> myMainWindow::getPresetsButtons() {
 }
 */
 
+void myMainWindow::selectPreset(int selected) {
+	const ECGpreset &temp = presets.at((const int)selected);
+	ui->ECGplot->setCurrentECGPlotted(temp);
+}
 
 // When the user presses Exit on file menu
 void myMainWindow::on_action_Exit_triggered()
@@ -215,6 +222,7 @@ void myMainWindow::optionsTabChanged(int newTab)
                 tempECGPreset = ui->ECGplot->currentECGPlotted();
             }
             ui->ECGplot->setDisplayData(false);
+			assessment->setECGplot(ui->ECGplot);
             currentTab = ASSESSMENTTAB;
             break;
         default :
@@ -288,6 +296,13 @@ void myMainWindow::loadPreferences()
         ui->actionBackgroundMonitor->setChecked(true);
         ui->ECGplot->setEcgBackground(false);
     }
+	ui->actionBackStatic->setChecked(true);
+	ui->actionBackRolling->setChecked(false);
+	ui->ECGplot->setDisplayStatic(true);
+
+	ui->actionSpeed25mm->setChecked(true);
+	ui->actionSpeed50mm->setChecked(false);
+	ui->ECGplot->setRollingSpeed(true);// True means 25mm/s, False 50m/s
 }
 
 
@@ -318,4 +333,5 @@ void myMainWindow::savePreferences()
     // ECG background paper/monitor
     qDebug("ECG background is %s", ui->ECGplot->ecgBackground().toLatin1().constData());
     preferences.setValue("ECG/Background", ui->ECGplot->ecgBackground());
+	//preferences.setValue("ECG/Static", ui->ECGplot->actionBackStatic());
 }

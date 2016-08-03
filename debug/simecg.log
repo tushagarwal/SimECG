@@ -1,0 +1,11 @@
+﻿  MOC ecgplotter.h
+  UIC mymainwindow.ui
+  assessmentframe.cpp
+  moc_assessmentframe.cpp
+  moc_ecgplotter.cpp
+  moc_mymainwindow.cpp
+  ecgplotter.cpp
+  main.cpp
+  mymainwindow.cpp
+  Generating Code...
+  simecg.vcxproj -> C:\Users\Tushar.Agarwal\Documents\GitHub\simecg-master\debug\simecg.exe

@@ -32,7 +32,7 @@
 #include <QLibraryInfo>
 #include <QTime>
 
-#include <unistd.h>
+//#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
@@ -64,16 +64,17 @@ int main(int argc, char *argv[])
     myMainWindow w;
 
     app.processEvents();
-
+	_sleep(1000);
     // Usually the splash screen takes a short moment, so we insert
     // some 2 more seconds for it to be seen by the user
     // Windows do not implement the same way as Linux and others
+/*
 #ifdef Q_WS_WIN
     _sleep(1000);           // For the windows platform only
 #else
-    sleep(2);               // Every other platform
+    //sleep(2);               // Every other platform
 #endif
-
+*/
     w.show();
     splash.finish(&w);
     return app.exec();

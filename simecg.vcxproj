@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3175533D-E4A9-3BA7-A734-59A6E14F3801}</ProjectGuid>
+    <RootNamespace>simecg</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <PlatformToolSet>v140</PlatformToolSet>
+    <OutputDirectory>release\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>simecg</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <PlatformToolSet>v140</PlatformToolSet>
+    <OutputDirectory>debug\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>simecg</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">simecg</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">simecg</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;C:\Qt\5.7\msvc2015_64\include;C:\Qt\5.7\msvc2015_64\include\QtWidgets;C:\Qt\5.7\msvc2015_64\include\QtGui;C:\Qt\5.7\msvc2015_64\include\QtANGLE;C:\Qt\5.7\msvc2015_64\include\QtCore;release;.;C:\Qt\5.7\msvc2015_64\mkspecs\win32-msvc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <DisableSpecificWarnings>4577;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>release\</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>
+      </ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>C:\Qt\5.7\msvc2015_64\lib\qtmain.lib;shell32.lib;C:\Qt\5.7\msvc2015_64\lib\Qt5Widgets.lib;C:\Qt\5.7\msvc2015_64\lib\Qt5Gui.lib;C:\Qt\5.7\msvc2015_64\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Qt\5.7\msvc2015_64\lib;C:\utils\postgresql\pgsql\lib;C:\utils\my_sql\my_sql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\simecg.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;C:\Qt\5.7\msvc2015_64\include;C:\Qt\5.7\msvc2015_64\include\QtWidgets;C:\Qt\5.7\msvc2015_64\include\QtGui;C:\Qt\5.7\msvc2015_64\include\QtANGLE;C:\Qt\5.7\msvc2015_64\include\QtCore;debug;.;C:\Qt\5.7\msvc2015_64\mkspecs\win32-msvc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4577;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>debug\</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;WIN64;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>C:\Qt\5.7\msvc2015_64\lib\qtmaind.lib;shell32.lib;C:\Qt\5.7\msvc2015_64\lib\Qt5Widgetsd.lib;C:\Qt\5.7\msvc2015_64\lib\Qt5Guid.lib;C:\Qt\5.7\msvc2015_64\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Qt\5.7\msvc2015_64\lib;C:\utils\postgresql\pgsql\lib;C:\utils\my_sql\my_sql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <OutputFile>$(OutDir)\simecg.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;WIN64;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="aboutdialog.cpp" />
+    <ClCompile Include="assessmentframe.cpp" />
+    <ClCompile Include="ecgplotter.cpp" />
+    <ClCompile Include="ecgpreset.cpp" />
+    <ClCompile Include="ecgpresetlist.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mymainwindow.cpp" />
+    <ClCompile Include="plotter.cpp" />
+    <ClCompile Include="qvectorplus.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="aboutdialog.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">aboutdialog.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore aboutdialog.h -o release\moc_aboutdialog.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MOC aboutdialog.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_aboutdialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">aboutdialog.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore aboutdialog.h -o debug\moc_aboutdialog.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC aboutdialog.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_aboutdialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="assessmentframe.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">assessmentframe.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore assessmentframe.h -o release\moc_assessmentframe.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MOC assessmentframe.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_assessmentframe.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">assessmentframe.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore assessmentframe.h -o debug\moc_assessmentframe.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC assessmentframe.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_assessmentframe.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="ecgplotter.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ecgplotter.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore ecgplotter.h -o release\moc_ecgplotter.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MOC ecgplotter.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_ecgplotter.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ecgplotter.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore ecgplotter.h -o debug\moc_ecgplotter.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC ecgplotter.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_ecgplotter.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="ecgpreset.h" />
+    <CustomBuild Include="ecgpresetlist.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ecgpresetlist.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore ecgpresetlist.h -o release\moc_ecgpresetlist.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MOC ecgpresetlist.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_ecgpresetlist.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ecgpresetlist.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore ecgpresetlist.h -o debug\moc_ecgpresetlist.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC ecgpresetlist.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_ecgpresetlist.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="mymainwindow.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">mymainwindow.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore mymainwindow.h -o release\moc_mymainwindow.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MOC mymainwindow.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_mymainwindow.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">mymainwindow.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore mymainwindow.h -o debug\moc_mymainwindow.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC mymainwindow.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_mymainwindow.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="plotter.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">plotter.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore plotter.h -o release\moc_plotter.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MOC plotter.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_plotter.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">plotter.h;C:\Qt\5.7\msvc2015_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1900 -D_WIN32 -D_WIN64 -IC:/Qt/5.7/msvc2015_64/mkspecs/win32-msvc2015 -IC:/Users/Tushar.Agarwal/Documents/GitHub/simecg-master -IC:/Qt/5.7/msvc2015_64/include -IC:/Qt/5.7/msvc2015_64/include/QtWidgets -IC:/Qt/5.7/msvc2015_64/include/QtGui -IC:/Qt/5.7/msvc2015_64/include/QtANGLE -IC:/Qt/5.7/msvc2015_64/include/QtCore plotter.h -o debug\moc_plotter.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC plotter.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_plotter.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="qvectorplus.h" />
+    <ClInclude Include="version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="debug\moc_aboutdialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_assessmentframe.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_ecgplotter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_ecgpresetlist.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_mymainwindow.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_plotter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\qrc_icons.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClInclude Include="ui_aboutdialog.h" />
+    <ClInclude Include="ui_assessmentframe.h" />
+    <ClInclude Include="ui_mymainwindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="simecg_de.ts" />
+    <None Include="simecg_es.ts" />
+    <None Include="simecg_fr.ts" />
+    <None Include="simecg_pt.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="aboutdialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">aboutdialog.ui;C:\Qt\5.7\msvc2015_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\uic.exe aboutdialog.ui -o ui_aboutdialog.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UIC aboutdialog.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ui_aboutdialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">aboutdialog.ui;C:\Qt\5.7\msvc2015_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\uic.exe aboutdialog.ui -o ui_aboutdialog.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UIC aboutdialog.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ui_aboutdialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="assessmentframe.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">assessmentframe.ui;C:\Qt\5.7\msvc2015_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\uic.exe assessmentframe.ui -o ui_assessmentframe.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UIC assessmentframe.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ui_assessmentframe.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">assessmentframe.ui;C:\Qt\5.7\msvc2015_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\uic.exe assessmentframe.ui -o ui_assessmentframe.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UIC assessmentframe.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ui_assessmentframe.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="mymainwindow.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">mymainwindow.ui;C:\Qt\5.7\msvc2015_64\bin\uic.exe;ecgplotter.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\uic.exe mymainwindow.ui -o ui_mymainwindow.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UIC mymainwindow.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ui_mymainwindow.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">mymainwindow.ui;C:\Qt\5.7\msvc2015_64\bin\uic.exe;ecgplotter.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\uic.exe mymainwindow.ui -o ui_mymainwindow.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UIC mymainwindow.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ui_mymainwindow.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\agplv3-155x51.png" />
+    <CustomBuild Include="icons.qrc">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">icons.qrc;C:\Qt\5.7\msvc2015_64\bin\rcc.exe;images\simecg-ss1.png;images\simecg-logo-32x32.png;images\simecg-logo.png;images\agplv3-155x51.png;images\simecg-ss2.png;translations\simecg_pt.qm;translations\simecg_es.qm;translations\simecg_fr.qm;translations\simecg_de.qm;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\5.7\msvc2015_64\bin\rcc.exe -name icons icons.qrc -o release\qrc_icons.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">RCC icons.qrc</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\qrc_icons.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">icons.qrc;C:\Qt\5.7\msvc2015_64\bin\rcc.exe;images\simecg-ss1.png;images\simecg-logo-32x32.png;images\simecg-logo.png;images\agplv3-155x51.png;images\simecg-ss2.png;translations\simecg_pt.qm;translations\simecg_es.qm;translations\simecg_fr.qm;translations\simecg_de.qm;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\5.7\msvc2015_64\bin\rcc.exe -name icons icons.qrc -o debug\qrc_icons.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">RCC icons.qrc</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\qrc_icons.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="images\simecg-logo-32x32.png" />
+    <None Include="images\simecg-logo.png" />
+    <None Include="images\simecg-ss1.png" />
+    <None Include="images\simecg-ss2.png" />
+    <None Include="translations\simecg_de.qm" />
+    <None Include="translations\simecg_es.qm" />
+    <None Include="translations\simecg_fr.qm" />
+    <None Include="translations\simecg_pt.qm" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

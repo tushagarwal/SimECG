@@ -39,7 +39,7 @@
 #define PI 3.14159265359
 #define SQUARE(x) ((x) * (x))
 #define ITERATIONS 100
-#define XELEMENTS  400
+#define XELEMENTS  600
 #define XSTART       0
 #define XEND         6
 
@@ -59,6 +59,8 @@ public:
 public slots:
     void setHeartRate(const int &);
     void setNoiseFilter(const bool &);
+	void setDisplayStatic(const bool &);
+	void setRollingSpeed(const bool &);
     // P wave
     void setAmplitude_P_wave(const double &);
     void setDuration_P_wave(const double &);
@@ -85,15 +87,16 @@ public slots:
     void setAmplitude_U_wave(const double &);
     void setDuration_U_wave(const double &);
     void setInterval_U_wave(const double &);
-
+	
+	void timeout();
 private:
     void generateSignal();
+	
     //void customSignal(const ECGpreset *);
 
     // Presets
     // TODO: Remove
     // void presetSignalByName(const QString &);
-
     void generate_P_wave();
     void generate_QRS_wave();
     void generate_Q_wave();
@@ -102,36 +105,10 @@ private:
     void generate_U_wave();
 
 private:
-    // TODO: Old presets. To REMOVE!
-/*
-    void presetSinusRhythm(bool);
-    void presetSinusBradycardia(bool);
-    void presetSinusTachycardia(bool);
-    void presetAtrialFibrillation(bool);
-    void presetFastAtrialFibrillation(bool);
-    void presetIsolatedSVE(bool);
-    void presetPairedSVE(bool);
-    void presetSupraventricularTachychardia(bool);
-    void presetSinusPause(bool);
-    void presetJunctionalRhythm(bool);
-    void presetAcceleratedJunctionalRhythm(bool);
-    void presetIdioventricularRhythm(bool);
-    void presetAcceleratedIdioventricularRhythm(bool);
-    void presetSinoAtrialBlock(bool);
-    void presetIsolatedMonoVE(bool);
-    void presetIsolatedPolyVE(bool);
-    void presetMonomorphicVT(bool);
-    void presetPolymorphicVT(bool);
-    void presetVentricularFibrillation(bool);
-    void presetFirstDegreeAVBlock(bool);
-    void presetType1AVBlock(bool);
-    void presetType2AVBlock(bool);
-    void presetTwoOneAVBlock(bool);
-    void presetDissociation(bool);
-*/
-
+	QTimer * timer;
     // Sine wave for testing purposes
     const QVector<QPointF> &generate_Sine_wave();
+	bool speed;//1 is 25mm/s, 0 is 50 mm/s
 
     // The generated ECG arrays of data
     QVector<QPointF> ecg;

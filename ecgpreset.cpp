@@ -125,7 +125,9 @@ void ECGpreset::atrialFibrillation()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+	heartRate = 300;
+	
+	//Q_ASSERT(false);
 }
 
 
@@ -140,7 +142,7 @@ void ECGpreset::fastAtrialFibrillation()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -155,7 +157,7 @@ void ECGpreset::isolatedSVE()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -170,7 +172,7 @@ void ECGpreset::pairedSVE()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -197,7 +199,7 @@ void ECGpreset::sinusPause()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -271,7 +273,7 @@ void ECGpreset::sinoAtrialBlock()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+   // Q_ASSERT(false);
 }
 
 
@@ -284,7 +286,7 @@ void ECGpreset::isolatedMonoVE()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -297,7 +299,7 @@ void ECGpreset::isolatedPolyVE()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -330,7 +332,7 @@ void ECGpreset::polymorphicVT()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -343,7 +345,7 @@ void ECGpreset::ventricularFibrillation()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+   // Q_ASSERT(false);
 }
 
 
@@ -370,7 +372,7 @@ void ECGpreset::type1AVBlock()
     disabled = false;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -383,7 +385,7 @@ void ECGpreset::type2AVBlock()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -396,7 +398,7 @@ void ECGpreset::twoOneAVBlock()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }
 
 
@@ -409,5 +411,5 @@ void ECGpreset::dissociation()
     disabled = true;
 
     setCommonValues();
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
 }

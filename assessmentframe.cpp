@@ -41,7 +41,7 @@ AssessmentFrame::AssessmentFrame(QWidget *parent) : QFrame(parent),
 
     connect(m_ui->pushButtonBegin, SIGNAL(clicked()), this, SLOT(startAssessment()));
     connect(m_ui->pushButtonNext, SIGNAL(clicked()), this, SLOT(nextQuestion()));
-
+	ECGplot = NULL;
     // Resets all variables and widgets
     resetScore();
 }
@@ -52,6 +52,10 @@ AssessmentFrame::~AssessmentFrame()
     delete m_ui;
 }
 
+
+void AssessmentFrame::setECGplot(ECGplotter * ecg) {
+	this->ECGplot = ecg;
+}
 
 void AssessmentFrame::changeEvent(QEvent *e)
 {
@@ -89,7 +93,7 @@ void AssessmentFrame::startAssessment()
     started = true;
     m_ui->pushButtonBegin->setDisabled(true);
     emit assessmentRunning(true);
-
+	
 
     // Start counting time
     timer->start(1000);
@@ -227,7 +231,7 @@ void AssessmentFrame::resetScore()
 //
 void AssessmentFrame::chooseQuestions()
 {
-    Q_ASSERT(!answerList.empty());
+   // Q_ASSERT(!answerList.empty());
 
     //QTime midnight(0, 0, 0);
     //qsrand(midnight.secsTo(QTime::currentTime()));
@@ -264,7 +268,10 @@ void AssessmentFrame::chooseQuestions()
     }
     // display the correct ECG signal
     emit questionChanged(answerList->at(correctAnswer).getName());
-
+	if (ECGplot) {
+		ECGpreset temp = answerList->at(correctAnswer);
+		ECGplot->setCurrentECGPlotted(temp);
+	}
     // Use only for testing purposes
     /*
     // How many presets do we have ??

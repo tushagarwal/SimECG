@@ -55,6 +55,7 @@ public:
 public slots:
     void changePWavePositiveness(int);
     void changeTWavePositiveness(int);
+	void selectPreset(int);
 
 private:
     Ui::myMainWindowClass *ui;

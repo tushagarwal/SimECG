@@ -84,7 +84,9 @@ public:
 public slots:
     void setDisplayData(bool status);
     void setEcgBackground(const bool &);
-    void timeout();
+
+  //  void timeout();
+	//void selectPreset(const int &);
 
 signals:
     void plotterChanged();
@@ -92,14 +94,16 @@ signals:
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
-
+	PlotSettings plotSettings;
+	bool moving;						  // True if display is rolling
+	//QTimer * timer;                       // Speed that display scrolls left
 private:
     void drawGrid(QPainter *painter);
     void drawCurves(QPainter *painter);
 
     enum { Margin = 10 };
 
-    PlotSettings plotSettings;
+    
     QMap<int, QVector<QPointF> > curveMap;
 
     bool displayGrid;                   // True if ECG paper type display, vital monitor otherwise
@@ -109,7 +113,6 @@ private:
     // TODO: Specific to ECG, move to ECGPlotter?
     QLabel heartRateWidget;             // The widget that shows heart rate
     int heartRate;                      // Current heart rate value
-    QTimer timer;                       // Speed that display scrolls left
 };
 
 

@@ -53,11 +53,15 @@ Plotter::Plotter(QWidget *parent) : QWidget(parent)
     heartRateWidget.setAlignment(Qt::AlignRight);
     heartRateWidget.setText(QString("<html><body style=\"font-size:22pt;\">\n%1</body></html>").arg(999));
     heartRateWidget.setVisible(displayData);
-
+	//timer = new QTimer(this);
     // Display scrolls at interval
-    // timer.setInterval(250);
-    connect( &timer, SIGNAL(timeout()), this, SLOT(timeout()) );
-
+	/*
+    timer->setInterval(250);
+	timer->start(250);
+	*/
+    //connect( timer, SIGNAL(timeout()), this, SLOT(timeout()) );
+	//connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
+	moving = false;
     plotSettings = PlotSettings();
 }
 
@@ -94,6 +98,8 @@ void Plotter::setDisplayData(bool status)
     heartRateWidget.setVisible(status);
     update();
 }
+
+
 
 // This is the setter for the ECG background preference
 void Plotter::setEcgBackground(const bool &status)
@@ -155,14 +161,6 @@ void Plotter::resizeEvent(QResizeEvent * /* event */)
 }
 
 
-// timeout method called when the display needs to scroll
-void Plotter::timeout()
-{
-    //TODO: NOT WORKING
-    //scroll(10, 0);
-    //update();
-}
-
 
 /**
   *
@@ -178,13 +176,13 @@ void Plotter::drawGrid(QPainter *painter)
     QPen axesColor(Qt::blue);
 
     // Draw vertical gridlines
-    for (int i = 0; i <= plotSettings.numXTicks; ++i) {
+    for (int i = 0; i <= plotSettings.numXTicks; i+=5) {
         int x = rect.left() + (i * (rect.width() - 1) / plotSettings.numXTicks);
         double label = plotSettings.minX + (i * plotSettings.spanX() / plotSettings.numXTicks);
         // Draw the grid (x)
-        if (!(i % 25)) {
+        if (!(i % 50)) {
             gridColor.setWidth(2);
-        } else if (!(i % 5)) {
+        } else if (!(i % 10)) {
             gridColor.setWidth(1);
         } else {
             gridColor.setWidth(0);
@@ -196,7 +194,7 @@ void Plotter::drawGrid(QPainter *painter)
             painter->setPen(axesColor);
             painter->drawLine(x, rect.bottom(), x, rect.bottom() + 5);
             // Draw the axes numbers
-            if (!(i % 5)) {
+            if (!(i % 10)) {
                 painter->drawText(x - 50, rect.bottom() + 5, 100, 15,
                                   Qt::AlignHCenter | Qt::AlignTop, QString::number(label));
             }
@@ -208,9 +206,9 @@ void Plotter::drawGrid(QPainter *painter)
         int y = rect.bottom() - (j * (rect.height() - 1) / plotSettings.numYTicks);
         double label = plotSettings.minY + (j * plotSettings.spanY() / plotSettings.numYTicks);
         // Draw the grid (y)
-        if (!(j % 25)) {
+        if (!(j % 25)) {  //every 50th tick
             gridColor.setWidth(2);
-        } else if (!(j % 5)) {
+        } else if (!(j % 5)) { //every 10th tick 
             gridColor.setWidth(1);
         } else {
             gridColor.setWidth(0);
@@ -283,14 +281,14 @@ PlotSettings::PlotSettings()
 {
     minX = 0;
     maxX = 6;
-    numXTicks = 150;
+    numXTicks = 300;
 
     minY = -2.0;
     maxY = 2.0;
     numYTicks = 40;
 }
 
-void PlotSettings::scroll(int dx, int dy)
+void PlotSettings::scroll(int dx, int  dy)
 {
     double stepX = spanX() / numXTicks;
     minX += dx * stepX;
@@ -299,6 +297,8 @@ void PlotSettings::scroll(int dx, int dy)
     double stepY = spanY() / numYTicks;
     minY += dy * stepY;
     maxY += dy * stepY;
+	
+	//adjust();
 }
 
 void PlotSettings::adjust()
