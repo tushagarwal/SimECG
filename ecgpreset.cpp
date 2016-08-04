@@ -24,17 +24,248 @@
 ****************************************************************************/
 
 #include "ecgpreset.h"
-
+#include <QFile>
+#include <qxmlstream.h>
+#include <QtDebug>
 
 ECGpreset::ECGpreset()
 {
     setCommonValues();
 }
 
+ECGpreset::ECGpreset(QString  & filename) {
+	//Construct ECGPreset from XML file
+	QXmlStreamReader Rxml;
+
+	QFile file(filename);
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+	{
+		qDebug () << "Error: Cannot read file " << qPrintable(filename)
+			<< ": " << qPrintable(file.errorString());
+	}
+
+	Rxml.setDevice(&file);
+	Rxml.readNext();
+	bool found = false;
+	while (!Rxml.atEnd() && !found) {
+		//check for start to be preset
+		if (Rxml.isStartElement()) {
+			if (Rxml.name() == "Preset")
+				found = true;
+		}
+		Rxml.readNext();
+	}
+	if (!found) {
+		//First Element isnt Preset
+		qDebug() << "Error: File not a preset XML "
+			<< qPrintable(filename);
+	}
+	else {
+		while (!Rxml.isEndDocument()) {
+			QString first = Rxml.name().toString();
+			if (Rxml.isStartElement()) {
+				QString temp = Rxml.name().toString();
+				if(temp == "Start"){
+					while(!Rxml.isEndElement()){
+						if (Rxml.name().toString() == "Heart_Rate") {
+							//Rxml.readNext();
+							QString a = Rxml.readElementText();
+							heartRate = a.toInt();
+							//Rxml.readNext();
+						}
+						else if (Rxml.name().toString() == "Noise_Filter") {
+							noiseFilter = Rxml.readElementText().toInt();
+							// TODO: Check if the above works
+							//Rxml.readNext();
+						}
+						Rxml.readNext();
+					}
+				}
+				else if (temp == "P_Wave") {
+					Rxml.readNext();
+					while (!Rxml.isEndElement()) {
+						QString name = Rxml.name().toString();
+						if (name == "Show")
+							showPWave = Rxml.readElementText().toInt();
+						else if(name == "A")
+							a_pwave = Rxml.readElementText().toDouble();
+						else if (name == "D")
+							d_pwave = Rxml.readElementText().toDouble();
+						else if (name == "T")
+							t_pwave = Rxml.readElementText().toDouble();
+						else if (name == "Positive")
+							positive_pwave = Rxml.readElementText().toInt();
+						Rxml.readNext();
+					}
+				}
+				else if (temp == "Q_Wave") {
+					Rxml.readNext();
+					while (!Rxml.isEndElement()) {
+						QString name = Rxml.name().toString();
+						if ( name == "Show")
+							showQWave = Rxml.readElementText().toInt();
+						else if ( name == "A")
+							a_qwave = Rxml.readElementText().toDouble();
+						else if ( name == "D")
+							d_qwave = Rxml.readElementText().toDouble();
+						else if ( name == "T")
+							t_qwave = Rxml.readElementText().toDouble();
+						Rxml.readNext();
+					}
+				}
+				else if (temp == "QRS_Wave") {
+					Rxml.readNext();
+					while (!Rxml.isEndElement()) {
+						QString name = Rxml.name().toString();
+						if ( name == "Show")
+							showQRSWave = Rxml.readElementText().toInt();
+						else if ( name == "A")
+							a_qrswave = Rxml.readElementText().toDouble();
+						else if ( name == "D")
+							d_qrswave = Rxml.readElementText().toDouble();
+						else if ( name == "Positive")
+							positive_qrswave = Rxml.readElementText().toInt();
+						Rxml.readNext();
+					}
+				}
+				else if (temp == "S_Wave") {
+					Rxml.readNext();
+					while (!Rxml.isEndElement()) {
+						QString name = Rxml.name().toString();
+						if (name == "Show")
+							showSWave = Rxml.readElementText().toInt();
+						else if (name == "A")
+							a_swave = Rxml.readElementText().toDouble();
+						else if (name == "D")
+							d_swave = Rxml.readElementText().toDouble();
+						else if (name == "T")
+							t_swave = Rxml.readElementText().toDouble();
+						Rxml.readNext();
+					}
+				}
+				else if (temp == "T_Wave") {
+					Rxml.readNext();
+					while (!Rxml.isEndElement()) {
+						QString name = Rxml.name().toString();
+						if (name == "Show")
+							showTWave = Rxml.readElementText().toInt();
+						else if (name == "A")
+							a_twave = Rxml.readElementText().toDouble();
+						else if (name == "D")
+							d_twave = Rxml.readElementText().toDouble();
+						else if (name == "T")
+							t_twave = Rxml.readElementText().toDouble();
+						else if (name == "Positive")
+							positive_twave = Rxml.readElementText().toInt();
+						Rxml.readNext();
+					}
+				}
+				else if (temp == "U_Wave") {
+					Rxml.readNext();
+					while (!Rxml.isEndElement()) {
+						QString name = Rxml.name().toString();
+						if (name == "Show")
+							showUWave = Rxml.readElementText().toInt();
+						else if (name == "A")
+							a_uwave = Rxml.readElementText().toDouble();
+						else if (name == "D")
+							d_uwave = Rxml.readElementText().toDouble();
+						else if (name == "T")
+							t_uwave = Rxml.readElementText().toDouble();
+						Rxml.readNext();
+					}
+				}
+			}
+			Rxml.readNext();
+		}
+	}
+		if (Rxml.isStartElement())
+			file.close();
+
+		if (Rxml.hasError())
+		{
+			qDebug() << "Error: Failed to parse file "
+				<< qPrintable(filename) << ": "
+				<< qPrintable(Rxml.errorString());
+		}
+		else if (file.error() != QFile::NoError)
+		{
+			qDebug() << "Error: Cannot read file " << qPrintable(filename)
+				<< ": " << qPrintable(file.errorString());
+		}
+}
 
 // This method sets common values for the ECG signal properties
 // These values DOES NOT include the name of the signal
 // or the signal description
+void ECGpreset::saveXMLFile(QString &filename) {
+	QFile file(filename);
+	file.open(QIODevice::WriteOnly);
+
+	QXmlStreamWriter xmlWriter(&file);
+	xmlWriter.setAutoFormatting(true);
+	xmlWriter.writeStartDocument();
+
+	xmlWriter.writeStartElement("Preset");
+
+	xmlWriter.writeStartElement("Start");
+		xmlWriter.writeTextElement("Heart_Rate", QString::number(heartRate));
+		xmlWriter.writeTextElement("Noise_Filter", QString::number(noiseFilter));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeStartElement("P_Wave");
+		xmlWriter.writeTextElement("Show", QString::number(showPWave));
+		xmlWriter.writeTextElement("A", QString::number(a_pwave));
+		xmlWriter.writeTextElement("D", QString::number(d_pwave));
+		xmlWriter.writeTextElement("T", QString::number(t_pwave));
+		xmlWriter.writeTextElement("Positive", QString::number(positive_pwave));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeStartElement("Q_Wave");
+		xmlWriter.writeTextElement("Show", QString::number(showQWave));
+		xmlWriter.writeTextElement("A", QString::number(a_qwave));
+		xmlWriter.writeTextElement("D", QString::number(d_qwave));
+		xmlWriter.writeTextElement("T", QString::number(t_qwave));
+		//xmlWriter.writeTextElement("Positive", QString::number(positive_pwave));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeStartElement("QRS_Wave");
+		xmlWriter.writeTextElement("Show", QString::number(showQRSWave));
+		xmlWriter.writeTextElement("A", QString::number(a_qrswave));
+		xmlWriter.writeTextElement("D", QString::number(d_qrswave));
+		//xmlWriter.writeTextElement("T", QString::number(t_qrswave));
+		xmlWriter.writeTextElement("Positive", QString::number(positive_qrswave));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeStartElement("S_Wave");
+		xmlWriter.writeTextElement("Show", QString::number(showSWave));
+		xmlWriter.writeTextElement("A", QString::number(a_swave));
+		xmlWriter.writeTextElement("D", QString::number(d_swave));
+		xmlWriter.writeTextElement("T", QString::number(t_swave));
+		//xmlWriter.writeTextElement("Positive", QString::number(positive_swave));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeStartElement("T_Wave");
+		xmlWriter.writeTextElement("Show", QString::number(showTWave));
+		xmlWriter.writeTextElement("A", QString::number(a_twave));
+		xmlWriter.writeTextElement("D", QString::number(d_twave));
+		xmlWriter.writeTextElement("T", QString::number(t_twave));
+		xmlWriter.writeTextElement("Positive", QString::number(positive_twave));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeStartElement("U_Wave");
+		xmlWriter.writeTextElement("Show", QString::number(showUWave));
+		xmlWriter.writeTextElement("A", QString::number(a_uwave));
+		xmlWriter.writeTextElement("D", QString::number(d_uwave));
+		xmlWriter.writeTextElement("T", QString::number(t_uwave));
+	//xmlWriter.writeTextElement("Positive", QString::number(positive_pwave));
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeEndElement();
+	xmlWriter.writeEndDocument();
+	file.close();
+}
+
 void ECGpreset::setCommonValues()
 {
     heartRate = 70;

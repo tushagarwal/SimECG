@@ -176,7 +176,7 @@ void Plotter::drawGrid(QPainter *painter)
     QPen axesColor(Qt::blue);
 
     // Draw vertical gridlines
-    for (int i = 0; i <= plotSettings.numXTicks; i+=5) {
+    for (int i = 0; i <= plotSettings.numXTicks; i+=10) {
         int x = rect.left() + (i * (rect.width() - 1) / plotSettings.numXTicks);
         double label = plotSettings.minX + (i * plotSettings.spanX() / plotSettings.numXTicks);
         // Draw the grid (x)
@@ -202,13 +202,13 @@ void Plotter::drawGrid(QPainter *painter)
     }
 
     // Draw horizontal gridlines
-    for (int j = 0; j <= plotSettings.numYTicks; ++j) {
+    for (int j = 2; j <= plotSettings.numYTicks; j+=5) {
         int y = rect.bottom() - (j * (rect.height() - 1) / plotSettings.numYTicks);
         double label = plotSettings.minY + (j * plotSettings.spanY() / plotSettings.numYTicks);
         // Draw the grid (y)
-        if (!(j % 25)) {  //every 50th tick
+        if ((j == 22) || (j==47) ) {  
             gridColor.setWidth(2);
-        } else if (!(j % 5)) { //every 10th tick 
+        } else if (!(j % 5)) {  
             gridColor.setWidth(1);
         } else {
             gridColor.setWidth(0);

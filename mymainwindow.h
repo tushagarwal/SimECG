@@ -56,6 +56,8 @@ public slots:
     void changePWavePositiveness(int);
     void changeTWavePositiveness(int);
 	void selectPreset(int);
+	void saveCustomSetting();
+	void loadCustomSetting();
 
 private:
     Ui::myMainWindowClass *ui;
@@ -67,6 +69,7 @@ private:
     AssessmentFrame *assessment;
     int currentTab;
     QString m_sPreferencesFile;
+	bool recording;
 
 private:
     void loadPreferences();

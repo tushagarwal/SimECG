@@ -28,7 +28,7 @@
 #include "aboutdialog.h"
 #include "version.h"
 #include "ecgpresetlist.h"
-
+#include "ffmpeg.h"
 #include <QtWidgets/QtWidgets>
 
 myMainWindow::myMainWindow(QWidget *parent)
@@ -44,6 +44,12 @@ myMainWindow::myMainWindow(QWidget *parent)
     //
     // Command menu signals
     //
+
+	//Save Custom Setting
+	connect(ui->actionSave_as_Preset, SIGNAL(triggered()), this, SLOT(saveCustomSetting()));
+
+	//Load Custom Setting
+	connect(ui->actionLoad_Training_Settings_as_Preset, SIGNAL(triggered()), this, SLOT(loadCustomSetting()));
 
     // ECG Calibration speed (25 or 50 mm/s)
     // TODO: Implement the connector when the method exists
@@ -142,6 +148,73 @@ QList<QAbstractButton *> myMainWindow::getPresetsButtons() {
     return ui->presetsButtonGroup->buttons();
 }
 */
+
+void myMainWindow::saveCustomSetting() {
+	//open file selector
+	//QString filename;
+	QString filename = QFileDialog::getSaveFileName(this,
+		tr("Save Custom Settings"), ".",
+		tr("Xml files (*.xml)"));
+	if (currentTab == CUSTOMTAB) {
+		ECGpreset temp = (ui->ECGplot->currentECGPlotted());
+		temp.saveXMLFile(filename);
+	}
+	else {
+		tempECGPreset.saveXMLFile(filename);
+	}
+}
+
+void myMainWindow::loadCustomSetting() {
+	QString filename = QFileDialog::getOpenFileName(this,
+		tr("Load Custom Setting"), ".",
+		tr("Xml files (*.xml)"));
+	ECGpreset * temp = new ECGpreset(filename);
+	if (currentTab == CUSTOMTAB) {
+		ui->ECGplot->setCurrentECGPlotted(*temp);
+		// heart rate
+		ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
+
+		// P wave
+		ui->pwaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_P_wave());
+		ui->pwaveduration->setValue(ui->ECGplot->currentECG.getDuration_P_wave());
+		ui->prduration->setValue(ui->ECGplot->currentECG.getInterval_P_wave());
+		ui->pwavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_P_wave() ? 0 : 1);
+
+		// QRS wave
+		ui->qrsamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_QRS_wave());
+		ui->qrsduration->setValue(ui->ECGplot->currentECG.getDuration_QRS_wave());
+		//qrspositiveness
+
+		// T wave
+		ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
+		ui->twaveduration->setValue(ui->ECGplot->currentECG.getDuration_T_wave());
+		ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
+
+		
+	}
+	else {
+		tempECGPreset = *temp;
+		// heart rate
+		ui->heartratespinBox->setValue(tempECGPreset.getHeartRate());
+
+		// P wave
+		ui->pwaveamplitude->setValue(tempECGPreset.getAmplitude_P_wave());
+		ui->pwaveduration->setValue(tempECGPreset.getDuration_P_wave());
+		ui->prduration->setValue(tempECGPreset.getInterval_P_wave());
+		ui->pwavepositiveness->setCurrentIndex(tempECGPreset.getPositive_P_wave() ? 0 : 1);
+
+		// QRS wave
+		ui->qrsamplitude->setValue(tempECGPreset.getAmplitude_QRS_wave());
+		ui->qrsduration->setValue(tempECGPreset.getDuration_QRS_wave());
+		//qrspositiveness
+
+		// T wave
+		ui->twaveamplitude->setValue(tempECGPreset.getAmplitude_T_wave());
+		ui->twaveduration->setValue(tempECGPreset.getDuration_T_wave());
+		ui->twavepositiveness->setCurrentIndex(tempECGPreset.getPositive_T_wave() ? 0 : 1);
+
+	}
+}
 
 void myMainWindow::selectPreset(int selected) {
 	const ECGpreset &temp = presets.at((const int)selected);

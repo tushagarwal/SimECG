@@ -72,9 +72,9 @@ void ECGplotter::timeout()
 	if (moving) {
 		//moveBaseData(10);
 		if(speed)//25mm/s
-			plotSettings.scroll(1, 0);
-		else//50mm/s
 			plotSettings.scroll(2, 0);
+		else//50mm/s
+			plotSettings.scroll(4, 0);
 		//double step = (double)(plotSettings.maxX - plotSettings.minX) / XELEMENTS;
 		//double value = plotSettings.minX;
 		double step = 0.01;
@@ -89,6 +89,12 @@ void ECGplotter::timeout()
 
 void ECGplotter::setRollingSpeed(const bool &rollingSpeed) {
 	speed = rollingSpeed;
+	/*
+	if (speed)
+		timer->start(40);
+	else
+		timer->start(20);
+	*/
 }
 
 void ECGplotter::generateSignal()
@@ -195,7 +201,9 @@ void ECGplotter::setDisplayStatic(const bool &status)
 		qDebug("Rolling View");
 		moving = true;
 		//if (speed)
-			timer->start(40);//80 means 0.08 sec resulting into 12.5 frames/sec
+			timer->start(40);
+		//else
+			//timer->start(20);
 	}
 }
 

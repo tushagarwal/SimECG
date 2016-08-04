@@ -118,13 +118,13 @@ public:
     {
         if (myMainWindowClass->objectName().isEmpty())
             myMainWindowClass->setObjectName(QStringLiteral("myMainWindowClass"));
-        myMainWindowClass->resize(800, 600);
+        myMainWindowClass->resize(900, 600);
         QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(myMainWindowClass->sizePolicy().hasHeightForWidth());
         myMainWindowClass->setSizePolicy(sizePolicy);
-        myMainWindowClass->setMinimumSize(QSize(800, 600));
+        myMainWindowClass->setMinimumSize(QSize(900, 600));
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/simecg-logo-32x32.png"), QSize(), QIcon::Normal, QIcon::Off);
         myMainWindowClass->setWindowIcon(icon);
@@ -185,7 +185,7 @@ public:
         actionSave_Technical_Specifications_As->setEnabled(false);
         actionLoad_Training_Settings_as_Preset = new QAction(myMainWindowClass);
         actionLoad_Training_Settings_as_Preset->setObjectName(QStringLiteral("actionLoad_Training_Settings_as_Preset"));
-        actionLoad_Training_Settings_as_Preset->setEnabled(false);
+        actionLoad_Training_Settings_as_Preset->setEnabled(true);
         actionLoad_preferences = new QAction(myMainWindowClass);
         actionLoad_preferences->setObjectName(QStringLiteral("actionLoad_preferences"));
         actionLoad_preferences->setEnabled(false);
@@ -204,7 +204,7 @@ public:
         myMainWindowClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(myMainWindowClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 800, 21));
+        menuBar->setGeometry(QRect(0, 0, 900, 21));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
         menu_Help = new QMenu(menuBar);
@@ -678,7 +678,7 @@ public:
         QObject::connect(actionSpeed25mm, SIGNAL(triggered()), actionSpeed50mm, SLOT(toggle()));
         QObject::connect(actionSpeed50mm, SIGNAL(triggered()), actionSpeed25mm, SLOT(toggle()));
 
-        ECGoptions->setCurrentIndex(1);
+        ECGoptions->setCurrentIndex(0);
         qrspositiveness->setCurrentIndex(1);
         specialConditionsComboBox->setCurrentIndex(1);
 

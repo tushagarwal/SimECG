@@ -34,7 +34,8 @@ class ECGpreset
 {
 public:
     ECGpreset();
-
+	ECGpreset(QString &);
+	void saveXMLFile(QString &);
     // GET methods
     inline const QString &getName() const { return name; }
     inline const QString &getDescription() const { return description; }

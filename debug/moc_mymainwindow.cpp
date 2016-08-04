@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_myMainWindow_t {
-    QByteArrayData data[8];
-    char stringdata0[144];
+    QByteArrayData data[10];
+    char stringdata0[180];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,13 +34,16 @@ QT_MOC_LITERAL(1, 13, 23), // "changePWavePositiveness"
 QT_MOC_LITERAL(2, 37, 0), // ""
 QT_MOC_LITERAL(3, 38, 23), // "changeTWavePositiveness"
 QT_MOC_LITERAL(4, 62, 12), // "selectPreset"
-QT_MOC_LITERAL(5, 75, 25), // "on_action_About_triggered"
-QT_MOC_LITERAL(6, 101, 24), // "on_action_Exit_triggered"
-QT_MOC_LITERAL(7, 126, 17) // "optionsTabChanged"
+QT_MOC_LITERAL(5, 75, 17), // "saveCustomSetting"
+QT_MOC_LITERAL(6, 93, 17), // "loadCustomSetting"
+QT_MOC_LITERAL(7, 111, 25), // "on_action_About_triggered"
+QT_MOC_LITERAL(8, 137, 24), // "on_action_Exit_triggered"
+QT_MOC_LITERAL(9, 162, 17) // "optionsTabChanged"
 
     },
     "myMainWindow\0changePWavePositiveness\0"
     "\0changeTWavePositiveness\0selectPreset\0"
+    "saveCustomSetting\0loadCustomSetting\0"
     "on_action_About_triggered\0"
     "on_action_Exit_triggered\0optionsTabChanged"
 };
@@ -52,7 +55,7 @@ static const uint qt_meta_data_myMainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -60,17 +63,21 @@ static const uint qt_meta_data_myMainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x0a /* Public */,
-       3,    1,   47,    2, 0x0a /* Public */,
-       4,    1,   50,    2, 0x0a /* Public */,
-       5,    0,   53,    2, 0x08 /* Private */,
-       6,    0,   54,    2, 0x08 /* Private */,
-       7,    1,   55,    2, 0x08 /* Private */,
+       1,    1,   54,    2, 0x0a /* Public */,
+       3,    1,   57,    2, 0x0a /* Public */,
+       4,    1,   60,    2, 0x0a /* Public */,
+       5,    0,   63,    2, 0x0a /* Public */,
+       6,    0,   64,    2, 0x0a /* Public */,
+       7,    0,   65,    2, 0x08 /* Private */,
+       8,    0,   66,    2, 0x08 /* Private */,
+       9,    1,   67,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    2,
@@ -87,9 +94,11 @@ void myMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->changePWavePositiveness((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->changeTWavePositiveness((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->selectPreset((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->on_action_About_triggered(); break;
-        case 4: _t->on_action_Exit_triggered(); break;
-        case 5: _t->optionsTabChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->saveCustomSetting(); break;
+        case 4: _t->loadCustomSetting(); break;
+        case 5: _t->on_action_About_triggered(); break;
+        case 6: _t->on_action_Exit_triggered(); break;
+        case 7: _t->optionsTabChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -120,13 +129,13 @@ int myMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 8;
     }
     return _id;
 }

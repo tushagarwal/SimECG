@@ -1,11 +1,19 @@
-﻿  MOC ecgplotter.h
-  UIC mymainwindow.ui
+﻿  MOC mymainwindow.h
+  aboutdialog.cpp
   assessmentframe.cpp
-  moc_assessmentframe.cpp
-  moc_ecgplotter.cpp
-  moc_mymainwindow.cpp
   ecgplotter.cpp
+  ecgpreset.cpp
+  ecgpresetlist.cpp
   main.cpp
   mymainwindow.cpp
+  plotter.cpp
+  qvectorplus.cpp
+  moc_aboutdialog.cpp
+  moc_assessmentframe.cpp
+  moc_ecgplotter.cpp
+  moc_ecgpresetlist.cpp
+  moc_mymainwindow.cpp
+  moc_plotter.cpp
+  qrc_icons.cpp
   Generating Code...
-  simecg.vcxproj -> C:\Users\Tushar.Agarwal\Documents\GitHub\simecg-master\debug\simecg.exe
+  simecg.vcxproj -> C:\Users\Tushar.Agarwal\Documents\GitHub\SimECG\debug\simecg.exe

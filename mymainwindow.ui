@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>900</width>
     <height>600</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>900</width>
     <height>600</height>
    </size>
   </property>
@@ -45,7 +45,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>900</width>
      <height>21</height>
     </rect>
    </property>
@@ -146,7 +146,7 @@
      <item row="0" column="0">
       <widget class="QTabWidget" name="ECGoptions">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="iconSize">
         <size>
@@ -1417,7 +1417,7 @@ When checked turns inactive PR and P wave characteristics, as well as special co
   </action>
   <action name="actionLoad_Training_Settings_as_Preset">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Load &amp;custom settings ...</string>
