@@ -32,6 +32,7 @@
 #include <QtWidgets/QtWidgets>
 #include <QtWidgets/QAbstractButton>
 #include <QSettings>
+//#include "QVideoEncoder.h"
 
 #define PRESETSTAB      0
 #define CUSTOMTAB       1
@@ -58,6 +59,8 @@ public slots:
 	void selectPreset(int);
 	void saveCustomSetting();
 	void loadCustomSetting();
+	void startRecording();
+	void stopRecording();
 
 private:
     Ui::myMainWindowClass *ui;
@@ -70,6 +73,8 @@ private:
     int currentTab;
     QString m_sPreferencesFile;
 	bool recording;
+	//QVideoEncoder * currVideo;
+	QProcess * recProcess;
 
 private:
     void loadPreferences();

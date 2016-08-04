@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_myMainWindow_t {
-    QByteArrayData data[10];
-    char stringdata0[180];
+    QByteArrayData data[12];
+    char stringdata0[209];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,14 +36,17 @@ QT_MOC_LITERAL(3, 38, 23), // "changeTWavePositiveness"
 QT_MOC_LITERAL(4, 62, 12), // "selectPreset"
 QT_MOC_LITERAL(5, 75, 17), // "saveCustomSetting"
 QT_MOC_LITERAL(6, 93, 17), // "loadCustomSetting"
-QT_MOC_LITERAL(7, 111, 25), // "on_action_About_triggered"
-QT_MOC_LITERAL(8, 137, 24), // "on_action_Exit_triggered"
-QT_MOC_LITERAL(9, 162, 17) // "optionsTabChanged"
+QT_MOC_LITERAL(7, 111, 14), // "startRecording"
+QT_MOC_LITERAL(8, 126, 13), // "stopRecording"
+QT_MOC_LITERAL(9, 140, 25), // "on_action_About_triggered"
+QT_MOC_LITERAL(10, 166, 24), // "on_action_Exit_triggered"
+QT_MOC_LITERAL(11, 191, 17) // "optionsTabChanged"
 
     },
     "myMainWindow\0changePWavePositiveness\0"
     "\0changeTWavePositiveness\0selectPreset\0"
     "saveCustomSetting\0loadCustomSetting\0"
+    "startRecording\0stopRecording\0"
     "on_action_About_triggered\0"
     "on_action_Exit_triggered\0optionsTabChanged"
 };
@@ -55,7 +58,7 @@ static const uint qt_meta_data_myMainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,19 +66,23 @@ static const uint qt_meta_data_myMainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x0a /* Public */,
-       3,    1,   57,    2, 0x0a /* Public */,
-       4,    1,   60,    2, 0x0a /* Public */,
-       5,    0,   63,    2, 0x0a /* Public */,
-       6,    0,   64,    2, 0x0a /* Public */,
-       7,    0,   65,    2, 0x08 /* Private */,
-       8,    0,   66,    2, 0x08 /* Private */,
-       9,    1,   67,    2, 0x08 /* Private */,
+       1,    1,   64,    2, 0x0a /* Public */,
+       3,    1,   67,    2, 0x0a /* Public */,
+       4,    1,   70,    2, 0x0a /* Public */,
+       5,    0,   73,    2, 0x0a /* Public */,
+       6,    0,   74,    2, 0x0a /* Public */,
+       7,    0,   75,    2, 0x0a /* Public */,
+       8,    0,   76,    2, 0x0a /* Public */,
+       9,    0,   77,    2, 0x08 /* Private */,
+      10,    0,   78,    2, 0x08 /* Private */,
+      11,    1,   79,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -96,9 +103,11 @@ void myMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 2: _t->selectPreset((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->saveCustomSetting(); break;
         case 4: _t->loadCustomSetting(); break;
-        case 5: _t->on_action_About_triggered(); break;
-        case 6: _t->on_action_Exit_triggered(); break;
-        case 7: _t->optionsTabChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->startRecording(); break;
+        case 6: _t->stopRecording(); break;
+        case 7: _t->on_action_About_triggered(); break;
+        case 8: _t->on_action_Exit_triggered(); break;
+        case 9: _t->optionsTabChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -129,13 +138,13 @@ int myMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }

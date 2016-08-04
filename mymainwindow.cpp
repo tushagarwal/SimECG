@@ -27,15 +27,16 @@
 #include "ui_mymainwindow.h"
 #include "aboutdialog.h"
 #include "version.h"
+#include <windows.h>
+#include <signal.h>
 #include "ecgpresetlist.h"
-#include "ffmpeg.h"
 #include <QtWidgets/QtWidgets>
 
 myMainWindow::myMainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::myMainWindowClass)
 {
     ui->setupUi(this);
-
+	recProcess = new QProcess(this);
     // General names for QSettings and others
     QCoreApplication::setOrganizationName("simECG");
     QCoreApplication::setOrganizationDomain("simecg.sourceforge.net");
@@ -132,6 +133,14 @@ myMainWindow::myMainWindow(QWidget *parent)
     // "custom settings" must be the default starting tab
     currentTab = CUSTOMTAB;
     ui->ECGoptions->setCurrentIndex(currentTab);
+
+
+	//Start Recording
+	connect(ui->startRecording, SIGNAL(pressed()), this, SLOT(startRecording()));
+
+	//Stop Recording
+	connect(ui->stopRecording, SIGNAL(pressed()), this, SLOT(stopRecording()));
+
 }
 
 
@@ -214,6 +223,45 @@ void myMainWindow::loadCustomSetting() {
 		ui->twavepositiveness->setCurrentIndex(tempECGPreset.getPositive_T_wave() ? 0 : 1);
 
 	}
+}
+
+void myMainWindow::startRecording() {
+	recording = true;
+	ui->stopRecording->setEnabled(true);
+	ui->startRecording->setEnabled(false);
+	//setFixedSize()
+	this->setFixedSize(width(),height());
+	recProcess->setProcessChannelMode(QProcess::ForwardedChannels);
+	QString program = "\"C:\\Users\\Tushar.Agarwal\\Documents\\GitHub\\SimECG\\debug\\ffmpeg.exe\"";
+	recProcess->setProgram(program);
+	QFile::remove("testVideo.mp4");
+	int w = width() - 16;
+	int h = height()/2 -16;
+	recProcess->setNativeArguments(QString("-f gdigrab -framerate 25 -offset_x 8 -offset_y 16 -s "+QString::number(w)+"*"+QString::number(h)+" -i title=\"simECG - The OpenSource ECG simulator\" testVideo.mp4"));
+	recProcess->start();
+	
+}
+void myMainWindow::stopRecording() {
+	recording = false;
+	ui->stopRecording->setEnabled(false);
+	ui->startRecording->setEnabled(true);
+	//recProcess->terminate();
+	QByteArray command("q\n");
+	recProcess->write(command);//send quit signal to ffmeg
+	int i = 0;
+	while (!recProcess->atEnd() && i < 5) {
+		Sleep(uint(400));//sleep to allow ffmpeg to quit
+		qDebug() << "Process didnt Exit";
+		//recProcess->write(command);
+		i++;
+	}
+	if (!recProcess->atEnd()) {
+		recProcess->close();
+		qDebug() << "Couldnt record file";
+	}
+	//this->setSizePolicy(QSizePolicy)
+	Q_PID pid = recProcess->pid();
+	qDebug() << "Pid" << pid;
 }
 
 void myMainWindow::selectPreset(int selected) {
@@ -369,13 +417,15 @@ void myMainWindow::loadPreferences()
         ui->actionBackgroundMonitor->setChecked(true);
         ui->ECGplot->setEcgBackground(false);
     }
-	ui->actionBackStatic->setChecked(true);
-	ui->actionBackRolling->setChecked(false);
-	ui->ECGplot->setDisplayStatic(true);
+	ui->actionBackStatic->setChecked(false);
+	ui->actionBackRolling->setChecked(true);
+	ui->ECGplot->setDisplayStatic(false);
 
 	ui->actionSpeed25mm->setChecked(true);
 	ui->actionSpeed50mm->setChecked(false);
 	ui->ECGplot->setRollingSpeed(true);// True means 25mm/s, False 50m/s
+
+	ui->stopRecording->setEnabled(false);
 }
 
 
