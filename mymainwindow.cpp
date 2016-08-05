@@ -108,6 +108,12 @@ myMainWindow::myMainWindow(QWidget *parent)
     connect(ui->qrsduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_QRS_wave(double)));
     //qrspositiveness
 
+	//S Wave
+	ui->swaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_S_wave());
+	connect(ui->swaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_S_wave(double)));
+	ui->swaveduration->setValue(ui->ECGplot->currentECG.getDuration_S_wave());
+	connect(ui->swaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_S_wave(double)));
+
     // T wave
     ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
     connect(ui->twaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_T_wave(double)));
@@ -115,7 +121,8 @@ myMainWindow::myMainWindow(QWidget *parent)
     connect(ui->twaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_T_wave(double)));
     ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
     connect(ui->twavepositiveness, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTWavePositiveness(int)));
-
+	ui->stduration->setValue(ui->ECGplot->currentECG.getInterval_T_wave());
+	connect(ui->stduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setInterval_T_wave(double)));
     //
     // Assessment (tab)
     //
@@ -162,7 +169,7 @@ void myMainWindow::saveCustomSetting() {
 	//open file selector
 	//QString filename;
 	QString filename = QFileDialog::getSaveFileName(this,
-		tr("Save Custom Settings"), ".",
+		tr("Save Custom Settings"), QString("./test"),
 		tr("Xml files (*.xml)"));
 	if (filename.size() == 0)
 		return;
@@ -198,11 +205,16 @@ void myMainWindow::loadCustomSetting() {
 		ui->qrsduration->setValue(ui->ECGplot->currentECG.getDuration_QRS_wave());
 		//qrspositiveness
 
+		//S Wave
+		ui->swaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_S_wave());
+		ui->swaveduration->setValue(ui->ECGplot->currentECG.getDuration_S_wave());
+
+
 		// T wave
 		ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
 		ui->twaveduration->setValue(ui->ECGplot->currentECG.getDuration_T_wave());
 		ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
-
+		ui->stduration->setValue(ui->ECGplot->currentECG.getInterval_T_wave());
 		
 	}
 	else {
@@ -221,11 +233,15 @@ void myMainWindow::loadCustomSetting() {
 		ui->qrsduration->setValue(tempECGPreset.getDuration_QRS_wave());
 		//qrspositiveness
 
+		//S Wave
+		ui->swaveamplitude->setValue(tempECGPreset.getAmplitude_S_wave());
+		ui->swaveduration->setValue(tempECGPreset.getDuration_S_wave());
+
 		// T wave
 		ui->twaveamplitude->setValue(tempECGPreset.getAmplitude_T_wave());
 		ui->twaveduration->setValue(tempECGPreset.getDuration_T_wave());
 		ui->twavepositiveness->setCurrentIndex(tempECGPreset.getPositive_T_wave() ? 0 : 1);
-
+		ui->stduration->setValue(tempECGPreset.getInterval_T_wave());
 	}
 }
 

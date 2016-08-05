@@ -184,12 +184,156 @@
            <x>1</x>
            <y>0</y>
            <width>859</width>
-           <height>131</height>
+           <height>172</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
+            <item row="3" column="0">
+             <widget class="QLabel" name="swavelabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate T">S Wave</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>twaveamplitude</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QDoubleSpinBox" name="swaveamplitude">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the amplitude of the S wave. Ranges from 0.10 mV to 0.50 mV. </string>
+              </property>
+              <property name="suffix">
+               <string comment="milivolts"> mV</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.500000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.050000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QDoubleSpinBox" name="swaveduration">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the duration of the S wave. Ranges from 0.10 s to 0.40 s</string>
+              </property>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.400000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.160000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="pwavelabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate P">P Wa&amp;ve</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>pwaveamplitude</cstring>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QLabel" name="heartratelabel">
               <property name="font">
@@ -208,6 +352,51 @@
               </property>
               <property name="buddy">
                <cstring>heartratespinBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QDoubleSpinBox" name="pwaveduration">
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the duration of the P wave. Ranges from 0.04 s to 0.14 s. Inactive when AF is checked</string>
+              </property>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.040000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.140000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.090000000000000</double>
               </property>
              </widget>
             </item>
@@ -265,96 +454,6 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="prlabel">
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string comment="Do not translate">PR</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QDoubleSpinBox" name="prduration">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string comment="PR Interval (do not translate PR)">Defines the duration of the PR interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.</string>
-              </property>
-              <property name="suffix">
-               <string comment="seconds"> s</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.080000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.300000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.010000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.150000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="pwavelabel">
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string comment="Do not translate P">P Wa&amp;ve</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>pwaveamplitude</cstring>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="1">
              <widget class="QDoubleSpinBox" name="pwaveamplitude">
               <property name="sizePolicy">
@@ -406,51 +505,6 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QDoubleSpinBox" name="pwaveduration">
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the duration of the P wave. Ranges from 0.04 s to 0.14 s. Inactive when AF is checked</string>
-              </property>
-              <property name="suffix">
-               <string comment="seconds"> s</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.040000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.140000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.010000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.090000000000000</double>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="3">
              <widget class="QComboBox" name="pwavepositiveness">
               <property name="sizePolicy">
@@ -494,8 +548,8 @@
               </item>
              </widget>
             </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="qrslabel">
+            <item row="4" column="0">
+             <widget class="QLabel" name="twavelabel">
               <property name="font">
                <font>
                 <family>Sans Serif</family>
@@ -505,14 +559,108 @@
                </font>
               </property>
               <property name="text">
-               <string comment="Do not translate QRS">&amp;QRS </string>
+               <string comment="Do not translate T">T Wave</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="buddy">
-               <cstring>qrsamplitude</cstring>
+               <cstring>twaveamplitude</cstring>
               </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QDoubleSpinBox" name="twaveamplitude">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the amplitude of the T wave. Ranges from 0.10 mV to 0.50 mV. </string>
+              </property>
+              <property name="suffix">
+               <string comment="milivolts"> mV</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.500000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.050000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QComboBox" name="twavepositiveness">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string comment="List box can be Positive or Negative T Wave value">Defines the orientation of the T wave. Can be set as positive or negative</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Positive</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Negative</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item row="2" column="1">
@@ -611,6 +759,78 @@
               </property>
              </widget>
             </item>
+            <item row="4" column="2">
+             <widget class="QDoubleSpinBox" name="twaveduration">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the duration of the T wave. Ranges from 0.10 s to 0.40 s</string>
+              </property>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.400000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.160000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="qrslabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate QRS">&amp;QRS </string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>qrsamplitude</cstring>
+              </property>
+             </widget>
+            </item>
             <item row="2" column="3">
              <widget class="QComboBox" name="qrspositiveness">
               <property name="enabled">
@@ -665,8 +885,8 @@
               </item>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="twavelabel">
+            <item row="3" column="3">
+             <widget class="QLabel" name="stlabel">
               <property name="font">
                <font>
                 <family>Sans Serif</family>
@@ -676,18 +896,15 @@
                </font>
               </property>
               <property name="text">
-               <string comment="Do not translate T">T Wave</string>
+               <string comment="Do not translate">ST Interval</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
-              <property name="buddy">
-               <cstring>twaveamplitude</cstring>
-              </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QDoubleSpinBox" name="twaveamplitude">
+            <item row="3" column="4">
+             <widget class="QDoubleSpinBox" name="stduration">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -715,58 +932,7 @@
                </font>
               </property>
               <property name="toolTip">
-               <string>Defines the amplitude of the T wave. Ranges from 0.10 mV to 0.50 mV. </string>
-              </property>
-              <property name="suffix">
-               <string comment="milivolts"> mV</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.500000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.050000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.100000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="2">
-             <widget class="QDoubleSpinBox" name="twaveduration">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the duration of the T wave. Ranges from 0.10 s to 0.40 s</string>
+               <string comment="PR Interval (do not translate PR)">Defines the duration of the ST interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.</string>
               </property>
               <property name="suffix">
                <string comment="seconds"> s</string>
@@ -775,21 +941,21 @@
                <number>2</number>
               </property>
               <property name="minimum">
-               <double>0.100000000000000</double>
+               <double>0.080000000000000</double>
               </property>
               <property name="maximum">
-               <double>0.400000000000000</double>
+               <double>0.300000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
               </property>
               <property name="value">
-               <double>0.160000000000000</double>
+               <double>0.150000000000000</double>
               </property>
              </widget>
             </item>
-            <item row="3" column="3">
-             <widget class="QComboBox" name="twavepositiveness">
+            <item row="0" column="4">
+             <widget class="QDoubleSpinBox" name="prduration">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -817,18 +983,44 @@
                </font>
               </property>
               <property name="toolTip">
-               <string comment="List box can be Positive or Negative T Wave value">Defines the orientation of the T wave. Can be set as positive or negative</string>
+               <string comment="PR Interval (do not translate PR)">Defines the duration of the PR interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.</string>
               </property>
-              <item>
-               <property name="text">
-                <string>Positive</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Negative</string>
-               </property>
-              </item>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.080000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.300000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.150000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="prlabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate">PR Interval</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
              </widget>
             </item>
            </layout>
@@ -1224,9 +1416,9 @@ When checked turns inactive PR and P wave characteristics, as well as special co
          <property name="geometry">
           <rect>
            <x>-1</x>
-           <y>129</y>
+           <y>169</y>
            <width>861</width>
-           <height>81</height>
+           <height>41</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0">
@@ -1529,7 +1721,6 @@ When checked turns inactive PR and P wave characteristics, as well as special co
  </customwidgets>
  <tabstops>
   <tabstop>heartratespinBox</tabstop>
-  <tabstop>prduration</tabstop>
   <tabstop>pwaveamplitude</tabstop>
   <tabstop>pwaveduration</tabstop>
   <tabstop>pwavepositiveness</tabstop>
