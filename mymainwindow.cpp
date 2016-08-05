@@ -242,7 +242,8 @@ void myMainWindow::startRecording() {
 	ui->stopRecording->setEnabled(true);
 	ui->startRecording->setEnabled(false);
 
-	
+	ui->ECGoptions->setTabIcon(CUSTOMTAB, QIcon("player_record.png"));
+
 	//setFixedSize()
 	this->setFixedSize(width(),height());
 	ui->menuBar->setEnabled(false);
@@ -306,6 +307,8 @@ void myMainWindow::stopRecording() {
 	}
 
 	//Change all other states once recording has stopped
+	//ui->ECGoptions->setTabIcon(CUSTOMTAB, QIcon();
+	ui->ECGoptions->setTabIcon(CUSTOMTAB, QIcon());
 	ui->startRecording->setEnabled(true);
 	ui->menuBar->setEnabled(true);
 	ui->ECGoptions->setTabEnabled(PRESETSTAB, true);
