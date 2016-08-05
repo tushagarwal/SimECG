@@ -40,7 +40,7 @@
     <item row="1" column="0">
      <widget class="ECGplotter" name="ECGplot" native="true">
       <property name="cursor">
-       <cursorShape>OpenHandCursor</cursorShape>
+       <cursorShape>BlankCursor</cursorShape>
       </property>
      </widget>
     </item>

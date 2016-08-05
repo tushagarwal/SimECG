@@ -72,9 +72,10 @@ private:
     AssessmentFrame *assessment;
     int currentTab;
     QString m_sPreferencesFile;
+	
 	bool recording;
-	//QVideoEncoder * currVideo;
 	QProcess * recProcess;
+	QString recFilename;
 
 private:
     void loadPreferences();

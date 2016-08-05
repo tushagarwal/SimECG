@@ -206,7 +206,7 @@ public:
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
         ECGplot = new ECGplotter(centralWidget);
         ECGplot->setObjectName(QStringLiteral("ECGplot"));
-        ECGplot->setCursor(QCursor(Qt::OpenHandCursor));
+        ECGplot->setCursor(QCursor(Qt::BlankCursor));
 
         gridLayout_3->addWidget(ECGplot, 1, 0, 1, 1);
 

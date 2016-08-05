@@ -164,6 +164,8 @@ void myMainWindow::saveCustomSetting() {
 	QString filename = QFileDialog::getSaveFileName(this,
 		tr("Save Custom Settings"), ".",
 		tr("Xml files (*.xml)"));
+	if (filename.size() == 0)
+		return;
 	if (currentTab == CUSTOMTAB) {
 		ECGpreset temp = (ui->ECGplot->currentECGPlotted());
 		temp.saveXMLFile(filename);
@@ -177,9 +179,11 @@ void myMainWindow::loadCustomSetting() {
 	QString filename = QFileDialog::getOpenFileName(this,
 		tr("Load Custom Setting"), ".",
 		tr("Xml files (*.xml)"));
-	ECGpreset * temp = new ECGpreset(filename);
+	if (filename.size() == 0)
+		return;
+	ECGpreset temp(filename);
 	if (currentTab == CUSTOMTAB) {
-		ui->ECGplot->setCurrentECGPlotted(*temp);
+		ui->ECGplot->setCurrentECGPlotted(temp);
 		// heart rate
 		ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
 
@@ -202,7 +206,7 @@ void myMainWindow::loadCustomSetting() {
 		
 	}
 	else {
-		tempECGPreset = *temp;
+		tempECGPreset = temp;
 		// heart rate
 		ui->heartratespinBox->setValue(tempECGPreset.getHeartRate());
 
@@ -226,42 +230,92 @@ void myMainWindow::loadCustomSetting() {
 }
 
 void myMainWindow::startRecording() {
+	QString filename = QFileDialog::getSaveFileName(this,
+		tr("Start Record Video"), ".",
+		tr("Video Files (*.mp4)"));
+	if (filename.size() == 0)
+		return;
+	recFilename = filename;
 	recording = true;
+	QFile::remove(filename);
+	//Change Start Stop Buttons
 	ui->stopRecording->setEnabled(true);
 	ui->startRecording->setEnabled(false);
+
+	
 	//setFixedSize()
 	this->setFixedSize(width(),height());
+	ui->menuBar->setEnabled(false);
+	ui->ECGoptions->setTabEnabled(PRESETSTAB,false);
+	ui->ECGoptions->setTabEnabled(ASSESSMENTTAB, false);
+
+	//Set Window Flags
+	Qt::WindowFlags flags = windowFlags() | Qt::WindowStaysOnTopHint;
+	flags &= ~Qt::WindowMinimizeButtonHint & ~Qt::WindowCloseButtonHint;
+	setWindowFlags(flags);
+	show();
+
+	//Remove Cursor from graph window
+	//ui->centralWidget->unsetCursor();
+	//ui->centralWidget->setCursor(Qt::BlankCursor);
+
+	//Start Exec Process
 	recProcess->setProcessChannelMode(QProcess::ForwardedChannels);
 	QString program = "\"C:\\Users\\Tushar.Agarwal\\Documents\\GitHub\\SimECG\\debug\\ffmpeg.exe\"";
 	recProcess->setProgram(program);
 	QFile::remove("testVideo.mp4");
 	int w = width() - 16;
 	int h = height()/2 -16;
-	recProcess->setNativeArguments(QString("-f gdigrab -framerate 25 -offset_x 8 -offset_y 16 -s "+QString::number(w)+"*"+QString::number(h)+" -i title=\"simECG - The OpenSource ECG simulator\" testVideo.mp4"));
+	recProcess->setNativeArguments(QString("-f gdigrab -framerate 25 -offset_x 8 -offset_y 16 -s "+QString::number(w)+"*"+QString::number(h)+" -i title=\"simECG - The OpenSource ECG simulator\" "+ filename));
 	recProcess->start();
 	
 }
 void myMainWindow::stopRecording() {
 	recording = false;
 	ui->stopRecording->setEnabled(false);
-	ui->startRecording->setEnabled(true);
+	
 	//recProcess->terminate();
 	QByteArray command("q\n");
-	recProcess->write(command);//send quit signal to ffmeg
+	recProcess->write(command);//send quit signal to ffmpeg
 	int i = 0;
 	while (!recProcess->atEnd() && i < 5) {
 		Sleep(uint(400));//sleep to allow ffmpeg to quit
 		qDebug() << "Process didnt Exit";
-		//recProcess->write(command);
+		QByteArray comm("^C\n");
+		recProcess->write(comm);
 		i++;
 	}
+	bool showAlert = false;
+	//Force quit if application still hasn't closed.
 	if (!recProcess->atEnd()) {
 		recProcess->close();
-		qDebug() << "Couldnt record file";
+		showAlert = true;
 	}
-	//this->setSizePolicy(QSizePolicy)
-	Q_PID pid = recProcess->pid();
-	qDebug() << "Pid" << pid;
+	else {
+		showAlert = (recProcess->exitStatus() == QProcess::CrashExit) | (recProcess->exitCode() != 0);
+	}
+
+	if (showAlert) {
+		QMessageBox alert;
+		alert.setText("Couldn complete recording file");
+		alert.setIcon(QMessageBox::Critical);
+		alert.exec();
+		qDebug() << "Couldnt record file";
+		if(recFilename!=NULL && recFilename.size()!=0)
+			QFile::remove(recFilename);//Delete file since it is unreadeable
+	}
+
+	//Change all other states once recording has stopped
+	ui->startRecording->setEnabled(true);
+	ui->menuBar->setEnabled(true);
+	ui->ECGoptions->setTabEnabled(PRESETSTAB, true);
+	ui->ECGoptions->setTabEnabled(ASSESSMENTTAB, true);
+
+	//Enable Minimize and close
+	Qt::WindowFlags flags = windowFlags() | Qt::WindowMinimizeButtonHint  | Qt::WindowCloseButtonHint;
+	flags &=  ~Qt::WindowStaysOnTopHint;
+	setWindowFlags(flags);
+	show();
 }
 
 void myMainWindow::selectPreset(int selected) {
