@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>600</height>
+    <width>1185</width>
+    <height>684</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,381 +22,386 @@
     <height>600</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>900</width>
-    <height>600</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string comment="Application title name">simECG - The OpenSource ECG simulator</string>
+   <string comment="Application title name">simECG</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
     <normaloff>:/images/simecg-logo-32x32.png</normaloff>:/images/simecg-logo-32x32.png</iconset>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="1" column="0">
-     <widget class="ECGplotter" name="ECGplot" native="true">
-      <property name="cursor">
-       <cursorShape>BlankCursor</cursorShape>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>900</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu_File">
-    <property name="title">
-     <string>&amp;File</string>
-    </property>
-    <addaction name="actionLoad_Training_Settings_as_Preset"/>
-    <addaction name="actionSave_as_Preset"/>
-    <addaction name="action_Exit"/>
-   </widget>
-   <widget class="QMenu" name="menu_Help">
-    <property name="title">
-     <string>&amp;Help</string>
-    </property>
-    <addaction name="action_About"/>
-   </widget>
-   <widget class="QMenu" name="menuTechinical">
-    <property name="title">
-     <string>Pr&amp;eferences</string>
-    </property>
-    <widget class="QMenu" name="menuCalibration">
-     <property name="title">
-      <string>&amp;Calibration</string>
-     </property>
-     <widget class="QMenu" name="menuAmplitude">
-      <property name="title">
-       <string>&amp;Amplitude</string>
-      </property>
-      <addaction name="actionAmplitude5mm"/>
-      <addaction name="actionAmplitude10mm"/>
-     </widget>
-     <widget class="QMenu" name="menuSpeed">
-      <property name="title">
-       <string>&amp;Speed</string>
-      </property>
-      <addaction name="actionSpeed25mm"/>
-      <addaction name="actionSpeed50mm"/>
-     </widget>
-     <addaction name="menuSpeed"/>
-     <addaction name="menuAmplitude"/>
-    </widget>
-    <widget class="QMenu" name="menuFilter">
-     <property name="title">
-      <string>&amp;Filters</string>
-     </property>
-     <addaction name="actionFilterOn"/>
-     <addaction name="actionFilterOff"/>
-    </widget>
-    <widget class="QMenu" name="menuDisplay">
-     <property name="title">
-      <string>&amp;Display</string>
-     </property>
-     <addaction name="actionBackStatic"/>
-     <addaction name="actionBackRolling"/>
-    </widget>
-    <widget class="QMenu" name="menuBackground">
-     <property name="title">
-      <string>&amp;Background</string>
-     </property>
-     <addaction name="actionBackgroundPaper"/>
-     <addaction name="actionBackgroundMonitor"/>
-    </widget>
-    <addaction name="menuCalibration"/>
-    <addaction name="menuFilter"/>
-    <addaction name="menuDisplay"/>
-    <addaction name="menuBackground"/>
-   </widget>
-   <addaction name="menu_File"/>
-   <addaction name="menuTechinical"/>
-   <addaction name="menu_Help"/>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="dockWindow">
-   <property name="minimumSize">
-    <size>
-     <width>900</width>
-     <height>210</height>
-    </size>
-   </property>
-   <property name="mouseTracking">
+   <property name="autoFillBackground">
     <bool>true</bool>
    </property>
-   <property name="floating">
-    <bool>false</bool>
-   </property>
-   <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents">
-    <layout class="QGridLayout" name="gridLayout_5">
-     <item row="0" column="0">
-      <widget class="QTabWidget" name="ECGoptions">
-       <property name="currentIndex">
-        <number>1</number>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="2">
+     <widget class="QFrame" name="PreferencesFrame">
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <layout class="QHBoxLayout" name="preference">
+       <property name="leftMargin">
+        <number>5</number>
        </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
+       <property name="topMargin">
+        <number>5</number>
        </property>
-       <widget class="QWidget" name="presetsTab">
-        <attribute name="title">
-         <string>Presets</string>
-        </attribute>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QListWidget" name="presetListWidget"/>
-           </item>
-          </layout>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QRadioButton" name="ecgRadio">
+         <property name="text">
+          <string>ECG Paper</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="monitorRadio">
+         <property name="text">
+          <string>Monitor Display</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="rollingView">
+         <property name="text">
+          <string>Rolling View</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="noiseFilter">
+         <property name="text">
+          <string>Noise Filter</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="captureImage">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Capture Image</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="startRecording">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Start Video Capture</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QFrame" name="saveFrame">
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <layout class="QHBoxLayout" name="SaveLayout">
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Delete">
+         <property name="text">
+          <string>Delete</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Save">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="SaveAs">
+         <property name="text">
+          <string>Save As</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QFrame" name="ECGplotFrame">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+       <item>
+        <widget class="ECGplotter" name="ECGplot" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>750</width>
+           <height>250</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>3</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>BlankCursor</cursorShape>
+         </property>
+         <zorder>WaveFrame</zorder>
+         <zorder>PreferencesFrame</zorder>
+         <zorder>ParameterFrame</zorder>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="4">
+     <widget class="QFrame" name="PresetFrame">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>400</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>300</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="PresetLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>ECG Rythms</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="AddPreset">
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Add</string>
+           </property>
+          </widget>
          </item>
         </layout>
-       </widget>
-       <widget class="QWidget" name="customSettingsTab">
-        <attribute name="title">
-         <string>Custom settings</string>
-        </attribute>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>1</x>
-           <y>0</y>
-           <width>859</width>
-           <height>172</height>
-          </rect>
+       </item>
+       <item>
+        <widget class="QListWidget" name="presetListWidget">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="3" column="0">
-             <widget class="QLabel" name="swavelabel">
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string comment="Do not translate T">S Wave</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>twaveamplitude</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QDoubleSpinBox" name="swaveamplitude">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the amplitude of the S wave. Ranges from 0.10 mV to 0.50 mV. </string>
-              </property>
-              <property name="suffix">
-               <string comment="milivolts"> mV</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.500000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.050000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.100000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="2">
-             <widget class="QDoubleSpinBox" name="swaveduration">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the duration of the S wave. Ranges from 0.10 s to 0.40 s</string>
-              </property>
-              <property name="suffix">
-               <string comment="seconds"> s</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.400000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.010000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.160000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="pwavelabel">
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string comment="Do not translate P">P Wa&amp;ve</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>pwaveamplitude</cstring>
-              </property>
-             </widget>
-            </item>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QFrame" name="ParameterFrame">
+      <property name="styleSheet">
+       <string notr="true">#ParameterFrame{
+	
+	border-color: rgb(255, 255, 255);
+	
+	alternate-background-color: rgb(85, 255, 255);
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <layout class="QVBoxLayout" name="ParameterLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="HeartRateFrame">
+           <property name="frameShape">
+            <enum>QFrame::Panel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="lineWidth">
+            <number>3</number>
+           </property>
+           <layout class="QFormLayout" name="HRLayout">
             <item row="0" column="0">
              <widget class="QLabel" name="heartratelabel">
               <property name="font">
                <font>
                 <family>Sans Serif</family>
-                <pointsize>8</pointsize>
+                <pointsize>10</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
               <property name="text">
-               <string>Heart Rate</string>
+               <string> Heart Rate                   </string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>heartratespinBox</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QDoubleSpinBox" name="pwaveduration">
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the duration of the P wave. Ranges from 0.04 s to 0.14 s. Inactive when AF is checked</string>
-              </property>
-              <property name="suffix">
-               <string comment="seconds"> s</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.040000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.140000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.010000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.090000000000000</double>
               </property>
              </widget>
             </item>
@@ -416,14 +421,14 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>83</width>
-                <height>23</height>
+                <width>150</width>
+                <height>35</height>
                </size>
               </property>
               <property name="font">
                <font>
                 <family>Sans Serif</family>
-                <pointsize>8</pointsize>
+                <pointsize>12</pointsize>
                 <weight>50</weight>
                 <bold>false</bold>
                </font>
@@ -454,102 +459,32 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QDoubleSpinBox" name="pwaveamplitude">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the amplitude of the P wave. Ranges from 0.05 mV to 0.40 mV. Inactive when AF is checked.</string>
-              </property>
-              <property name="suffix">
-               <string comment="milivolts"> mV</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.050000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.400000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.050000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.200000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QComboBox" name="pwavepositiveness">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string comment="Tooltip">Defines the orientation of the P wave. Can be set as positive or negative. Inactive when AF is checked.</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>Positive</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Negative</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="twavelabel">
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="WaveFrame">
+           <property name="frameShape">
+            <enum>QFrame::Panel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="lineWidth">
+            <number>3</number>
+           </property>
+           <property name="midLineWidth">
+            <number>1</number>
+           </property>
+           <layout class="QGridLayout" name="waveLayout" columnstretch="0,0,0,0,0,0,0,0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item row="2" column="1" alignment="Qt::AlignLeft">
+             <widget class="QLabel" name="pwavelabel">
               <property name="font">
                <font>
                 <family>Sans Serif</family>
@@ -559,112 +494,21 @@
                </font>
               </property>
               <property name="text">
-               <string comment="Do not translate T">T Wave</string>
+               <string comment="Do not translate P">P Wave</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
-              <property name="buddy">
-               <cstring>twaveamplitude</cstring>
-              </property>
              </widget>
             </item>
-            <item row="4" column="1">
-             <widget class="QDoubleSpinBox" name="twaveamplitude">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Defines the amplitude of the T wave. Ranges from 0.10 mV to 0.50 mV. </string>
-              </property>
-              <property name="suffix">
-               <string comment="milivolts"> mV</string>
-              </property>
-              <property name="decimals">
-               <number>2</number>
-              </property>
-              <property name="minimum">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>0.500000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.050000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.100000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="3">
-             <widget class="QComboBox" name="twavepositiveness">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>83</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string comment="List box can be Positive or Negative T Wave value">Defines the orientation of the T wave. Can be set as positive or negative</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>Positive</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Negative</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="2" column="1">
+            <item row="3" column="3">
              <widget class="QDoubleSpinBox" name="qrsamplitude">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>83</width>
@@ -673,7 +517,7 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>83</width>
+                <width>16777215</width>
                 <height>23</height>
                </size>
               </property>
@@ -708,10 +552,28 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="2">
-             <widget class="QDoubleSpinBox" name="qrsduration">
+            <item row="4" column="1" alignment="Qt::AlignLeft">
+             <widget class="QLabel" name="swavelabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate T">S Wave</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QDoubleSpinBox" name="pwaveduration">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -724,7 +586,7 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>83</width>
+                <width>16777215</width>
                 <height>23</height>
                </size>
               </property>
@@ -737,7 +599,7 @@
                </font>
               </property>
               <property name="toolTip">
-               <string>Defines the duration of the QRS complex. Can range from 0.08 s to 0.16 s. </string>
+               <string>Defines the duration of the P wave. Ranges from 0.04 s to 0.14 s. Inactive when AF is checked</string>
               </property>
               <property name="suffix">
                <string comment="seconds"> s</string>
@@ -746,23 +608,42 @@
                <number>2</number>
               </property>
               <property name="minimum">
-               <double>0.080000000000000</double>
+               <double>0.040000000000000</double>
               </property>
               <property name="maximum">
-               <double>0.160000000000000</double>
+               <double>0.140000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
               </property>
               <property name="value">
-               <double>0.100000000000000</double>
+               <double>0.090000000000000</double>
               </property>
              </widget>
             </item>
-            <item row="4" column="2">
-             <widget class="QDoubleSpinBox" name="twaveduration">
+            <item row="3" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+             <widget class="QCheckBox" name="qrswaveshow">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>35</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QDoubleSpinBox" name="pwaveamplitude">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -775,7 +656,58 @@
               </property>
               <property name="maximumSize">
                <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the amplitude of the P wave. Ranges from 0.05 mV to 0.40 mV. Inactive when AF is checked.</string>
+              </property>
+              <property name="suffix">
+               <string comment="milivolts"> mV</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.050000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.400000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.050000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.200000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="4">
+             <widget class="QDoubleSpinBox" name="twaveduration">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
                 <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
                 <height>23</height>
                </size>
               </property>
@@ -810,7 +742,21 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="0" column="4">
+             <widget class="QLabel" name="DurationLabel">
+              <property name="font">
+               <font>
+                <family>MS Sans Serif</family>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Duration                               </string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" alignment="Qt::AlignLeft">
              <widget class="QLabel" name="qrslabel">
               <property name="font">
                <font>
@@ -821,23 +767,133 @@
                </font>
               </property>
               <property name="text">
-               <string comment="Do not translate QRS">&amp;QRS </string>
+               <string comment="Do not translate QRS">QRS Wave</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
-              <property name="buddy">
-               <cstring>qrsamplitude</cstring>
+             </widget>
+            </item>
+            <item row="5" column="1" alignment="Qt::AlignLeft">
+             <widget class="QLabel" name="twavelabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate T">T Wave</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
-            <item row="2" column="3">
-             <widget class="QComboBox" name="qrspositiveness">
-              <property name="enabled">
-               <bool>false</bool>
+            <item row="0" column="3">
+             <widget class="QLabel" name="AmpLabel">
+              <property name="font">
+               <font>
+                <family>MS Sans Serif</family>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
               </property>
+              <property name="text">
+               <string>Amplitude                                        </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="ShowTitle">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>35</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>MS Sans Serif</family>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Show</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="8">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" alignment="Qt::AlignHCenter">
+             <widget class="QCheckBox" name="swaveshow">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>35</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0" alignment="Qt::AlignHCenter">
+             <widget class="QCheckBox" name="twaveshow">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>35</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="5" column="3">
+             <widget class="QDoubleSpinBox" name="twaveamplitude">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -850,7 +906,61 @@
               </property>
               <property name="maximumSize">
                <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the amplitude of the T wave. Ranges from 0.10 mV to 0.50 mV. </string>
+              </property>
+              <property name="suffix">
+               <string comment="milivolts"> mV</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.500000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.050000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="5">
+             <widget class="QComboBox" name="qrspositiveness">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
                 <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
                 <height>23</height>
                </size>
               </property>
@@ -885,28 +995,10 @@
               </item>
              </widget>
             </item>
-            <item row="3" column="3">
-             <widget class="QLabel" name="stlabel">
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string comment="Do not translate">ST Interval</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="4">
-             <widget class="QDoubleSpinBox" name="stduration">
+            <item row="4" column="3">
+             <widget class="QDoubleSpinBox" name="swaveamplitude">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -919,7 +1011,7 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>83</width>
+                <width>16777215</width>
                 <height>23</height>
                </size>
               </property>
@@ -932,32 +1024,32 @@
                </font>
               </property>
               <property name="toolTip">
-               <string comment="PR Interval (do not translate PR)">Defines the duration of the ST interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.</string>
+               <string>Defines the amplitude of the S wave. Ranges from 0.10 mV to 0.50 mV. </string>
               </property>
               <property name="suffix">
-               <string comment="seconds"> s</string>
+               <string comment="milivolts"> mV</string>
               </property>
               <property name="decimals">
                <number>2</number>
               </property>
               <property name="minimum">
-               <double>0.080000000000000</double>
+               <double>0.100000000000000</double>
               </property>
               <property name="maximum">
-               <double>0.300000000000000</double>
+               <double>0.500000000000000</double>
               </property>
               <property name="singleStep">
-               <double>0.010000000000000</double>
+               <double>0.050000000000000</double>
               </property>
               <property name="value">
-               <double>0.150000000000000</double>
+               <double>0.100000000000000</double>
               </property>
              </widget>
             </item>
-            <item row="0" column="4">
-             <widget class="QDoubleSpinBox" name="prduration">
+            <item row="3" column="4">
+             <widget class="QDoubleSpinBox" name="qrsduration">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -970,7 +1062,252 @@
               </property>
               <property name="maximumSize">
                <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the duration of the QRS complex. Can range from 0.08 s to 0.16 s. </string>
+              </property>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.080000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.160000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="NameLabel">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>MS Sans Serif</family>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string> Name                                                 </string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="5">
+             <widget class="QComboBox" name="twavepositiveness">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
                 <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string comment="List box can be Positive or Negative T Wave value">Defines the orientation of the T wave. Can be set as positive or negative</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Positive</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Negative</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+             <widget class="QCheckBox" name="pwaveshow">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>35</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="4">
+             <widget class="QDoubleSpinBox" name="swaveduration">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Defines the duration of the S wave. Ranges from 0.10 s to 0.40 s</string>
+              </property>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.400000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.160000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="5">
+             <widget class="QComboBox" name="pwavepositiveness">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string comment="Tooltip">Defines the orientation of the P wave. Can be set as positive or negative. Inactive when AF is checked.</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Positive</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Negative</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QLabel" name="prlabel">
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string comment="Do not translate">             PR Interval</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="7">
+             <widget class="QDoubleSpinBox" name="prduration">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
                 <height>23</height>
                </size>
               </property>
@@ -1005,8 +1342,59 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="3">
-             <widget class="QLabel" name="prlabel">
+            <item row="4" column="7">
+             <widget class="QDoubleSpinBox" name="stduration">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>83</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string comment="PR Interval (do not translate PR)">Defines the duration of the ST interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.</string>
+              </property>
+              <property name="suffix">
+               <string comment="seconds"> s</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.080000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>0.300000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.150000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="6">
+             <widget class="QLabel" name="stlabel">
               <property name="font">
                <font>
                 <family>Sans Serif</family>
@@ -1016,32 +1404,45 @@
                </font>
               </property>
               <property name="text">
-               <string comment="Do not translate">PR Interval</string>
+               <string comment="Do not translate">ST Interval</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>13</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item row="0" column="5">
              <widget class="QLabel" name="label_3">
+              <property name="font">
+               <font>
+                <family>MS Sans Serif</family>
+                <pointsize>8</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Sign                             </string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="preamtureFrame">
+           <property name="frameShape">
+            <enum>QFrame::Panel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="lineWidth">
+            <number>3</number>
+           </property>
+           <layout class="QVBoxLayout" name="PrematureHeadLay">
+            <item>
+             <widget class="QLabel" name="PrematureBeatsLabel">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -1055,29 +1456,7 @@
              </widget>
             </item>
             <item>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="svecheckbox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Sans Serif</family>
-                  <pointsize>8</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string comment="Tooltip">Activates the presence of premature atrial contractions.
-Inactive when AF is checked.</string>
-                </property>
-                <property name="text">
-                 <string comment="PAC = Premature Atrial Contractions (check box)">PAC</string>
-                </property>
-               </widget>
-              </item>
+             <layout class="QGridLayout" name="prematureBeatLayout">
               <item row="0" column="1">
                <widget class="QSpinBox" name="numberofsve">
                 <property name="enabled">
@@ -1180,8 +1559,8 @@ Inactive when AF is checked.</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QSpinBox" name="numberofve">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="svecheckbox">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -1193,30 +1572,41 @@ Inactive when AF is checked.</string>
                   <bold>false</bold>
                  </font>
                 </property>
-                <property name="cursor">
-                 <cursorShape>ArrowCursor</cursorShape>
+                <property name="toolTip">
+                 <string comment="Tooltip">Activates the presence of premature atrial contractions.
+Inactive when AF is checked.</string>
+                </property>
+                <property name="text">
+                 <string comment="PAC = Premature Atrial Contractions (check box)">PAC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QComboBox" name="morphologyofve">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Sans Serif</family>
+                  <pointsize>8</pointsize>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
                 </property>
                 <property name="toolTip">
-                 <string comment="Tooltip">Defines the number of premature beats. Ranges from 1 to 99.</string>
+                 <string comment="Morphology of the intraventricular conduction disturbance">Defines the morphology of the intraventricular conduction disturbance. Can be set as intraventricular conduction disturbance with RBBB or as intraventricular conduction disturbance with LBBB.</string>
                 </property>
-                <property name="wrapping">
-                 <bool>true</bool>
-                </property>
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::PlusMinus</enum>
-                </property>
-                <property name="prefix">
-                 <string/>
-                </property>
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>99</number>
-                </property>
-                <property name="value">
-                 <number>3</number>
-                </property>
+                <item>
+                 <property name="text">
+                  <string>RBBB</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>LBBB</string>
+                 </property>
+                </item>
                </widget>
               </item>
               <item row="1" column="2">
@@ -1258,8 +1648,8 @@ Inactive when AF is checked.</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="3">
-               <widget class="QComboBox" name="morphologyofve">
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="numberofve">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -1271,234 +1661,165 @@ Inactive when AF is checked.</string>
                   <bold>false</bold>
                  </font>
                 </property>
-                <property name="toolTip">
-                 <string comment="Morphology of the intraventricular conduction disturbance">Defines the morphology of the intraventricular conduction disturbance. Can be set as intraventricular conduction disturbance with RBBB or as intraventricular conduction disturbance with LBBB.</string>
+                <property name="cursor">
+                 <cursorShape>ArrowCursor</cursorShape>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>RBBB</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LBBB</string>
-                 </property>
-                </item>
+                <property name="toolTip">
+                 <string comment="Tooltip">Defines the number of premature beats. Ranges from 1 to 99.</string>
+                </property>
+                <property name="wrapping">
+                 <bool>true</bool>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="prefix">
+                 <string/>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>99</number>
+                </property>
+                <property name="value">
+                 <number>3</number>
+                </property>
                </widget>
               </item>
              </layout>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QLabel" name="labelSpecialConditions">
-              <property name="maximumSize">
-               <size>
-                <width>170</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Special conditions</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="specialConditionsComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>170</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string comment="Tooltip for special conditions">This simulates advanced atrio-ventricular conduction disturbances, such as 2nd a 3rd degree atrio-ventricular blocks. 
-When AF is checked, this option is turned off.</string>
-              </property>
-              <property name="currentIndex">
-               <number>1</number>
-              </property>
-              <item>
-               <property name="text">
-                <string>1st degree AV block</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Type I 2nd degree AV block</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Type II 2nd degree AV block</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>AV dissociation</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOtherConditions">
-              <property name="maximumSize">
-               <size>
-                <width>170</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Other conditions</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="atrialfibrillation">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>170</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Sans Serif</family>
-                <pointsize>8</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string comment="Tooltip">When checked this option simulates an atrial fibrillation.
+             <widget class="QFrame" name="OtherFrame">
+              <layout class="QGridLayout" name="otherLayout">
+               <item row="0" column="2">
+                <widget class="QLabel" name="labelSpecialConditions">
+                 <property name="maximumSize">
+                  <size>
+                   <width>170</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Special conditions</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="atrialfibrillation">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>170</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Sans Serif</family>
+                   <pointsize>8</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string comment="Tooltip">When checked this option simulates an atrial fibrillation.
 When checked turns inactive PR and P wave characteristics, as well as special conditions.</string>
-              </property>
-              <property name="text">
-               <string comment="AF means Atrial Fibrilation (in a check box)">AF</string>
-              </property>
+                 </property>
+                 <property name="text">
+                  <string comment="AF means Atrial Fibrilation (in a check box)">AF</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QComboBox" name="specialConditionsComboBox">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>170</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Sans Serif</family>
+                   <pointsize>8</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string comment="Tooltip for special conditions">This simulates advanced atrio-ventricular conduction disturbances, such as 2nd a 3rd degree atrio-ventricular blocks. 
+When AF is checked, this option is turned off.</string>
+                 </property>
+                 <property name="currentIndex">
+                  <number>1</number>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>1st degree AV block</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Type I 2nd degree AV block</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Type II 2nd degree AV block</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>AV dissociation</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="labelOtherConditions">
+                 <property name="maximumSize">
+                  <size>
+                   <width>170</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Other conditions</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="horizontalLayoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>-1</x>
-           <y>169</y>
-           <width>861</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0">
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Minimum</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="startRecording">
-            <property name="text">
-             <string>Start Recording</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Minimum</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopRecording">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Stop Recording</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Minimum</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="assessmentTab">
-        <attribute name="title">
-         <string>Assessment</string>
-        </attribute>
-       </widget>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -1720,7 +2041,6 @@ When checked turns inactive PR and P wave characteristics, as well as special co
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>heartratespinBox</tabstop>
   <tabstop>pwaveamplitude</tabstop>
   <tabstop>pwaveduration</tabstop>
   <tabstop>pwavepositiveness</tabstop>
@@ -1737,8 +2057,6 @@ When checked turns inactive PR and P wave characteristics, as well as special co
   <tabstop>numberofve</tabstop>
   <tabstop>couplingofve</tabstop>
   <tabstop>morphologyofve</tabstop>
-  <tabstop>specialConditionsComboBox</tabstop>
-  <tabstop>atrialfibrillation</tabstop>
  </tabstops>
  <resources>
   <include location="icons.qrc"/>

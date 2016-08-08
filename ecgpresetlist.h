@@ -15,15 +15,16 @@ public:
     int size() const;
     const ECGpreset &at(const int &);
 
+
 signals:
 
 public slots:
-    int createPreset(ECGpreset *);
+    int createPreset(ECGpreset &);
     int removePreset(const QString &oldPreset);
 
 private:
     // ECG presets
-    QMap<QString, ECGpreset *> presetList;
+    QMap<QString, ECGpreset > presetList;
 
 private:
     // Save all presets to permanent storage

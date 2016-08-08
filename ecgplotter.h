@@ -58,8 +58,8 @@ public:
 
 public slots:
     void setHeartRate(const int &);
-    void setNoiseFilter(const bool &);
-	void setDisplayStatic(const bool &);
+    void setNoiseFilter(const int &);
+	void setDisplayStatic(const int &);
 	void setRollingSpeed(const bool &);
     // P wave
     void setAmplitude_P_wave(const double &);

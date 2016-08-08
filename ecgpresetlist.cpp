@@ -8,113 +8,138 @@ ECGpresetList::ECGpresetList(QObject *parent) : QObject(parent)
 
     preset = new ECGpreset;
     preset->sinusRhythm();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->sinusBradycardia();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->sinusTachycardia();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->firstDegreeAVBlock();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->isolatedMonoVE();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->sinusPause();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->junctionalRhythm();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->acceleratedJunctionalRhythm();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->isolatedSVE();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->pairedSVE();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->isolatedPolyVE();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->idioventricularRhythm();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->acceleratedIdioventricularRhythm();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->supraventricularTachychardia();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->type2AVBlock();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->monomorphicVT();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->atrialFibrillation();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->type1AVBlock();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->twoOneAVBlock();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->polymorphicVT();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->fastAtrialFibrillation();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->sinoAtrialBlock();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(),*preset);
 
     preset = new ECGpreset;
     preset->dissociation();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 
     preset = new ECGpreset;
     preset->ventricularFibrillation();
-    presetList.insert(preset->getName(), preset);
+	preset->setRemoveable(false);
+    presetList.insert(preset->getName(), *preset);
 }
 
 
 // Fills a list widget with all the existing presets
 void ECGpresetList::populatePresetListWidget(QListWidget *listWidget)
 {
-    QMapIterator<QString, ECGpreset *> i(presetList);
+    QMapIterator<QString, ECGpreset > i(presetList);
     while (i.hasNext()) {
         i.next();
         QListWidgetItem *newItem = new QListWidgetItem(i.key(), listWidget);
-        if (i.value()->isDisabled()) {
+        if (i.value().isDisabled()) {
             newItem->setBackground(QBrush(Qt::lightGray));
         }
-        newItem->setToolTip(i.value()->getDescription());
+		//i.value()->setRemoveable(false);
+        newItem->setToolTip(i.value().getDescription());
     }
 }
 
@@ -130,35 +155,26 @@ int ECGpresetList::size() const
 const ECGpreset &ECGpresetList::at(const int &position)
 {
     int pos=-1;
-
-	
-
     // Make sure the requested position is valid
     Q_ASSERT(position < presetList.size());
 
-    QMapIterator<QString, ECGpreset *> i(presetList);
-	/*if (position == 0) {
-		i.next();
-		return *(i.value());
-	}*/
+    QMapIterator<QString, ECGpreset > i(presetList);
     while (i.hasNext() && pos < position) {
         i.next();
         pos++;
     }
-	//qDebug("Preset Changed");
-	//qDebug(&((i.value())-getName));
-	//const ECGpreset * temp = i.value();
-    return *i.value();
+	
+    return i.value();
 }
 
 
 // TODO: Not implemented yet
 // Creates a new preset signal
-int ECGpresetList::createPreset(ECGpreset *newPreset)
+int ECGpresetList::createPreset(ECGpreset& newPreset)
 {
     //TODO: Check that this new preset isn't already in the list
-    Q_ASSERT(false);
-    presetList.insert(newPreset->getName(), newPreset);
+    //Q_ASSERT(false);
+    presetList.insert(newPreset.getName(), newPreset);
     return 0;
 }
 

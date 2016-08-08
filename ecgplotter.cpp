@@ -97,6 +97,8 @@ void ECGplotter::setRollingSpeed(const bool &rollingSpeed) {
 	*/
 }
 
+
+
 void ECGplotter::generateSignal()
 {
 	if(!moving)   
@@ -184,20 +186,23 @@ void ECGplotter::setHeartRate(const int &value)
 }
 
 
-void ECGplotter::setNoiseFilter(const bool &status)
+void ECGplotter::setNoiseFilter(const int &status)
 {
-    currentECG.setNoiseFilter(status);
+	if (status == 0)
+		currentECG.setNoiseFilter(false);
+	else if (status ==2)
+		currentECG.setNoiseFilter(true);
     generateSignal();
 }
 
-void ECGplotter::setDisplayStatic(const bool &status)
+void ECGplotter::setDisplayStatic(const int &status)
 {
-	if (status) {
+	if (status == 0) {
 		qDebug("Static View");
 		moving = false;
 		timer->stop();
 	}
-	else {
+	else if(status == 2) {
 		qDebug("Rolling View");
 		moving = true;
 		//if (speed)

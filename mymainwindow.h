@@ -59,8 +59,13 @@ public slots:
 	void selectPreset(int);
 	void saveCustomSetting();
 	void loadCustomSetting();
+	void record();
 	void startRecording();
 	void stopRecording();
+	void showPwave(int);
+	void showQRSwave(int);
+	void showSwave(int);
+	void showTwave(int);
 
 private:
     Ui::myMainWindowClass *ui;
@@ -80,11 +85,12 @@ private:
 private:
     void loadPreferences();
     void savePreferences();
+	void updateControls();
 
 private slots:
     void on_action_About_triggered();
     void on_action_Exit_triggered();
-    void optionsTabChanged(int);
+    //void optionsTabChanged(int);
 };
 
 #endif

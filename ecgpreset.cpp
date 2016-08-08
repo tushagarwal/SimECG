@@ -26,6 +26,7 @@
 #include "ecgpreset.h"
 #include <QFile>
 #include <qxmlstream.h>
+#include <qdatastream.h>
 #include <QtDebug>
 
 ECGpreset::ECGpreset()
@@ -33,166 +34,178 @@ ECGpreset::ECGpreset()
     setCommonValues();
 }
 
-ECGpreset::ECGpreset(QString  & filename) {
+QList<ECGpreset>* ECGpreset::getCustomPresets(QString  & filename) {
 	//Construct ECGPreset from XML file
 	QXmlStreamReader Rxml;
-
+	QList<ECGpreset> * temp = new QList<ECGpreset>();
 	QFile file(filename);
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
 		qDebug () << "Error: Cannot read file " << qPrintable(filename)
 			<< ": " << qPrintable(file.errorString());
 	}
-
+	
 	Rxml.setDevice(&file);
 	Rxml.readNext();
-	bool found = false;
-	while (!Rxml.atEnd() && !found) {
-		//check for start to be preset
-		if (Rxml.isStartElement()) {
-			if (Rxml.name() == "Preset")
-				found = true;
-		}
-		Rxml.readNext();
-	}
-	if (!found) {
-		//First Element isnt Preset
-		qDebug() << "Error: File not a preset XML "
-			<< qPrintable(filename);
-	}
-	else {
-		while (!Rxml.isEndDocument()) {
-			QString first = Rxml.name().toString();
+	int i = 0;
+	while (!Rxml.atEnd()) {
+		ECGpreset * curr = new ECGpreset();
+		//First Search for Start Element: Preset
+		bool found = false;
+		while (!Rxml.atEnd() && !found) {
+			//check for start to be preset
 			if (Rxml.isStartElement()) {
-				QString temp = Rxml.name().toString();
-				if(temp == "Start"){
-					while(!Rxml.isEndElement()){
-						if (Rxml.name().toString() == "Heart_Rate") {
-							//Rxml.readNext();
-							QString a = Rxml.readElementText();
-							heartRate = a.toInt();
-							//Rxml.readNext();
-						}
-						else if (Rxml.name().toString() == "Noise_Filter") {
-							noiseFilter = Rxml.readElementText().toInt();
-							// TODO: Check if the above works
-							//Rxml.readNext();
-						}
-						Rxml.readNext();
-					}
-				}
-				else if (temp == "P_Wave") {
-					Rxml.readNext();
-					while (!Rxml.isEndElement()) {
-						QString name = Rxml.name().toString();
-						if (name == "Show")
-							showPWave = Rxml.readElementText().toInt();
-						else if(name == "A")
-							a_pwave = Rxml.readElementText().toDouble();
-						else if (name == "D")
-							d_pwave = Rxml.readElementText().toDouble();
-						else if (name == "T")
-							t_pwave = Rxml.readElementText().toDouble();
-						else if (name == "Positive")
-							positive_pwave = Rxml.readElementText().toInt();
-						Rxml.readNext();
-					}
-				}
-				else if (temp == "Q_Wave") {
-					Rxml.readNext();
-					while (!Rxml.isEndElement()) {
-						QString name = Rxml.name().toString();
-						if ( name == "Show")
-							showQWave = Rxml.readElementText().toInt();
-						else if ( name == "A")
-							a_qwave = Rxml.readElementText().toDouble();
-						else if ( name == "D")
-							d_qwave = Rxml.readElementText().toDouble();
-						else if ( name == "T")
-							t_qwave = Rxml.readElementText().toDouble();
-						Rxml.readNext();
-					}
-				}
-				else if (temp == "QRS_Wave") {
-					Rxml.readNext();
-					while (!Rxml.isEndElement()) {
-						QString name = Rxml.name().toString();
-						if ( name == "Show")
-							showQRSWave = Rxml.readElementText().toInt();
-						else if ( name == "A")
-							a_qrswave = Rxml.readElementText().toDouble();
-						else if ( name == "D")
-							d_qrswave = Rxml.readElementText().toDouble();
-						else if ( name == "Positive")
-							positive_qrswave = Rxml.readElementText().toInt();
-						Rxml.readNext();
-					}
-				}
-				else if (temp == "S_Wave") {
-					Rxml.readNext();
-					while (!Rxml.isEndElement()) {
-						QString name = Rxml.name().toString();
-						if (name == "Show")
-							showSWave = Rxml.readElementText().toInt();
-						else if (name == "A")
-							a_swave = Rxml.readElementText().toDouble();
-						else if (name == "D")
-							d_swave = Rxml.readElementText().toDouble();
-						else if (name == "T")
-							t_swave = Rxml.readElementText().toDouble();
-						Rxml.readNext();
-					}
-				}
-				else if (temp == "T_Wave") {
-					Rxml.readNext();
-					while (!Rxml.isEndElement()) {
-						QString name = Rxml.name().toString();
-						if (name == "Show")
-							showTWave = Rxml.readElementText().toInt();
-						else if (name == "A")
-							a_twave = Rxml.readElementText().toDouble();
-						else if (name == "D")
-							d_twave = Rxml.readElementText().toDouble();
-						else if (name == "T")
-							t_twave = Rxml.readElementText().toDouble();
-						else if (name == "Positive")
-							positive_twave = Rxml.readElementText().toInt();
-						Rxml.readNext();
-					}
-				}
-				else if (temp == "U_Wave") {
-					Rxml.readNext();
-					while (!Rxml.isEndElement()) {
-						QString name = Rxml.name().toString();
-						if (name == "Show")
-							showUWave = Rxml.readElementText().toInt();
-						else if (name == "A")
-							a_uwave = Rxml.readElementText().toDouble();
-						else if (name == "D")
-							d_uwave = Rxml.readElementText().toDouble();
-						else if (name == "T")
-							t_uwave = Rxml.readElementText().toDouble();
-						Rxml.readNext();
-					}
-				}
+				if (Rxml.name() == "Preset")
+					found = true;
 			}
 			Rxml.readNext();
 		}
+		if (!found) {
+			//First Element isnt Preset
+			qDebug() << "Error: File not a preset XML "
+				<< qPrintable(filename);
+			return NULL;
+		}
+		else {
+			i++;
+			while (!Rxml.atEnd() && Rxml.name().toString() != "Preset") {
+				QString first = Rxml.name().toString();
+				if (Rxml.isStartElement()) {
+					QString temp = Rxml.name().toString();
+					if (temp == "Start") {
+						while (!Rxml.isEndElement()) {
+							if (Rxml.name().toString() == "Heart_Rate") {
+								QString a = Rxml.readElementText();
+								curr->heartRate = a.toInt();
+							}
+							else if (Rxml.name().toString() == "Name") {
+								curr->name = Rxml.readElementText();
+							}
+							else if (Rxml.name().toString() == "Noise_Filter") {
+								curr->noiseFilter = Rxml.readElementText().toInt();
+							}
+							Rxml.readNext();
+						}
+					}
+					else if (temp == "P_Wave") {
+						Rxml.readNext();
+						while (!Rxml.isEndElement()) {
+							QString name = Rxml.name().toString();
+							if (name == "Show")
+								curr->showPWave = Rxml.readElementText().toInt();
+							else if (name == "A")
+								curr->a_pwave = Rxml.readElementText().toDouble();
+							else if (name == "D")
+								curr->d_pwave = Rxml.readElementText().toDouble();
+							else if (name == "T")
+								curr->t_pwave = Rxml.readElementText().toDouble();
+							else if (name == "Positive")
+								curr->positive_pwave = Rxml.readElementText().toInt();
+							Rxml.readNext();
+						}
+					}
+					else if (temp == "Q_Wave") {
+						Rxml.readNext();
+						while (!Rxml.isEndElement()) {
+							QString name = Rxml.name().toString();
+							if (name == "Show")
+								curr->showQWave = Rxml.readElementText().toInt();
+							else if (name == "A")
+								curr->a_qwave = Rxml.readElementText().toDouble();
+							else if (name == "D")
+								curr->d_qwave = Rxml.readElementText().toDouble();
+							else if (name == "T")
+								curr->t_qwave = Rxml.readElementText().toDouble();
+							Rxml.readNext();
+						}
+					}
+					else if (temp == "QRS_Wave") {
+						Rxml.readNext();
+						while (!Rxml.isEndElement()) {
+							QString name = Rxml.name().toString();
+							if (name == "Show")
+								curr->showQRSWave = Rxml.readElementText().toInt();
+							else if (name == "A")
+								curr->a_qrswave = Rxml.readElementText().toDouble();
+							else if (name == "D")
+								curr->d_qrswave = Rxml.readElementText().toDouble();
+							else if (name == "Positive")
+								curr->positive_qrswave = Rxml.readElementText().toInt();
+							Rxml.readNext();
+						}
+					}
+					else if (temp == "S_Wave") {
+						Rxml.readNext();
+						while (!Rxml.isEndElement()) {
+							QString name = Rxml.name().toString();
+							if (name == "Show")
+								curr->showSWave = Rxml.readElementText().toInt();
+							else if (name == "A")
+								curr->a_swave = Rxml.readElementText().toDouble();
+							else if (name == "D")
+								curr->d_swave = Rxml.readElementText().toDouble();
+							else if (name == "T")
+								curr->t_swave = Rxml.readElementText().toDouble();
+							Rxml.readNext();
+						}
+					}
+					else if (temp == "T_Wave") {
+						Rxml.readNext();
+						while (!Rxml.isEndElement()) {
+							QString name = Rxml.name().toString();
+							if (name == "Show")
+								curr->showTWave = Rxml.readElementText().toInt();
+							else if (name == "A")
+								curr->a_twave = Rxml.readElementText().toDouble();
+							else if (name == "D")
+								curr->d_twave = Rxml.readElementText().toDouble();
+							else if (name == "T")
+								curr->t_twave = Rxml.readElementText().toDouble();
+							else if (name == "Positive")
+								curr->positive_twave = Rxml.readElementText().toInt();
+							Rxml.readNext();
+						}
+					}
+					else if (temp == "U_Wave") {
+						Rxml.readNext();
+						while (!Rxml.isEndElement()) {
+							QString name = Rxml.name().toString();
+							if (name == "Show")
+								curr->showUWave = Rxml.readElementText().toInt();
+							else if (name == "A")
+								curr->a_uwave = Rxml.readElementText().toDouble();
+							else if (name == "D")
+								curr->d_uwave = Rxml.readElementText().toDouble();
+							else if (name == "T")
+								curr->t_uwave = Rxml.readElementText().toDouble();
+							Rxml.readNext();
+						}
+					}
+				}
+				Rxml.readNext();
+			}
+			temp->append(*curr);
+		}
 	}
-		if (Rxml.isStartElement())
-			file.close();
-
-		if (Rxml.hasError())
-		{
-			qDebug() << "Error: Failed to parse file "
-				<< qPrintable(filename) << ": "
-				<< qPrintable(Rxml.errorString());
-		}
-		else if (file.error() != QFile::NoError)
-		{
-			qDebug() << "Error: Cannot read file " << qPrintable(filename)
-				<< ": " << qPrintable(file.errorString());
-		}
+	
+	if (Rxml.hasError())
+	{
+		qDebug() << "Error: Failed to parse file "
+			<< qPrintable(filename) << ": "
+			<< qPrintable(Rxml.errorString());
+		file.close();
+		return NULL;
+	}
+	else if (file.error() != QFile::NoError)
+	{
+		qDebug() << "Error: Cannot read file " << qPrintable(filename)
+			<< ": " << qPrintable(file.errorString());
+		file.close();
+		return NULL;
+	}
+	file.close();
+	qDebug() << "Read " << i << " elements. Size of list: " << temp->size();
+	return temp;
 }
 
 // This method sets common values for the ECG signal properties
@@ -200,7 +213,7 @@ ECGpreset::ECGpreset(QString  & filename) {
 // or the signal description
 void ECGpreset::saveXMLFile(QString &filename) {
 	QFile file(filename);
-	file.open(QIODevice::WriteOnly);
+	file.open(QIODevice::Append);
 
 	QXmlStreamWriter xmlWriter(&file);
 	xmlWriter.setAutoFormatting(true);
@@ -270,7 +283,8 @@ void ECGpreset::setCommonValues()
 {
     heartRate = 70;
     noiseFilter = true;
-
+	removeable = false;
+	
     showPWave = true;
     a_pwave = 0.15;
     d_pwave = 0.08;
@@ -304,6 +318,111 @@ void ECGpreset::setCommonValues()
     t_uwave = 0.433;
 }
 
+QDataStream &operator <<(QDataStream &out, const ECGpreset &ecg) {
+	return ecg.writeData(out);
+}
+
+QDataStream &operator >> (QDataStream &in, ECGpreset &ecg) {
+	return ecg.readData(in);
+}
+
+QDataStream & ECGpreset::writeData(QDataStream& out) const{
+	out << name;
+	out << description;
+	out << removeable;
+	out << disabled;
+	out.writeRawData((char *)heartRate, sizeof(heartRate));
+	out << noiseFilter;
+
+	//P Wave
+	out << showPWave;
+	out << a_pwave;
+	out << d_pwave;
+	out << t_pwave;
+	out << positive_pwave;
+
+	//Q Wave
+	out << showQWave;
+	out << a_qwave;
+	out << d_qwave;
+	out << t_qwave;
+	
+	//QRS Wave
+	out << showQRSWave;
+	out << a_qrswave;
+	out << d_qrswave;
+	out << positive_qrswave;
+
+	//S Wave
+	out << showSWave;
+	out << a_swave;
+	out << d_swave;
+	out << t_swave;
+
+	//T Wave
+	out << showTWave;
+	out << a_twave;
+	out << d_twave;
+	out << t_twave;
+	out << positive_twave;
+
+	//U Wave
+	out << showUWave;
+	out << a_uwave;
+	out << d_uwave;
+	out << t_uwave;
+	
+	return out;
+}
+
+QDataStream & ECGpreset::readData(QDataStream& in) {
+	in >> name;
+	in >> description;
+	in >> removeable;
+	in >> disabled;
+	in.readRawData((char *)heartRate, sizeof(heartRate));
+	in >> noiseFilter;
+
+	//P Wave
+	in >> showPWave;
+	in >> a_pwave;
+	in >> d_pwave;
+	in >> t_pwave;
+	in >> positive_pwave;
+
+	//Q Wave
+	in >> showQWave;
+	in >> a_qwave;
+	in >> d_qwave;
+	in >> t_qwave;
+
+	//QRS Wave
+	in >> showQRSWave;
+	in >> a_qrswave;
+	in >> d_qrswave;
+	in >> positive_qrswave;
+
+	//S Wave
+	in >> showSWave;
+	in >> a_swave;
+	in >> d_swave;
+	in >> t_swave;
+
+	//T Wave
+	in >> showTWave;
+	in >> a_twave;
+	in >> d_twave;
+	in >> t_twave;
+	in >> positive_twave;
+
+	//U Wave
+	in >> showUWave;
+	in >> a_uwave;
+	in >> d_uwave;
+	in >> t_uwave;
+
+	return in;
+}
 
 //
 // Preset signals

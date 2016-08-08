@@ -33,8 +33,11 @@
 class ECGpreset
 {
 public:
+	static QList<ECGpreset>* getCustomPresets(QString  &);
     ECGpreset();
-	ECGpreset(QString &);
+	QDataStream & writeData(QDataStream& out) const;
+	QDataStream & readData(QDataStream& in);
+	//ECGpreset(QString &);
 	void saveXMLFile(QString &);
     // GET methods
     inline const QString &getName() const { return name; }
@@ -101,29 +104,35 @@ public:
     inline void set_U_wave(const double &a, const double &d, const double &t)
         {a_uwave = a; d_uwave = d; t_uwave = t; }
     // P wave
+	void setShowPwave(const bool &a) { showPWave = a; }
     void setAmplitude_P_wave(const double &a) { a_pwave = a; }
     void setDuration_P_wave(const double &d) { d_pwave = d; }
     void setInterval_P_wave(const double &t) { t_pwave = t; }
     void setPositive_P_wave(const bool &p) { positive_pwave = p; }
     // Q wave
+	void setShowQwave(const bool &a) { showQWave = a; }
     void setAmplitude_Q_wave(const double &a) { a_qwave = a; }
     void setDuration_Q_wave(const double &d) { d_qwave = d; }
     void setInterval_Q_wave(const double &t) { t_qwave = t; }
     // QRS wave
+	void setShowQRSwave(const bool &a) { showQRSWave = a; }
     void setAmplitude_QRS_wave(const double &a) { a_qrswave = a; }
     void setDuration_QRS_wave(const double &d) { d_qrswave = d; }
     // no interval
     void setPositive_QRS_wave(const bool &p) { positive_qrswave = p; }
     // S wave
+	void setShowSwave(const bool &a) { showSWave = a; }
     void setAmplitude_S_wave(const double &a) { a_swave = a; }
     void setDuration_S_wave(const double &d) { d_swave = d; }
     void setInterval_S_wave(const double &t) { t_swave = t; }
     // T wave
+	void setShowTwave(const bool &a) { showTWave = a; }
     void setAmplitude_T_wave(const double &a) { a_twave = a; }
     void setDuration_T_wave(const double &d) { d_twave = d; }
     void setInterval_T_wave(const double &t) { t_twave = t; }
     void setPositive_T_wave(const bool &p) { positive_twave = p; }
     // U wave
+	void setShowUwave(const bool &a) { showUWave = a; }
     void setAmplitude_U_wave(const double &a) { a_uwave = a; }
     void setDuration_U_wave(const double &d) { d_uwave = d; }
     void setInterval_U_wave(const double &t) { t_uwave = t; }
@@ -211,5 +220,8 @@ private:
     double d_uwave;         // U wave duration
     double t_uwave;         // U wave interval
 };
+
+QDataStream &operator <<(QDataStream &out, const ECGpreset &ecg);
+QDataStream &operator >>(QDataStream &in, ECGpreset &ecg);
 
 #endif // ECGPRESET_H

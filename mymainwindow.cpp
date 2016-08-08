@@ -38,36 +38,46 @@ myMainWindow::myMainWindow(QWidget *parent)
     ui->setupUi(this);
 	recProcess = new QProcess(this);
     // General names for QSettings and others
-    QCoreApplication::setOrganizationName("simECG");
-    QCoreApplication::setOrganizationDomain("simecg.sourceforge.net");
-    QCoreApplication::setApplicationName("ECG simulator");
+    QCoreApplication::setOrganizationName("SimulationIQ");
+    QCoreApplication::setOrganizationDomain("EMSPA");
+    QCoreApplication::setApplicationName("ECG Simulator");
 
-    //
+	//To disable maximize button
+	//Qt::WindowFlags flags = windowFlags();//  Qt::WindowMaximizeButtonHint;
+	//flags &= ~Qt::WindowMaximizeButtonHint;// &~Qt::WindowCloseButtonHint;
+	//setWindowFlags(flags);
+
+	showMaximized();
+	
+	QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	policy.setHeightForWidth(true);
+	ui->ECGplot->setSizePolicy(policy);
+
+	//
     // Command menu signals
     //
 
 	//Save Custom Setting
-	connect(ui->actionSave_as_Preset, SIGNAL(triggered()), this, SLOT(saveCustomSetting()));
+	//connect(ui->actionSave_as_Preset, SIGNAL(triggered()), this, SLOT(saveCustomSetting()));
 
 	//Load Custom Setting
-	connect(ui->actionLoad_Training_Settings_as_Preset, SIGNAL(triggered()), this, SLOT(loadCustomSetting()));
+	//connect(ui->actionLoad_Training_Settings_as_Preset, SIGNAL(triggered()), this, SLOT(loadCustomSetting()));
 
     // ECG Calibration speed (25 or 50 mm/s)
     // TODO: Implement the connector when the method exists
-	connect(ui->actionSpeed25mm, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setRollingSpeed(bool)));
+	//connect(ui->actionSpeed25mm, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setRollingSpeed(bool)));
 
     // ECG Calibration amplitude (5 or 10 mm/mV)
     // TODO: Implement the connector when the method exists
 
     // ECG noise filter (ON or OFF)
-    connect(ui->actionFilterOn, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setNoiseFilter(bool)));
+	connect(ui->noiseFilter, SIGNAL(stateChanged(int)), ui->ECGplot, SLOT(setNoiseFilter(int)));
 
     // ECG display (static or rolling)
-    // TODO: Implement the connector when the method exists
-	connect(ui->actionBackStatic, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setDisplayStatic(bool)));
-
-    // ECG background paper/monitor
-    connect(ui->actionBackgroundPaper, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setEcgBackground(bool)));
+	connect(ui->rollingView, SIGNAL(stateChanged(int)), ui->ECGplot, SLOT(setDisplayStatic(int)));
+    
+	// ECG background paper/monitor
+	connect(ui->ecgRadio, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setEcgBackground(bool)));
 
     // Load the previously saved preferences
     loadPreferences();
@@ -76,77 +86,82 @@ myMainWindow::myMainWindow(QWidget *parent)
     // Presets (tab)
     //
 
+	connect(ui->AddPreset, SIGNAL(pressed()), this, SLOT(addCustomPreset()));
+
+
+
     // Populates all the presets in the List Widget
     presets.populatePresetListWidget(ui->presetListWidget);
 	connect(ui->presetListWidget, SIGNAL(currentRowChanged(int)), this, SLOT(selectPreset(int)) );
-
-    connect(ui->ECGoptions, SIGNAL(currentChanged(int)),
-            this, SLOT(optionsTabChanged(int)));
-
     //
     // Custom settings (tab)
     //
 
     // heart rate
-    ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
     connect(ui->heartratespinBox, SIGNAL(valueChanged(int)), ui->ECGplot, SLOT(setHeartRate(int)));
 
     // P wave
-    ui->pwaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_P_wave());
+	connect(ui->pwaveshow, SIGNAL(stateChanged(int)), this, SLOT(showPwave(int)));
+  
     connect(ui->pwaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_P_wave(double)));
-    ui->pwaveduration->setValue(ui->ECGplot->currentECG.getDuration_P_wave());
+   
     connect(ui->pwaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_P_wave(double)));
-    ui->prduration->setValue(ui->ECGplot->currentECG.getInterval_P_wave());
+  
     connect(ui->prduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setInterval_P_wave(double)));
-    ui->pwavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_P_wave() ? 0 : 1);
+   
     connect(ui->pwavepositiveness, SIGNAL(currentIndexChanged(int)), this, SLOT(changePWavePositiveness(int)));
 
     // QRS wave
-    ui->qrsamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_QRS_wave());
+	connect(ui->qrswaveshow, SIGNAL(stateChanged(int)), this, SLOT(showQRSwave(int)));
+ 
     connect(ui->qrsamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_QRS_wave(double)));
-    ui->qrsduration->setValue(ui->ECGplot->currentECG.getDuration_QRS_wave());
+   
     connect(ui->qrsduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_QRS_wave(double)));
     //qrspositiveness
 
 	//S Wave
-	ui->swaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_S_wave());
+
+	connect(ui->swaveshow, SIGNAL(stateChanged(int)), this, SLOT(showSwave(int)));
+
 	connect(ui->swaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_S_wave(double)));
-	ui->swaveduration->setValue(ui->ECGplot->currentECG.getDuration_S_wave());
+
 	connect(ui->swaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_S_wave(double)));
 
     // T wave
-    ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
+	connect(ui->twaveshow, SIGNAL(stateChanged(int)), this, SLOT(showTwave(int)));
+   
     connect(ui->twaveamplitude, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setAmplitude_T_wave(double)));
-    ui->twaveduration->setValue(ui->ECGplot->currentECG.getDuration_T_wave());
+  
     connect(ui->twaveduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setDuration_T_wave(double)));
-    ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
+   
     connect(ui->twavepositiveness, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTWavePositiveness(int)));
-	ui->stduration->setValue(ui->ECGplot->currentECG.getInterval_T_wave());
+	
 	connect(ui->stduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setInterval_T_wave(double)));
+	updateControls();
     //
     // Assessment (tab)
     //
 
     // Attach assessment class to the assessment tab
-    assessment = new AssessmentFrame(ui->ECGoptions->widget(ASSESSMENTTAB));
+    //assessment = new AssessmentFrame(ui->ECGoptions->widget(ASSESSMENTTAB));
     // Give the assessment class the reference to the list of ECG presets
-    assessment->setAssessmentAnswers(&presets);
+    //assessment->setAssessmentAnswers(&presets);
 
     // Connect assessment to ECG plotter, so that when a question changes, the signal also changes
-    connect(assessment, SIGNAL(questionChanged(QString)), ui->ECGplot, SLOT(setCurrentECGPlotted(QString)));
+    //connect(assessment, SIGNAL(questionChanged(QString)), ui->ECGplot, SLOT(setCurrentECGPlotted(QString)));
     // Connect assessment to ECG plotter so that ECG is displayed only during the assessment
-    connect(assessment, SIGNAL(assessmentRunning(bool)), ui->ECGplot, SLOT(setDisplayData(bool)));
+    //connect(assessment, SIGNAL(assessmentRunning(bool)), ui->ECGplot, SLOT(setDisplayData(bool)));
 
     // "custom settings" must be the default starting tab
-    currentTab = CUSTOMTAB;
-    ui->ECGoptions->setCurrentIndex(currentTab);
+    //currentTab = CUSTOMTAB;
+    //ui->ECGoptions->setCurrentIndex(currentTab);
 
 
 	//Start Recording
-	connect(ui->startRecording, SIGNAL(pressed()), this, SLOT(startRecording()));
-
+	connect(ui->startRecording, SIGNAL(pressed()), this, SLOT(record()));
+	recording = false;
 	//Stop Recording
-	connect(ui->stopRecording, SIGNAL(pressed()), this, SLOT(stopRecording()));
+	//connect(ui->stopRecording, SIGNAL(pressed()), this, SLOT(stopRecording()));
 
 }
 
@@ -158,12 +173,7 @@ myMainWindow::~myMainWindow()
     delete ui;
 }
 
-// TODO: Remove this
-/*
-QList<QAbstractButton *> myMainWindow::getPresetsButtons() {
-    return ui->presetsButtonGroup->buttons();
-}
-*/
+
 
 void myMainWindow::saveCustomSetting() {
 	//open file selector
@@ -188,60 +198,19 @@ void myMainWindow::loadCustomSetting() {
 		tr("Xml files (*.xml)"));
 	if (filename.size() == 0)
 		return;
-	ECGpreset temp(filename);
-	if (currentTab == CUSTOMTAB) {
-		ui->ECGplot->setCurrentECGPlotted(temp);
-		// heart rate
-		ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
+	//ECGpreset temp(filename);
+	//ui->ECGplot->setCurrentECGPlotted(temp);
+	updateControls();
+}
 
-		// P wave
-		ui->pwaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_P_wave());
-		ui->pwaveduration->setValue(ui->ECGplot->currentECG.getDuration_P_wave());
-		ui->prduration->setValue(ui->ECGplot->currentECG.getInterval_P_wave());
-		ui->pwavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_P_wave() ? 0 : 1);
-
-		// QRS wave
-		ui->qrsamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_QRS_wave());
-		ui->qrsduration->setValue(ui->ECGplot->currentECG.getDuration_QRS_wave());
-		//qrspositiveness
-
-		//S Wave
-		ui->swaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_S_wave());
-		ui->swaveduration->setValue(ui->ECGplot->currentECG.getDuration_S_wave());
-
-
-		// T wave
-		ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
-		ui->twaveduration->setValue(ui->ECGplot->currentECG.getDuration_T_wave());
-		ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
-		ui->stduration->setValue(ui->ECGplot->currentECG.getInterval_T_wave());
-		
+void myMainWindow::record() {
+	if (recording) {
+		stopRecording();
+		recording = false;
 	}
 	else {
-		tempECGPreset = temp;
-		// heart rate
-		ui->heartratespinBox->setValue(tempECGPreset.getHeartRate());
-
-		// P wave
-		ui->pwaveamplitude->setValue(tempECGPreset.getAmplitude_P_wave());
-		ui->pwaveduration->setValue(tempECGPreset.getDuration_P_wave());
-		ui->prduration->setValue(tempECGPreset.getInterval_P_wave());
-		ui->pwavepositiveness->setCurrentIndex(tempECGPreset.getPositive_P_wave() ? 0 : 1);
-
-		// QRS wave
-		ui->qrsamplitude->setValue(tempECGPreset.getAmplitude_QRS_wave());
-		ui->qrsduration->setValue(tempECGPreset.getDuration_QRS_wave());
-		//qrspositiveness
-
-		//S Wave
-		ui->swaveamplitude->setValue(tempECGPreset.getAmplitude_S_wave());
-		ui->swaveduration->setValue(tempECGPreset.getDuration_S_wave());
-
-		// T wave
-		ui->twaveamplitude->setValue(tempECGPreset.getAmplitude_T_wave());
-		ui->twaveduration->setValue(tempECGPreset.getDuration_T_wave());
-		ui->twavepositiveness->setCurrentIndex(tempECGPreset.getPositive_T_wave() ? 0 : 1);
-		ui->stduration->setValue(tempECGPreset.getInterval_T_wave());
+		recording = true;
+		startRecording();
 	}
 }
 
@@ -255,17 +224,11 @@ void myMainWindow::startRecording() {
 	recording = true;
 	QFile::remove(filename);
 	//Change Start Stop Buttons
-	ui->stopRecording->setEnabled(true);
-	ui->startRecording->setEnabled(false);
-
-	ui->ECGoptions->setTabIcon(CUSTOMTAB, QIcon("player_record.png"));
-
+	ui->startRecording->setText("Stop Video Recording");
+	
 	//setFixedSize()
 	this->setFixedSize(width(),height());
-	ui->menuBar->setEnabled(false);
-	ui->ECGoptions->setTabEnabled(PRESETSTAB,false);
-	ui->ECGoptions->setTabEnabled(ASSESSMENTTAB, false);
-
+	
 	//Set Window Flags
 	Qt::WindowFlags flags = windowFlags() | Qt::WindowStaysOnTopHint;
 	flags &= ~Qt::WindowMinimizeButtonHint & ~Qt::WindowCloseButtonHint;
@@ -278,20 +241,18 @@ void myMainWindow::startRecording() {
 
 	//Start Exec Process
 	recProcess->setProcessChannelMode(QProcess::ForwardedChannels);
-	QString program = "\"C:\\Users\\Tushar.Agarwal\\Documents\\GitHub\\SimECG\\debug\\ffmpeg.exe\"";
+	QString program = ".\\debug\\ffmpeg.exe";
+	//QString program = "\"C:\\Users\\Tushar.Agarwal\\Documents\\GitHub\\SimECG\\debug\\ffmpeg.exe\"";
 	recProcess->setProgram(program);
-	QFile::remove("testVideo.mp4");
-	int w = width() - 16;
-	int h = height()/2 -16;
+	
+	int w = ui->centralWidget->width() - 16;
+	int h = ui->centralWidget->height() - 16;
 	recProcess->setNativeArguments(QString("-f gdigrab -framerate 25 -offset_x 8 -offset_y 16 -s "+QString::number(w)+"*"+QString::number(h)+" -i title=\"simECG - The OpenSource ECG simulator\" "+ filename));
 	recProcess->start();
 	
 }
 void myMainWindow::stopRecording() {
 	recording = false;
-	ui->stopRecording->setEnabled(false);
-	
-	//recProcess->terminate();
 	QByteArray command("q\n");
 	recProcess->write(command);//send quit signal to ffmpeg
 	int i = 0;
@@ -321,15 +282,9 @@ void myMainWindow::stopRecording() {
 		if(recFilename!=NULL && recFilename.size()!=0)
 			QFile::remove(recFilename);//Delete file since it is unreadeable
 	}
-
-	//Change all other states once recording has stopped
-	//ui->ECGoptions->setTabIcon(CUSTOMTAB, QIcon();
-	ui->ECGoptions->setTabIcon(CUSTOMTAB, QIcon());
-	ui->startRecording->setEnabled(true);
-	ui->menuBar->setEnabled(true);
-	ui->ECGoptions->setTabEnabled(PRESETSTAB, true);
-	ui->ECGoptions->setTabEnabled(ASSESSMENTTAB, true);
-
+	
+	ui->startRecording->setText("Start Video Recording");
+	
 	//Enable Minimize and close
 	Qt::WindowFlags flags = windowFlags() | Qt::WindowMinimizeButtonHint  | Qt::WindowCloseButtonHint;
 	flags &=  ~Qt::WindowStaysOnTopHint;
@@ -340,6 +295,7 @@ void myMainWindow::stopRecording() {
 void myMainWindow::selectPreset(int selected) {
 	const ECGpreset &temp = presets.at((const int)selected);
 	ui->ECGplot->setCurrentECGPlotted(temp);
+	updateControls();
 }
 
 // When the user presses Exit on file menu
@@ -357,8 +313,40 @@ void myMainWindow::on_action_About_triggered()
     dialog.exec();
 }
 
+void myMainWindow::updateControls() {
+	// heart rate
+	ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
+
+	// P wave
+	ui->pwaveshow->setChecked(ui->ECGplot->currentECG.getDisplayPWave());
+	ui->pwaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_P_wave());
+	ui->pwaveduration->setValue(ui->ECGplot->currentECG.getDuration_P_wave());
+	ui->prduration->setValue(ui->ECGplot->currentECG.getInterval_P_wave());
+	ui->pwavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_P_wave() ? 0 : 1);
+
+	// QRS wave
+	ui->qrswaveshow->setChecked(ui->ECGplot->currentECG.getDisplayQRSWave());
+	ui->qrsamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_QRS_wave());
+	ui->qrsduration->setValue(ui->ECGplot->currentECG.getDuration_QRS_wave());
+	//qrspositiveness
+
+	//S Wave
+	ui->swaveshow->setChecked(ui->ECGplot->currentECG.getDisplaySWave());
+	ui->swaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_S_wave());
+	ui->swaveduration->setValue(ui->ECGplot->currentECG.getDuration_S_wave());
+
+
+	// T wave
+	ui->twaveshow->setChecked(ui->ECGplot->currentECG.getDisplayTWave());
+	ui->twaveamplitude->setValue(ui->ECGplot->currentECG.getAmplitude_T_wave());
+	ui->twaveduration->setValue(ui->ECGplot->currentECG.getDuration_T_wave());
+	ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
+	ui->stduration->setValue(ui->ECGplot->currentECG.getInterval_T_wave());
+
+}
 
 // When the user moves to a new tab
+/*
 void myMainWindow::optionsTabChanged(int newTab)
 {
     // Check if assessment is running
@@ -375,7 +363,7 @@ void myMainWindow::optionsTabChanged(int newTab)
             break;
         case QMessageBox::Cancel:
             currentTab = ASSESSMENTTAB;
-            ui->ECGoptions->setCurrentIndex(currentTab);
+            //ui->ECGoptions->setCurrentIndex(currentTab);
             return;
             break;
         default:
@@ -423,7 +411,7 @@ void myMainWindow::optionsTabChanged(int newTab)
             Q_ASSERT(false);
     }
 }
-
+*/
 
 void myMainWindow::changePWavePositiveness(int currentIndex)
 {
@@ -446,6 +434,75 @@ void myMainWindow::changeTWavePositiveness(int currentIndex)
     } else {
         ui->ECGplot->setPositive_T_wave(false);
     }
+}
+
+void myMainWindow::showPwave(int checkState) {
+	if (checkState == 0) {//dont show p wave
+		ui->prlabel->setEnabled(false);
+		ui->prduration->setEnabled(false);
+		ui->pwavelabel->setEnabled(false);
+		ui->pwaveamplitude->setEnabled(false);
+		ui->pwavepositiveness->setEnabled(false);
+		ui->pwaveduration->setEnabled(false);
+		ui->ECGplot->currentECG.setShowPwave(false);
+	}
+	else if (checkState == 2) {
+		ui->prlabel->setEnabled(true);
+		ui->prduration->setEnabled(true);
+		ui->pwavelabel->setEnabled(true);
+		ui->pwaveamplitude->setEnabled(true);
+		ui->pwavepositiveness->setEnabled(true);
+		ui->pwaveduration->setEnabled(true);
+		ui->ECGplot->currentECG.setShowPwave(true);
+	}
+}
+void myMainWindow::showQRSwave(int checkState) {
+	if (checkState == 0) {//dont show p wave
+		ui->qrslabel->setEnabled(false);
+		ui->qrsamplitude->setEnabled(false);
+		ui->qrsduration->setEnabled(false);
+		ui->ECGplot->currentECG.setShowQRSwave(false);
+	}
+	else if (checkState == 2) {
+		ui->qrslabel->setEnabled(true);
+		ui->qrsamplitude->setEnabled(true);
+		ui->qrsduration->setEnabled(true);
+		ui->ECGplot->currentECG.setShowQRSwave(true);
+	}
+}
+void myMainWindow::showSwave(int checkState) {
+	if (checkState == 0) {//dont show p wave
+		ui->stduration->setEnabled(false);
+		ui->stlabel->setEnabled(false);
+		ui->swavelabel->setEnabled(false);
+		ui->swaveamplitude->setEnabled(false);
+		ui->swaveduration->setEnabled(false);
+		ui->ECGplot->currentECG.setShowSwave(false);
+	}
+	else if (checkState == 2) {
+		ui->stduration->setEnabled(true);
+		ui->stlabel->setEnabled(true);
+		ui->swavelabel->setEnabled(true);
+		ui->swaveamplitude->setEnabled(true);
+		ui->swaveduration->setEnabled(true);
+		ui->ECGplot->currentECG.setShowSwave(true);
+	}
+}
+void myMainWindow::showTwave(int checkState) {
+	if (checkState == 0) {//dont show p wave
+		ui->twavelabel->setEnabled(false);
+		ui->twaveamplitude->setEnabled(false);
+		ui->twavepositiveness->setEnabled(false);
+		ui->twaveduration->setEnabled(false);
+		ui->ECGplot->currentECG.setShowTwave(false);
+	}
+	else if (checkState == 2) {
+		ui->twavelabel->setEnabled(true);
+		ui->twaveamplitude->setEnabled(true);
+		ui->twavepositiveness->setEnabled(true);
+		ui->twaveduration->setEnabled(true);
+		ui->ECGplot->currentECG.setShowTwave(true);
+	}
 }
 
 
@@ -480,25 +537,29 @@ void myMainWindow::loadPreferences()
     // TODO: To implement
 
     // ECG background paper/monitor
+	
     qDebug("ECG background is %s", preferences.value("ECG/Background").toString().toLatin1().constData());
     if (preferences.value("ECG/Background", QString("Paper")) == "Paper") {
-        ui->actionBackgroundPaper->setChecked(true);
-        ui->actionBackgroundMonitor->setChecked(false);
-        ui->ECGplot->setEcgBackground(true);
+		ui->ecgRadio->setChecked(true);
+		ui->monitorRadio->setChecked(false);
+		ui->ECGplot->setEcgBackground(true);
     } else {
-        ui->actionBackgroundPaper->setChecked(false);
-        ui->actionBackgroundMonitor->setChecked(true);
-        ui->ECGplot->setEcgBackground(false);
-    }
-	ui->actionBackStatic->setChecked(false);
-	ui->actionBackRolling->setChecked(true);
-	ui->ECGplot->setDisplayStatic(false);
+		ui->ecgRadio->setChecked(false);
+		ui->monitorRadio->setChecked(true);
+		ui->ECGplot->setEcgBackground(false);
+	}
+	
+	ui->rollingView->setCheckState(Qt::Checked);
+	ui->ECGplot->setDisplayStatic(2);
 
-	ui->actionSpeed25mm->setChecked(true);
-	ui->actionSpeed50mm->setChecked(false);
+	ui->noiseFilter->setCheckState(Qt::Checked);
+	ui->ECGplot->setNoiseFilter(2);
+
+
+	//ui->actionSpeed25mm->setChecked(true);
+	//ui->actionSpeed50mm->setChecked(false);
 	ui->ECGplot->setRollingSpeed(true);// True means 25mm/s, False 50m/s
 
-	ui->stopRecording->setEnabled(false);
 }
 
 
@@ -529,5 +590,4 @@ void myMainWindow::savePreferences()
     // ECG background paper/monitor
     qDebug("ECG background is %s", ui->ECGplot->ecgBackground().toLatin1().constData());
     preferences.setValue("ECG/Background", ui->ECGplot->ecgBackground());
-	//preferences.setValue("ECG/Static", ui->ECGplot->actionBackStatic());
 }

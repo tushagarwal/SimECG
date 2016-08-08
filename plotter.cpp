@@ -99,7 +99,9 @@ void Plotter::setDisplayData(bool status)
     update();
 }
 
-
+int QWidget::heightForWidth(int w) const {
+	return w / 6;
+}
 
 // This is the setter for the ECG background preference
 void Plotter::setEcgBackground(const bool &status)
