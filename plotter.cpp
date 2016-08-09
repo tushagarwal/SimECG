@@ -79,17 +79,25 @@ void Plotter::setCurveData(int id, const QVector<QPointF> &data)
 //    update();
 //}
 
-
+/*
 QSize Plotter::minimumSizeHint() const
 {
-    return QSize(6 * Margin, 4 * Margin);
+	int w = width();
+	QSize * temp = new QSize(w, (w *3)/4);
+    return *temp;
 }
+*/
 
 
+/*
 QSize Plotter::sizeHint() const
 {
-    return QSize(12 * Margin, 8 * Margin);
+	QSize temp = QWidget::sizeHint();
+	int w = width();
+	int h = height();
+	return QSize(w, w);
 }
+*/
 
 
 void Plotter::setDisplayData(bool status)
@@ -99,9 +107,11 @@ void Plotter::setDisplayData(bool status)
     update();
 }
 
-int QWidget::heightForWidth(int w) const {
-	return w / 6;
+/*
+int Plotter::heightForWidth(int w) const {
+	return w ;
 }
+*/
 
 // This is the setter for the ECG background preference
 void Plotter::setEcgBackground(const bool &status)
@@ -292,9 +302,9 @@ PlotSettings::PlotSettings()
 
 void PlotSettings::scroll(int dx, int  dy)
 {
-    double stepX = spanX() / numXTicks;
-    minX += dx * stepX;
-    maxX += dx * stepX;
+    //double stepX = spanX() / numXTicks;
+    minX += dx * 0.02;
+    maxX += dx * 0.02;
 
     double stepY = spanY() / numYTicks;
     minY += dy * stepY;

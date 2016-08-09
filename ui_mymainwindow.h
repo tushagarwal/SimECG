@@ -16,12 +16,12 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -55,6 +55,9 @@ public:
     QAction *actionLoad_preferences;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
+    QFrame *ECGplotFrame;
+    QVBoxLayout *verticalLayout;
+    ECGplotter *ECGplot;
     QFrame *PreferencesFrame;
     QHBoxLayout *preference;
     QRadioButton *ecgRadio;
@@ -65,18 +68,6 @@ public:
     QSpacerItem *horizontalSpacer_3;
     QPushButton *captureImage;
     QPushButton *startRecording;
-    QFrame *saveFrame;
-    QHBoxLayout *SaveLayout;
-    QSpacerItem *horizontalSpacer_7;
-    QPushButton *Delete;
-    QSpacerItem *horizontalSpacer_4;
-    QPushButton *Save;
-    QSpacerItem *horizontalSpacer_5;
-    QPushButton *SaveAs;
-    QSpacerItem *horizontalSpacer_6;
-    QFrame *ECGplotFrame;
-    QVBoxLayout *verticalLayout;
-    ECGplotter *ECGplot;
     QFrame *PresetFrame;
     QVBoxLayout *PresetLayout;
     QHBoxLayout *horizontalLayout;
@@ -86,42 +77,51 @@ public:
     QFrame *ParameterFrame;
     QVBoxLayout *ParameterLayout;
     QVBoxLayout *verticalLayout_2;
+    QFrame *headFrame_2;
+    QVBoxLayout *headFrame;
     QFrame *HeartRateFrame;
-    QFormLayout *HRLayout;
-    QLabel *heartratelabel;
+    QGridLayout *gridLayout_2;
     QSpinBox *heartratespinBox;
+    QLabel *PresetNameLabel;
+    QLabel *heartratelabel;
+    QLineEdit *PresetNameEdit;
     QFrame *WaveFrame;
     QGridLayout *waveLayout;
-    QLabel *pwavelabel;
-    QDoubleSpinBox *qrsamplitude;
-    QLabel *swavelabel;
-    QDoubleSpinBox *pwaveduration;
-    QCheckBox *qrswaveshow;
     QDoubleSpinBox *pwaveamplitude;
-    QDoubleSpinBox *twaveduration;
-    QLabel *DurationLabel;
-    QLabel *qrslabel;
     QLabel *twavelabel;
-    QLabel *AmpLabel;
+    QLabel *swavelabel;
     QLabel *ShowTitle;
+    QLabel *AmpLabel;
     QLabel *label;
     QCheckBox *swaveshow;
+    QLabel *DurationLabel;
+    QLabel *pwavelabel;
     QCheckBox *twaveshow;
     QSpacerItem *horizontalSpacer_2;
     QDoubleSpinBox *twaveamplitude;
-    QComboBox *qrspositiveness;
-    QDoubleSpinBox *swaveamplitude;
-    QDoubleSpinBox *qrsduration;
-    QLabel *NameLabel;
-    QComboBox *twavepositiveness;
-    QCheckBox *pwaveshow;
-    QDoubleSpinBox *swaveduration;
-    QComboBox *pwavepositiveness;
-    QLabel *prlabel;
-    QDoubleSpinBox *prduration;
+    QLabel *qrslabel;
+    QDoubleSpinBox *twaveduration;
+    QDoubleSpinBox *pwaveduration;
+    QDoubleSpinBox *qrsamplitude;
+    QCheckBox *qrswaveshow;
     QDoubleSpinBox *stduration;
-    QLabel *stlabel;
     QLabel *label_3;
+    QComboBox *qrspositiveness;
+    QLabel *NameLabel;
+    QCheckBox *pwaveshow;
+    QComboBox *twavepositiveness;
+    QDoubleSpinBox *qrsduration;
+    QLabel *prlabel;
+    QDoubleSpinBox *swaveduration;
+    QLabel *stlabel;
+    QDoubleSpinBox *prduration;
+    QComboBox *pwavepositiveness;
+    QDoubleSpinBox *swaveamplitude;
+    QSpacerItem *horizontalSpacer_10;
+    QSpacerItem *horizontalSpacer_9;
+    QSpacerItem *horizontalSpacer_11;
+    QSpacerItem *horizontalSpacer_12;
+    QSpacerItem *horizontalSpacer_13;
     QFrame *preamtureFrame;
     QVBoxLayout *PrematureHeadLay;
     QLabel *PrematureBeatsLabel;
@@ -139,12 +139,23 @@ public:
     QCheckBox *atrialfibrillation;
     QComboBox *specialConditionsComboBox;
     QLabel *labelOtherConditions;
+    QFrame *saveFrame;
+    QHBoxLayout *SaveLayout;
+    QSpacerItem *horizontalSpacer_8;
+    QPushButton *closePreset;
+    QSpacerItem *horizontalSpacer_7;
+    QPushButton *Delete;
+    QSpacerItem *horizontalSpacer_4;
+    QPushButton *Save;
+    QSpacerItem *horizontalSpacer_5;
+    QPushButton *SaveAs;
+    QSpacerItem *horizontalSpacer_6;
 
     void setupUi(QMainWindow *myMainWindowClass)
     {
         if (myMainWindowClass->objectName().isEmpty())
             myMainWindowClass->setObjectName(QStringLiteral("myMainWindowClass"));
-        myMainWindowClass->resize(1185, 684);
+        myMainWindowClass->resize(1229, 791);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -224,9 +235,43 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        PreferencesFrame = new QFrame(centralWidget);
+        ECGplotFrame = new QFrame(centralWidget);
+        ECGplotFrame->setObjectName(QStringLiteral("ECGplotFrame"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(ECGplotFrame->sizePolicy().hasHeightForWidth());
+        ECGplotFrame->setSizePolicy(sizePolicy1);
+        ECGplotFrame->setMinimumSize(QSize(750, 300));
+        ECGplotFrame->setStyleSheet(QLatin1String("#PreferencesFrame{\n"
+"	\n"
+"}"));
+        ECGplotFrame->setFrameShape(QFrame::Box);
+        ECGplotFrame->setFrameShadow(QFrame::Raised);
+        ECGplotFrame->setLineWidth(3);
+        verticalLayout = new QVBoxLayout(ECGplotFrame);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        ECGplot = new ECGplotter(ECGplotFrame);
+        ECGplot->setObjectName(QStringLiteral("ECGplot"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(ECGplot->sizePolicy().hasHeightForWidth());
+        ECGplot->setSizePolicy(sizePolicy2);
+        ECGplot->setMinimumSize(QSize(900, 350));
+        ECGplot->setSizeIncrement(QSize(4, 3));
+        ECGplot->setCursor(QCursor(Qt::BlankCursor));
+
+        verticalLayout->addWidget(ECGplot);
+
+        PreferencesFrame = new QFrame(ECGplotFrame);
         PreferencesFrame->setObjectName(QStringLiteral("PreferencesFrame"));
-        PreferencesFrame->setFrameShape(QFrame::Box);
+        PreferencesFrame->setStyleSheet(QLatin1String("#PreferencesFrame{\n"
+"	background-color: rgb(255, 255, 255);\n"
+"}"));
+        PreferencesFrame->setFrameShape(QFrame::NoFrame);
         PreferencesFrame->setFrameShadow(QFrame::Raised);
         PreferencesFrame->setLineWidth(3);
         preference = new QHBoxLayout(PreferencesFrame);
@@ -276,70 +321,7 @@ public:
         preference->addWidget(startRecording);
 
 
-        gridLayout->addWidget(PreferencesFrame, 1, 2, 1, 1);
-
-        saveFrame = new QFrame(centralWidget);
-        saveFrame->setObjectName(QStringLiteral("saveFrame"));
-        saveFrame->setFrameShape(QFrame::Box);
-        saveFrame->setFrameShadow(QFrame::Raised);
-        saveFrame->setLineWidth(3);
-        SaveLayout = new QHBoxLayout(saveFrame);
-        SaveLayout->setSpacing(6);
-        SaveLayout->setContentsMargins(11, 11, 11, 11);
-        SaveLayout->setObjectName(QStringLiteral("SaveLayout"));
-        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        SaveLayout->addItem(horizontalSpacer_7);
-
-        Delete = new QPushButton(saveFrame);
-        Delete->setObjectName(QStringLiteral("Delete"));
-
-        SaveLayout->addWidget(Delete);
-
-        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        SaveLayout->addItem(horizontalSpacer_4);
-
-        Save = new QPushButton(saveFrame);
-        Save->setObjectName(QStringLiteral("Save"));
-
-        SaveLayout->addWidget(Save);
-
-        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        SaveLayout->addItem(horizontalSpacer_5);
-
-        SaveAs = new QPushButton(saveFrame);
-        SaveAs->setObjectName(QStringLiteral("SaveAs"));
-
-        SaveLayout->addWidget(SaveAs);
-
-        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        SaveLayout->addItem(horizontalSpacer_6);
-
-
-        gridLayout->addWidget(saveFrame, 3, 2, 1, 1);
-
-        ECGplotFrame = new QFrame(centralWidget);
-        ECGplotFrame->setObjectName(QStringLiteral("ECGplotFrame"));
-        verticalLayout = new QVBoxLayout(ECGplotFrame);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        ECGplot = new ECGplotter(ECGplotFrame);
-        ECGplot->setObjectName(QStringLiteral("ECGplot"));
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(ECGplot->sizePolicy().hasHeightForWidth());
-        ECGplot->setSizePolicy(sizePolicy1);
-        ECGplot->setMinimumSize(QSize(750, 250));
-        ECGplot->setSizeIncrement(QSize(3, 0));
-        ECGplot->setCursor(QCursor(Qt::BlankCursor));
-        PreferencesFrame->raise();
-
-        verticalLayout->addWidget(ECGplot);
+        verticalLayout->addWidget(PreferencesFrame);
 
 
         gridLayout->addWidget(ECGplotFrame, 0, 2, 1, 1);
@@ -369,7 +351,7 @@ public:
 
         AddPreset = new QPushButton(PresetFrame);
         AddPreset->setObjectName(QStringLiteral("AddPreset"));
-        AddPreset->setMaximumSize(QSize(50, 16777215));
+        AddPreset->setMaximumSize(QSize(100, 16777215));
 
         horizontalLayout->addWidget(AddPreset);
 
@@ -405,39 +387,38 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(4, -1, -1, -1);
-        HeartRateFrame = new QFrame(ParameterFrame);
+        headFrame_2 = new QFrame(ParameterFrame);
+        headFrame_2->setObjectName(QStringLiteral("headFrame_2"));
+        headFrame_2->setFrameShape(QFrame::Panel);
+        headFrame_2->setFrameShadow(QFrame::Raised);
+        headFrame_2->setLineWidth(3);
+        headFrame = new QVBoxLayout(headFrame_2);
+        headFrame->setSpacing(6);
+        headFrame->setContentsMargins(11, 11, 11, 11);
+        headFrame->setObjectName(QStringLiteral("headFrame"));
+        headFrame->setContentsMargins(6, 6, 6, 6);
+        HeartRateFrame = new QFrame(headFrame_2);
         HeartRateFrame->setObjectName(QStringLiteral("HeartRateFrame"));
-        HeartRateFrame->setFrameShape(QFrame::Panel);
+        HeartRateFrame->setFrameShape(QFrame::NoFrame);
         HeartRateFrame->setFrameShadow(QFrame::Raised);
         HeartRateFrame->setLineWidth(3);
-        HRLayout = new QFormLayout(HeartRateFrame);
-        HRLayout->setSpacing(6);
-        HRLayout->setContentsMargins(11, 11, 11, 11);
-        HRLayout->setObjectName(QStringLiteral("HRLayout"));
-        heartratelabel = new QLabel(HeartRateFrame);
-        heartratelabel->setObjectName(QStringLiteral("heartratelabel"));
-        QFont font1;
-        font1.setFamily(QStringLiteral("Sans Serif"));
-        font1.setPointSize(10);
-        font1.setBold(true);
-        font1.setWeight(75);
-        heartratelabel->setFont(font1);
-        heartratelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        HRLayout->setWidget(0, QFormLayout::LabelRole, heartratelabel);
-
+        gridLayout_2 = new QGridLayout(HeartRateFrame);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
         heartratespinBox = new QSpinBox(HeartRateFrame);
         heartratespinBox->setObjectName(QStringLiteral("heartratespinBox"));
         sizePolicy.setHeightForWidth(heartratespinBox->sizePolicy().hasHeightForWidth());
         heartratespinBox->setSizePolicy(sizePolicy);
         heartratespinBox->setMinimumSize(QSize(83, 23));
         heartratespinBox->setMaximumSize(QSize(150, 35));
-        QFont font2;
-        font2.setFamily(QStringLiteral("Sans Serif"));
-        font2.setPointSize(12);
-        font2.setBold(false);
-        font2.setWeight(50);
-        heartratespinBox->setFont(font2);
+        QFont font1;
+        font1.setFamily(QStringLiteral("Sans Serif"));
+        font1.setPointSize(12);
+        font1.setBold(false);
+        font1.setWeight(50);
+        heartratespinBox->setFont(font1);
         heartratespinBox->setCursor(QCursor(Qt::ArrowCursor));
         heartratespinBox->setWrapping(true);
         heartratespinBox->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
@@ -445,14 +426,55 @@ public:
         heartratespinBox->setMaximum(200);
         heartratespinBox->setValue(70);
 
-        HRLayout->setWidget(0, QFormLayout::FieldRole, heartratespinBox);
+        gridLayout_2->addWidget(heartratespinBox, 0, 1, 1, 1);
+
+        PresetNameLabel = new QLabel(HeartRateFrame);
+        PresetNameLabel->setObjectName(QStringLiteral("PresetNameLabel"));
+        sizePolicy2.setHeightForWidth(PresetNameLabel->sizePolicy().hasHeightForWidth());
+        PresetNameLabel->setSizePolicy(sizePolicy2);
+        QFont font2;
+        font2.setFamily(QStringLiteral("MS Sans Serif"));
+        font2.setPointSize(10);
+        font2.setBold(true);
+        font2.setWeight(75);
+        PresetNameLabel->setFont(font2);
+
+        gridLayout_2->addWidget(PresetNameLabel, 0, 2, 1, 1);
+
+        heartratelabel = new QLabel(HeartRateFrame);
+        heartratelabel->setObjectName(QStringLiteral("heartratelabel"));
+        heartratelabel->setEnabled(true);
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(heartratelabel->sizePolicy().hasHeightForWidth());
+        heartratelabel->setSizePolicy(sizePolicy3);
+        QFont font3;
+        font3.setFamily(QStringLiteral("Sans Serif"));
+        font3.setPointSize(10);
+        font3.setBold(true);
+        font3.setWeight(75);
+        heartratelabel->setFont(font3);
+        heartratelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        gridLayout_2->addWidget(heartratelabel, 0, 0, 1, 1, Qt::AlignLeft);
+
+        PresetNameEdit = new QLineEdit(HeartRateFrame);
+        PresetNameEdit->setObjectName(QStringLiteral("PresetNameEdit"));
+        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(PresetNameEdit->sizePolicy().hasHeightForWidth());
+        PresetNameEdit->setSizePolicy(sizePolicy4);
+
+        gridLayout_2->addWidget(PresetNameEdit, 0, 3, 1, 1);
 
 
-        verticalLayout_2->addWidget(HeartRateFrame);
+        headFrame->addWidget(HeartRateFrame);
 
-        WaveFrame = new QFrame(ParameterFrame);
+        WaveFrame = new QFrame(headFrame_2);
         WaveFrame->setObjectName(QStringLiteral("WaveFrame"));
-        WaveFrame->setFrameShape(QFrame::Panel);
+        WaveFrame->setFrameShape(QFrame::NoFrame);
         WaveFrame->setFrameShadow(QFrame::Raised);
         WaveFrame->setLineWidth(3);
         WaveFrame->setMidLineWidth(1);
@@ -461,77 +483,18 @@ public:
         waveLayout->setContentsMargins(11, 11, 11, 11);
         waveLayout->setObjectName(QStringLiteral("waveLayout"));
         waveLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
-        pwavelabel = new QLabel(WaveFrame);
-        pwavelabel->setObjectName(QStringLiteral("pwavelabel"));
-        QFont font3;
-        font3.setFamily(QStringLiteral("Sans Serif"));
-        font3.setPointSize(8);
-        font3.setBold(true);
-        font3.setWeight(75);
-        pwavelabel->setFont(font3);
-        pwavelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        waveLayout->addWidget(pwavelabel, 2, 1, 1, 1, Qt::AlignLeft);
-
-        qrsamplitude = new QDoubleSpinBox(WaveFrame);
-        qrsamplitude->setObjectName(QStringLiteral("qrsamplitude"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(qrsamplitude->sizePolicy().hasHeightForWidth());
-        qrsamplitude->setSizePolicy(sizePolicy2);
-        qrsamplitude->setMinimumSize(QSize(83, 23));
-        qrsamplitude->setMaximumSize(QSize(16777215, 23));
+        waveLayout->setContentsMargins(0, 0, 0, 0);
+        pwaveamplitude = new QDoubleSpinBox(WaveFrame);
+        pwaveamplitude->setObjectName(QStringLiteral("pwaveamplitude"));
+        sizePolicy4.setHeightForWidth(pwaveamplitude->sizePolicy().hasHeightForWidth());
+        pwaveamplitude->setSizePolicy(sizePolicy4);
+        pwaveamplitude->setMinimumSize(QSize(83, 23));
+        pwaveamplitude->setMaximumSize(QSize(16777215, 23));
         QFont font4;
         font4.setFamily(QStringLiteral("Sans Serif"));
         font4.setPointSize(8);
         font4.setBold(false);
         font4.setWeight(50);
-        qrsamplitude->setFont(font4);
-        qrsamplitude->setDecimals(2);
-        qrsamplitude->setMinimum(0.5);
-        qrsamplitude->setMaximum(2);
-        qrsamplitude->setSingleStep(0.5);
-        qrsamplitude->setValue(1);
-
-        waveLayout->addWidget(qrsamplitude, 3, 3, 1, 1);
-
-        swavelabel = new QLabel(WaveFrame);
-        swavelabel->setObjectName(QStringLiteral("swavelabel"));
-        swavelabel->setFont(font3);
-        swavelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        waveLayout->addWidget(swavelabel, 4, 1, 1, 1, Qt::AlignLeft);
-
-        pwaveduration = new QDoubleSpinBox(WaveFrame);
-        pwaveduration->setObjectName(QStringLiteral("pwaveduration"));
-        sizePolicy2.setHeightForWidth(pwaveduration->sizePolicy().hasHeightForWidth());
-        pwaveduration->setSizePolicy(sizePolicy2);
-        pwaveduration->setMinimumSize(QSize(83, 23));
-        pwaveduration->setMaximumSize(QSize(16777215, 23));
-        pwaveduration->setFont(font4);
-        pwaveduration->setDecimals(2);
-        pwaveduration->setMinimum(0.04);
-        pwaveduration->setMaximum(0.14);
-        pwaveduration->setSingleStep(0.01);
-        pwaveduration->setValue(0.09);
-
-        waveLayout->addWidget(pwaveduration, 2, 4, 1, 1);
-
-        qrswaveshow = new QCheckBox(WaveFrame);
-        qrswaveshow->setObjectName(QStringLiteral("qrswaveshow"));
-        sizePolicy.setHeightForWidth(qrswaveshow->sizePolicy().hasHeightForWidth());
-        qrswaveshow->setSizePolicy(sizePolicy);
-        qrswaveshow->setMaximumSize(QSize(35, 16777215));
-
-        waveLayout->addWidget(qrswaveshow, 3, 0, 1, 1, Qt::AlignHCenter|Qt::AlignVCenter);
-
-        pwaveamplitude = new QDoubleSpinBox(WaveFrame);
-        pwaveamplitude->setObjectName(QStringLiteral("pwaveamplitude"));
-        sizePolicy2.setHeightForWidth(pwaveamplitude->sizePolicy().hasHeightForWidth());
-        pwaveamplitude->setSizePolicy(sizePolicy2);
-        pwaveamplitude->setMinimumSize(QSize(83, 23));
-        pwaveamplitude->setMaximumSize(QSize(16777215, 23));
         pwaveamplitude->setFont(font4);
         pwaveamplitude->setDecimals(2);
         pwaveamplitude->setMinimum(0.05);
@@ -541,67 +504,51 @@ public:
 
         waveLayout->addWidget(pwaveamplitude, 2, 3, 1, 1);
 
-        twaveduration = new QDoubleSpinBox(WaveFrame);
-        twaveduration->setObjectName(QStringLiteral("twaveduration"));
-        sizePolicy2.setHeightForWidth(twaveduration->sizePolicy().hasHeightForWidth());
-        twaveduration->setSizePolicy(sizePolicy2);
-        twaveduration->setMinimumSize(QSize(83, 23));
-        twaveduration->setMaximumSize(QSize(16777215, 23));
-        twaveduration->setFont(font4);
-        twaveduration->setDecimals(2);
-        twaveduration->setMinimum(0.1);
-        twaveduration->setMaximum(0.4);
-        twaveduration->setSingleStep(0.01);
-        twaveduration->setValue(0.16);
-
-        waveLayout->addWidget(twaveduration, 5, 4, 1, 1);
-
-        DurationLabel = new QLabel(WaveFrame);
-        DurationLabel->setObjectName(QStringLiteral("DurationLabel"));
-        QFont font5;
-        font5.setFamily(QStringLiteral("MS Sans Serif"));
-        font5.setBold(true);
-        font5.setWeight(75);
-        DurationLabel->setFont(font5);
-
-        waveLayout->addWidget(DurationLabel, 0, 4, 1, 1);
-
-        qrslabel = new QLabel(WaveFrame);
-        qrslabel->setObjectName(QStringLiteral("qrslabel"));
-        qrslabel->setFont(font3);
-        qrslabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        waveLayout->addWidget(qrslabel, 3, 1, 1, 1, Qt::AlignLeft);
-
         twavelabel = new QLabel(WaveFrame);
         twavelabel->setObjectName(QStringLiteral("twavelabel"));
-        twavelabel->setFont(font3);
+        QFont font5;
+        font5.setFamily(QStringLiteral("Sans Serif"));
+        font5.setPointSize(8);
+        font5.setBold(true);
+        font5.setWeight(75);
+        twavelabel->setFont(font5);
         twavelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         waveLayout->addWidget(twavelabel, 5, 1, 1, 1, Qt::AlignLeft);
 
-        AmpLabel = new QLabel(WaveFrame);
-        AmpLabel->setObjectName(QStringLiteral("AmpLabel"));
-        AmpLabel->setFont(font5);
+        swavelabel = new QLabel(WaveFrame);
+        swavelabel->setObjectName(QStringLiteral("swavelabel"));
+        swavelabel->setFont(font5);
+        swavelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        waveLayout->addWidget(AmpLabel, 0, 3, 1, 1);
+        waveLayout->addWidget(swavelabel, 4, 1, 1, 1, Qt::AlignLeft);
 
         ShowTitle = new QLabel(WaveFrame);
         ShowTitle->setObjectName(QStringLiteral("ShowTitle"));
-        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(ShowTitle->sizePolicy().hasHeightForWidth());
-        ShowTitle->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(ShowTitle->sizePolicy().hasHeightForWidth());
+        ShowTitle->setSizePolicy(sizePolicy5);
         ShowTitle->setMaximumSize(QSize(35, 16777215));
-        ShowTitle->setFont(font5);
+        QFont font6;
+        font6.setFamily(QStringLiteral("MS Sans Serif"));
+        font6.setBold(true);
+        font6.setWeight(75);
+        ShowTitle->setFont(font6);
 
         waveLayout->addWidget(ShowTitle, 0, 0, 1, 1, Qt::AlignHCenter);
+
+        AmpLabel = new QLabel(WaveFrame);
+        AmpLabel->setObjectName(QStringLiteral("AmpLabel"));
+        AmpLabel->setFont(font6);
+
+        waveLayout->addWidget(AmpLabel, 0, 3, 1, 1);
 
         label = new QLabel(WaveFrame);
         label->setObjectName(QStringLiteral("label"));
 
-        waveLayout->addWidget(label, 2, 8, 1, 1);
+        waveLayout->addWidget(label, 2, 10, 1, 1);
 
         swaveshow = new QCheckBox(WaveFrame);
         swaveshow->setObjectName(QStringLiteral("swaveshow"));
@@ -610,6 +557,19 @@ public:
         swaveshow->setMaximumSize(QSize(35, 16777215));
 
         waveLayout->addWidget(swaveshow, 4, 0, 1, 1, Qt::AlignHCenter);
+
+        DurationLabel = new QLabel(WaveFrame);
+        DurationLabel->setObjectName(QStringLiteral("DurationLabel"));
+        DurationLabel->setFont(font6);
+
+        waveLayout->addWidget(DurationLabel, 0, 5, 1, 1);
+
+        pwavelabel = new QLabel(WaveFrame);
+        pwavelabel->setObjectName(QStringLiteral("pwavelabel"));
+        pwavelabel->setFont(font5);
+        pwavelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        waveLayout->addWidget(pwavelabel, 2, 1, 1, 1, Qt::AlignLeft);
 
         twaveshow = new QCheckBox(WaveFrame);
         twaveshow->setObjectName(QStringLiteral("twaveshow"));
@@ -625,8 +585,8 @@ public:
 
         twaveamplitude = new QDoubleSpinBox(WaveFrame);
         twaveamplitude->setObjectName(QStringLiteral("twaveamplitude"));
-        sizePolicy2.setHeightForWidth(twaveamplitude->sizePolicy().hasHeightForWidth());
-        twaveamplitude->setSizePolicy(sizePolicy2);
+        sizePolicy4.setHeightForWidth(twaveamplitude->sizePolicy().hasHeightForWidth());
+        twaveamplitude->setSizePolicy(sizePolicy4);
         twaveamplitude->setMinimumSize(QSize(83, 23));
         twaveamplitude->setMaximumSize(QSize(16777215, 23));
         twaveamplitude->setFont(font4);
@@ -638,21 +598,201 @@ public:
 
         waveLayout->addWidget(twaveamplitude, 5, 3, 1, 1);
 
+        qrslabel = new QLabel(WaveFrame);
+        qrslabel->setObjectName(QStringLiteral("qrslabel"));
+        qrslabel->setFont(font5);
+        qrslabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        waveLayout->addWidget(qrslabel, 3, 1, 1, 1, Qt::AlignLeft);
+
+        twaveduration = new QDoubleSpinBox(WaveFrame);
+        twaveduration->setObjectName(QStringLiteral("twaveduration"));
+        sizePolicy4.setHeightForWidth(twaveduration->sizePolicy().hasHeightForWidth());
+        twaveduration->setSizePolicy(sizePolicy4);
+        twaveduration->setMinimumSize(QSize(83, 23));
+        twaveduration->setMaximumSize(QSize(16777215, 23));
+        twaveduration->setFont(font4);
+        twaveduration->setDecimals(2);
+        twaveduration->setMinimum(0.1);
+        twaveduration->setMaximum(0.4);
+        twaveduration->setSingleStep(0.01);
+        twaveduration->setValue(0.16);
+
+        waveLayout->addWidget(twaveduration, 5, 5, 1, 1);
+
+        pwaveduration = new QDoubleSpinBox(WaveFrame);
+        pwaveduration->setObjectName(QStringLiteral("pwaveduration"));
+        sizePolicy4.setHeightForWidth(pwaveduration->sizePolicy().hasHeightForWidth());
+        pwaveduration->setSizePolicy(sizePolicy4);
+        pwaveduration->setMinimumSize(QSize(83, 23));
+        pwaveduration->setMaximumSize(QSize(16777215, 23));
+        pwaveduration->setFont(font4);
+        pwaveduration->setDecimals(2);
+        pwaveduration->setMinimum(0.04);
+        pwaveduration->setMaximum(0.14);
+        pwaveduration->setSingleStep(0.01);
+        pwaveduration->setValue(0.09);
+
+        waveLayout->addWidget(pwaveduration, 2, 5, 1, 1);
+
+        qrsamplitude = new QDoubleSpinBox(WaveFrame);
+        qrsamplitude->setObjectName(QStringLiteral("qrsamplitude"));
+        sizePolicy4.setHeightForWidth(qrsamplitude->sizePolicy().hasHeightForWidth());
+        qrsamplitude->setSizePolicy(sizePolicy4);
+        qrsamplitude->setMinimumSize(QSize(83, 23));
+        qrsamplitude->setMaximumSize(QSize(16777215, 23));
+        qrsamplitude->setFont(font4);
+        qrsamplitude->setDecimals(2);
+        qrsamplitude->setMinimum(0.5);
+        qrsamplitude->setMaximum(2);
+        qrsamplitude->setSingleStep(0.5);
+        qrsamplitude->setValue(1);
+
+        waveLayout->addWidget(qrsamplitude, 3, 3, 1, 1);
+
+        qrswaveshow = new QCheckBox(WaveFrame);
+        qrswaveshow->setObjectName(QStringLiteral("qrswaveshow"));
+        sizePolicy.setHeightForWidth(qrswaveshow->sizePolicy().hasHeightForWidth());
+        qrswaveshow->setSizePolicy(sizePolicy);
+        qrswaveshow->setMaximumSize(QSize(35, 16777215));
+
+        waveLayout->addWidget(qrswaveshow, 3, 0, 1, 1, Qt::AlignHCenter|Qt::AlignVCenter);
+
+        stduration = new QDoubleSpinBox(WaveFrame);
+        stduration->setObjectName(QStringLiteral("stduration"));
+        sizePolicy4.setHeightForWidth(stduration->sizePolicy().hasHeightForWidth());
+        stduration->setSizePolicy(sizePolicy4);
+        stduration->setMinimumSize(QSize(83, 23));
+        stduration->setMaximumSize(QSize(16777215, 23));
+        stduration->setFont(font4);
+        stduration->setDecimals(2);
+        stduration->setMinimum(0.08);
+        stduration->setMaximum(0.3);
+        stduration->setSingleStep(0.01);
+        stduration->setValue(0.15);
+
+        waveLayout->addWidget(stduration, 4, 9, 1, 1);
+
+        label_3 = new QLabel(WaveFrame);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        QFont font7;
+        font7.setFamily(QStringLiteral("MS Sans Serif"));
+        font7.setPointSize(8);
+        font7.setBold(true);
+        font7.setWeight(75);
+        label_3->setFont(font7);
+
+        waveLayout->addWidget(label_3, 0, 7, 1, 1);
+
         qrspositiveness = new QComboBox(WaveFrame);
         qrspositiveness->setObjectName(QStringLiteral("qrspositiveness"));
         qrspositiveness->setEnabled(false);
-        sizePolicy2.setHeightForWidth(qrspositiveness->sizePolicy().hasHeightForWidth());
-        qrspositiveness->setSizePolicy(sizePolicy2);
+        sizePolicy4.setHeightForWidth(qrspositiveness->sizePolicy().hasHeightForWidth());
+        qrspositiveness->setSizePolicy(sizePolicy4);
         qrspositiveness->setMinimumSize(QSize(83, 23));
         qrspositiveness->setMaximumSize(QSize(16777215, 23));
         qrspositiveness->setFont(font4);
 
-        waveLayout->addWidget(qrspositiveness, 3, 5, 1, 1);
+        waveLayout->addWidget(qrspositiveness, 3, 7, 1, 1);
+
+        NameLabel = new QLabel(WaveFrame);
+        NameLabel->setObjectName(QStringLiteral("NameLabel"));
+        NameLabel->setMaximumSize(QSize(16777215, 16777215));
+        NameLabel->setFont(font6);
+
+        waveLayout->addWidget(NameLabel, 0, 1, 1, 1);
+
+        pwaveshow = new QCheckBox(WaveFrame);
+        pwaveshow->setObjectName(QStringLiteral("pwaveshow"));
+        sizePolicy.setHeightForWidth(pwaveshow->sizePolicy().hasHeightForWidth());
+        pwaveshow->setSizePolicy(sizePolicy);
+        pwaveshow->setMaximumSize(QSize(35, 16777215));
+
+        waveLayout->addWidget(pwaveshow, 2, 0, 1, 1, Qt::AlignHCenter|Qt::AlignVCenter);
+
+        twavepositiveness = new QComboBox(WaveFrame);
+        twavepositiveness->setObjectName(QStringLiteral("twavepositiveness"));
+        sizePolicy4.setHeightForWidth(twavepositiveness->sizePolicy().hasHeightForWidth());
+        twavepositiveness->setSizePolicy(sizePolicy4);
+        twavepositiveness->setMinimumSize(QSize(83, 23));
+        twavepositiveness->setMaximumSize(QSize(16777215, 23));
+        twavepositiveness->setFont(font4);
+
+        waveLayout->addWidget(twavepositiveness, 5, 7, 1, 1);
+
+        qrsduration = new QDoubleSpinBox(WaveFrame);
+        qrsduration->setObjectName(QStringLiteral("qrsduration"));
+        sizePolicy4.setHeightForWidth(qrsduration->sizePolicy().hasHeightForWidth());
+        qrsduration->setSizePolicy(sizePolicy4);
+        qrsduration->setMinimumSize(QSize(83, 23));
+        qrsduration->setMaximumSize(QSize(16777215, 23));
+        qrsduration->setFont(font4);
+        qrsduration->setDecimals(2);
+        qrsduration->setMinimum(0.08);
+        qrsduration->setMaximum(0.16);
+        qrsduration->setSingleStep(0.01);
+        qrsduration->setValue(0.1);
+
+        waveLayout->addWidget(qrsduration, 3, 5, 1, 1);
+
+        prlabel = new QLabel(WaveFrame);
+        prlabel->setObjectName(QStringLiteral("prlabel"));
+        prlabel->setFont(font5);
+        prlabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        waveLayout->addWidget(prlabel, 2, 8, 1, 1);
+
+        swaveduration = new QDoubleSpinBox(WaveFrame);
+        swaveduration->setObjectName(QStringLiteral("swaveduration"));
+        sizePolicy4.setHeightForWidth(swaveduration->sizePolicy().hasHeightForWidth());
+        swaveduration->setSizePolicy(sizePolicy4);
+        swaveduration->setMinimumSize(QSize(83, 23));
+        swaveduration->setMaximumSize(QSize(16777215, 23));
+        swaveduration->setFont(font4);
+        swaveduration->setDecimals(2);
+        swaveduration->setMinimum(0.1);
+        swaveduration->setMaximum(0.4);
+        swaveduration->setSingleStep(0.01);
+        swaveduration->setValue(0.16);
+
+        waveLayout->addWidget(swaveduration, 4, 5, 1, 1);
+
+        stlabel = new QLabel(WaveFrame);
+        stlabel->setObjectName(QStringLiteral("stlabel"));
+        stlabel->setFont(font5);
+        stlabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        waveLayout->addWidget(stlabel, 4, 8, 1, 1);
+
+        prduration = new QDoubleSpinBox(WaveFrame);
+        prduration->setObjectName(QStringLiteral("prduration"));
+        sizePolicy4.setHeightForWidth(prduration->sizePolicy().hasHeightForWidth());
+        prduration->setSizePolicy(sizePolicy4);
+        prduration->setMinimumSize(QSize(83, 23));
+        prduration->setMaximumSize(QSize(16777215, 23));
+        prduration->setFont(font4);
+        prduration->setDecimals(2);
+        prduration->setMinimum(0.08);
+        prduration->setMaximum(0.3);
+        prduration->setSingleStep(0.01);
+        prduration->setValue(0.15);
+
+        waveLayout->addWidget(prduration, 2, 9, 1, 1);
+
+        pwavepositiveness = new QComboBox(WaveFrame);
+        pwavepositiveness->setObjectName(QStringLiteral("pwavepositiveness"));
+        sizePolicy4.setHeightForWidth(pwavepositiveness->sizePolicy().hasHeightForWidth());
+        pwavepositiveness->setSizePolicy(sizePolicy4);
+        pwavepositiveness->setMinimumSize(QSize(83, 23));
+        pwavepositiveness->setMaximumSize(QSize(16777215, 23));
+        pwavepositiveness->setFont(font4);
+
+        waveLayout->addWidget(pwavepositiveness, 2, 7, 1, 1);
 
         swaveamplitude = new QDoubleSpinBox(WaveFrame);
         swaveamplitude->setObjectName(QStringLiteral("swaveamplitude"));
-        sizePolicy2.setHeightForWidth(swaveamplitude->sizePolicy().hasHeightForWidth());
-        swaveamplitude->setSizePolicy(sizePolicy2);
+        sizePolicy4.setHeightForWidth(swaveamplitude->sizePolicy().hasHeightForWidth());
+        swaveamplitude->setSizePolicy(sizePolicy4);
         swaveamplitude->setMinimumSize(QSize(83, 23));
         swaveamplitude->setMaximumSize(QSize(16777215, 23));
         swaveamplitude->setFont(font4);
@@ -664,128 +804,31 @@ public:
 
         waveLayout->addWidget(swaveamplitude, 4, 3, 1, 1);
 
-        qrsduration = new QDoubleSpinBox(WaveFrame);
-        qrsduration->setObjectName(QStringLiteral("qrsduration"));
-        sizePolicy2.setHeightForWidth(qrsduration->sizePolicy().hasHeightForWidth());
-        qrsduration->setSizePolicy(sizePolicy2);
-        qrsduration->setMinimumSize(QSize(83, 23));
-        qrsduration->setMaximumSize(QSize(16777215, 23));
-        qrsduration->setFont(font4);
-        qrsduration->setDecimals(2);
-        qrsduration->setMinimum(0.08);
-        qrsduration->setMaximum(0.16);
-        qrsduration->setSingleStep(0.01);
-        qrsduration->setValue(0.1);
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        waveLayout->addWidget(qrsduration, 3, 4, 1, 1);
+        waveLayout->addItem(horizontalSpacer_10, 3, 4, 1, 1);
 
-        NameLabel = new QLabel(WaveFrame);
-        NameLabel->setObjectName(QStringLiteral("NameLabel"));
-        NameLabel->setMaximumSize(QSize(16777215, 16777215));
-        NameLabel->setFont(font5);
+        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        waveLayout->addWidget(NameLabel, 0, 1, 1, 1);
+        waveLayout->addItem(horizontalSpacer_9, 2, 4, 1, 1);
 
-        twavepositiveness = new QComboBox(WaveFrame);
-        twavepositiveness->setObjectName(QStringLiteral("twavepositiveness"));
-        sizePolicy2.setHeightForWidth(twavepositiveness->sizePolicy().hasHeightForWidth());
-        twavepositiveness->setSizePolicy(sizePolicy2);
-        twavepositiveness->setMinimumSize(QSize(83, 23));
-        twavepositiveness->setMaximumSize(QSize(16777215, 23));
-        twavepositiveness->setFont(font4);
+        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        waveLayout->addWidget(twavepositiveness, 5, 5, 1, 1);
+        waveLayout->addItem(horizontalSpacer_11, 2, 6, 1, 1);
 
-        pwaveshow = new QCheckBox(WaveFrame);
-        pwaveshow->setObjectName(QStringLiteral("pwaveshow"));
-        sizePolicy.setHeightForWidth(pwaveshow->sizePolicy().hasHeightForWidth());
-        pwaveshow->setSizePolicy(sizePolicy);
-        pwaveshow->setMaximumSize(QSize(35, 16777215));
+        horizontalSpacer_12 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        waveLayout->addWidget(pwaveshow, 2, 0, 1, 1, Qt::AlignHCenter|Qt::AlignVCenter);
+        waveLayout->addItem(horizontalSpacer_12, 3, 6, 1, 1);
 
-        swaveduration = new QDoubleSpinBox(WaveFrame);
-        swaveduration->setObjectName(QStringLiteral("swaveduration"));
-        sizePolicy2.setHeightForWidth(swaveduration->sizePolicy().hasHeightForWidth());
-        swaveduration->setSizePolicy(sizePolicy2);
-        swaveduration->setMinimumSize(QSize(83, 23));
-        swaveduration->setMaximumSize(QSize(16777215, 23));
-        swaveduration->setFont(font4);
-        swaveduration->setDecimals(2);
-        swaveduration->setMinimum(0.1);
-        swaveduration->setMaximum(0.4);
-        swaveduration->setSingleStep(0.01);
-        swaveduration->setValue(0.16);
+        horizontalSpacer_13 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        waveLayout->addWidget(swaveduration, 4, 4, 1, 1);
-
-        pwavepositiveness = new QComboBox(WaveFrame);
-        pwavepositiveness->setObjectName(QStringLiteral("pwavepositiveness"));
-        sizePolicy2.setHeightForWidth(pwavepositiveness->sizePolicy().hasHeightForWidth());
-        pwavepositiveness->setSizePolicy(sizePolicy2);
-        pwavepositiveness->setMinimumSize(QSize(83, 23));
-        pwavepositiveness->setMaximumSize(QSize(16777215, 23));
-        pwavepositiveness->setFont(font4);
-
-        waveLayout->addWidget(pwavepositiveness, 2, 5, 1, 1);
-
-        prlabel = new QLabel(WaveFrame);
-        prlabel->setObjectName(QStringLiteral("prlabel"));
-        prlabel->setFont(font3);
-        prlabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        waveLayout->addWidget(prlabel, 2, 6, 1, 1);
-
-        prduration = new QDoubleSpinBox(WaveFrame);
-        prduration->setObjectName(QStringLiteral("prduration"));
-        sizePolicy2.setHeightForWidth(prduration->sizePolicy().hasHeightForWidth());
-        prduration->setSizePolicy(sizePolicy2);
-        prduration->setMinimumSize(QSize(83, 23));
-        prduration->setMaximumSize(QSize(16777215, 23));
-        prduration->setFont(font4);
-        prduration->setDecimals(2);
-        prduration->setMinimum(0.08);
-        prduration->setMaximum(0.3);
-        prduration->setSingleStep(0.01);
-        prduration->setValue(0.15);
-
-        waveLayout->addWidget(prduration, 2, 7, 1, 1);
-
-        stduration = new QDoubleSpinBox(WaveFrame);
-        stduration->setObjectName(QStringLiteral("stduration"));
-        sizePolicy2.setHeightForWidth(stduration->sizePolicy().hasHeightForWidth());
-        stduration->setSizePolicy(sizePolicy2);
-        stduration->setMinimumSize(QSize(83, 23));
-        stduration->setMaximumSize(QSize(16777215, 23));
-        stduration->setFont(font4);
-        stduration->setDecimals(2);
-        stduration->setMinimum(0.08);
-        stduration->setMaximum(0.3);
-        stduration->setSingleStep(0.01);
-        stduration->setValue(0.15);
-
-        waveLayout->addWidget(stduration, 4, 7, 1, 1);
-
-        stlabel = new QLabel(WaveFrame);
-        stlabel->setObjectName(QStringLiteral("stlabel"));
-        stlabel->setFont(font3);
-        stlabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        waveLayout->addWidget(stlabel, 4, 6, 1, 1);
-
-        label_3 = new QLabel(WaveFrame);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        QFont font6;
-        font6.setFamily(QStringLiteral("MS Sans Serif"));
-        font6.setPointSize(8);
-        font6.setBold(true);
-        font6.setWeight(75);
-        label_3->setFont(font6);
-
-        waveLayout->addWidget(label_3, 0, 5, 1, 1);
+        waveLayout->addItem(horizontalSpacer_13, 4, 6, 1, 1);
 
 
-        verticalLayout_2->addWidget(WaveFrame);
+        headFrame->addWidget(WaveFrame);
+
+
+        verticalLayout_2->addWidget(headFrame_2);
 
         preamtureFrame = new QFrame(ParameterFrame);
         preamtureFrame->setObjectName(QStringLiteral("preamtureFrame"));
@@ -796,13 +839,14 @@ public:
         PrematureHeadLay->setSpacing(6);
         PrematureHeadLay->setContentsMargins(11, 11, 11, 11);
         PrematureHeadLay->setObjectName(QStringLiteral("PrematureHeadLay"));
+        PrematureHeadLay->setContentsMargins(6, 6, 6, 6);
         PrematureBeatsLabel = new QLabel(preamtureFrame);
         PrematureBeatsLabel->setObjectName(QStringLiteral("PrematureBeatsLabel"));
-        QFont font7;
-        font7.setPointSize(10);
-        font7.setBold(true);
-        font7.setWeight(75);
-        PrematureBeatsLabel->setFont(font7);
+        QFont font8;
+        font8.setPointSize(10);
+        font8.setBold(true);
+        font8.setWeight(75);
+        PrematureBeatsLabel->setFont(font8);
 
         PrematureHeadLay->addWidget(PrematureBeatsLabel);
 
@@ -890,16 +934,17 @@ public:
         otherLayout->setSpacing(6);
         otherLayout->setContentsMargins(11, 11, 11, 11);
         otherLayout->setObjectName(QStringLiteral("otherLayout"));
+        otherLayout->setContentsMargins(0, 0, 0, 0);
         labelSpecialConditions = new QLabel(OtherFrame);
         labelSpecialConditions->setObjectName(QStringLiteral("labelSpecialConditions"));
         labelSpecialConditions->setMaximumSize(QSize(170, 16777215));
-        labelSpecialConditions->setFont(font7);
+        labelSpecialConditions->setFont(font8);
 
         otherLayout->addWidget(labelSpecialConditions, 0, 2, 1, 1);
 
         atrialfibrillation = new QCheckBox(OtherFrame);
         atrialfibrillation->setObjectName(QStringLiteral("atrialfibrillation"));
-        atrialfibrillation->setEnabled(false);
+        atrialfibrillation->setEnabled(true);
         atrialfibrillation->setMaximumSize(QSize(170, 16777215));
         atrialfibrillation->setFont(font4);
 
@@ -916,7 +961,7 @@ public:
         labelOtherConditions = new QLabel(OtherFrame);
         labelOtherConditions->setObjectName(QStringLiteral("labelOtherConditions"));
         labelOtherConditions->setMaximumSize(QSize(170, 16777215));
-        labelOtherConditions->setFont(font7);
+        labelOtherConditions->setFont(font8);
 
         otherLayout->addWidget(labelOtherConditions, 0, 0, 1, 1);
 
@@ -928,6 +973,58 @@ public:
 
 
         ParameterLayout->addLayout(verticalLayout_2);
+
+        saveFrame = new QFrame(ParameterFrame);
+        saveFrame->setObjectName(QStringLiteral("saveFrame"));
+        saveFrame->setFrameShape(QFrame::Panel);
+        saveFrame->setFrameShadow(QFrame::Raised);
+        saveFrame->setLineWidth(3);
+        SaveLayout = new QHBoxLayout(saveFrame);
+        SaveLayout->setSpacing(6);
+        SaveLayout->setContentsMargins(11, 11, 11, 11);
+        SaveLayout->setObjectName(QStringLiteral("SaveLayout"));
+        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        SaveLayout->addItem(horizontalSpacer_8);
+
+        closePreset = new QPushButton(saveFrame);
+        closePreset->setObjectName(QStringLiteral("closePreset"));
+
+        SaveLayout->addWidget(closePreset);
+
+        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        SaveLayout->addItem(horizontalSpacer_7);
+
+        Delete = new QPushButton(saveFrame);
+        Delete->setObjectName(QStringLiteral("Delete"));
+
+        SaveLayout->addWidget(Delete);
+
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        SaveLayout->addItem(horizontalSpacer_4);
+
+        Save = new QPushButton(saveFrame);
+        Save->setObjectName(QStringLiteral("Save"));
+
+        SaveLayout->addWidget(Save);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        SaveLayout->addItem(horizontalSpacer_5);
+
+        SaveAs = new QPushButton(saveFrame);
+        SaveAs->setObjectName(QStringLiteral("SaveAs"));
+
+        SaveLayout->addWidget(SaveAs);
+
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        SaveLayout->addItem(horizontalSpacer_6);
+
+
+        ParameterLayout->addWidget(saveFrame);
 
 
         gridLayout->addWidget(ParameterFrame, 2, 2, 1, 1);
@@ -1031,47 +1128,50 @@ public:
         noiseFilter->setText(QApplication::translate("myMainWindowClass", "Noise Filter", 0));
         captureImage->setText(QApplication::translate("myMainWindowClass", "Capture Image", 0));
         startRecording->setText(QApplication::translate("myMainWindowClass", "Start Video Capture", 0));
-        Delete->setText(QApplication::translate("myMainWindowClass", "Delete", 0));
-        Save->setText(QApplication::translate("myMainWindowClass", "Save", 0));
-        SaveAs->setText(QApplication::translate("myMainWindowClass", "Save As", 0));
         label_2->setText(QApplication::translate("myMainWindowClass", "ECG Rythms", 0));
-        AddPreset->setText(QApplication::translate("myMainWindowClass", "Add", 0));
-        heartratelabel->setText(QApplication::translate("myMainWindowClass", " Heart Rate                   ", 0));
+        AddPreset->setText(QApplication::translate("myMainWindowClass", "Add/Duplicate", 0));
 #ifndef QT_NO_TOOLTIP
         heartratespinBox->setToolTip(QApplication::translate("myMainWindowClass", "Defines the heart rate. Ranges from 30 bpm to 200 bpm.", 0));
 #endif // QT_NO_TOOLTIP
         heartratespinBox->setSuffix(QApplication::translate("myMainWindowClass", " bpm", "bpm = beats per minute"));
-        pwavelabel->setText(QApplication::translate("myMainWindowClass", "P Wave", "Do not translate P"));
-#ifndef QT_NO_TOOLTIP
-        qrsamplitude->setToolTip(QApplication::translate("myMainWindowClass", "Defines the amplitude of the QRS complex. Can range from 0.50 mV to 2.00 mV. ", 0));
-#endif // QT_NO_TOOLTIP
-        qrsamplitude->setSuffix(QApplication::translate("myMainWindowClass", " mV", "milivolts"));
-        swavelabel->setText(QApplication::translate("myMainWindowClass", "S Wave", "Do not translate T"));
-#ifndef QT_NO_TOOLTIP
-        pwaveduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the P wave. Ranges from 0.04 s to 0.14 s. Inactive when AF is checked", 0));
-#endif // QT_NO_TOOLTIP
-        pwaveduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
-        qrswaveshow->setText(QString());
+        PresetNameLabel->setText(QApplication::translate("myMainWindowClass", "  Preset Name", 0));
+        heartratelabel->setText(QApplication::translate("myMainWindowClass", " Heart Rate      ", 0));
 #ifndef QT_NO_TOOLTIP
         pwaveamplitude->setToolTip(QApplication::translate("myMainWindowClass", "Defines the amplitude of the P wave. Ranges from 0.05 mV to 0.40 mV. Inactive when AF is checked.", 0));
 #endif // QT_NO_TOOLTIP
         pwaveamplitude->setSuffix(QApplication::translate("myMainWindowClass", " mV", "milivolts"));
-#ifndef QT_NO_TOOLTIP
-        twaveduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the T wave. Ranges from 0.10 s to 0.40 s", 0));
-#endif // QT_NO_TOOLTIP
-        twaveduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
-        DurationLabel->setText(QApplication::translate("myMainWindowClass", "Duration                               ", 0));
-        qrslabel->setText(QApplication::translate("myMainWindowClass", "QRS Wave", "Do not translate QRS"));
         twavelabel->setText(QApplication::translate("myMainWindowClass", "T Wave", "Do not translate T"));
-        AmpLabel->setText(QApplication::translate("myMainWindowClass", "Amplitude                                        ", 0));
+        swavelabel->setText(QApplication::translate("myMainWindowClass", "S Wave", "Do not translate T"));
         ShowTitle->setText(QApplication::translate("myMainWindowClass", "Show", 0));
+        AmpLabel->setText(QApplication::translate("myMainWindowClass", "Amplitude                                        ", 0));
         label->setText(QString());
         swaveshow->setText(QString());
+        DurationLabel->setText(QApplication::translate("myMainWindowClass", "Duration                               ", 0));
+        pwavelabel->setText(QApplication::translate("myMainWindowClass", "P Wave", "Do not translate P"));
         twaveshow->setText(QString());
 #ifndef QT_NO_TOOLTIP
         twaveamplitude->setToolTip(QApplication::translate("myMainWindowClass", "Defines the amplitude of the T wave. Ranges from 0.10 mV to 0.50 mV. ", 0));
 #endif // QT_NO_TOOLTIP
         twaveamplitude->setSuffix(QApplication::translate("myMainWindowClass", " mV", "milivolts"));
+        qrslabel->setText(QApplication::translate("myMainWindowClass", "QRS Wave", "Do not translate QRS"));
+#ifndef QT_NO_TOOLTIP
+        twaveduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the T wave. Ranges from 0.10 s to 0.40 s", 0));
+#endif // QT_NO_TOOLTIP
+        twaveduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
+#ifndef QT_NO_TOOLTIP
+        pwaveduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the P wave. Ranges from 0.04 s to 0.14 s. Inactive when AF is checked", 0));
+#endif // QT_NO_TOOLTIP
+        pwaveduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
+#ifndef QT_NO_TOOLTIP
+        qrsamplitude->setToolTip(QApplication::translate("myMainWindowClass", "Defines the amplitude of the QRS complex. Can range from 0.50 mV to 2.00 mV. ", 0));
+#endif // QT_NO_TOOLTIP
+        qrsamplitude->setSuffix(QApplication::translate("myMainWindowClass", " mV", "milivolts"));
+        qrswaveshow->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        stduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the ST interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.", "PR Interval (do not translate PR)"));
+#endif // QT_NO_TOOLTIP
+        stduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
+        label_3->setText(QApplication::translate("myMainWindowClass", "Sign                             ", 0));
         qrspositiveness->clear();
         qrspositiveness->insertItems(0, QStringList()
          << QApplication::translate("myMainWindowClass", "Normal", 0)
@@ -1081,15 +1181,8 @@ public:
 #ifndef QT_NO_TOOLTIP
         qrspositiveness->setToolTip(QApplication::translate("myMainWindowClass", "Defines the morphology of the QRS complex. Can be set as normal intarventricular conduction, intraventricular conduction disturbance with RBBB or as intraventricular conduction disturbance with LBBB. ", "Tooltip"));
 #endif // QT_NO_TOOLTIP
-#ifndef QT_NO_TOOLTIP
-        swaveamplitude->setToolTip(QApplication::translate("myMainWindowClass", "Defines the amplitude of the S wave. Ranges from 0.10 mV to 0.50 mV. ", 0));
-#endif // QT_NO_TOOLTIP
-        swaveamplitude->setSuffix(QApplication::translate("myMainWindowClass", " mV", "milivolts"));
-#ifndef QT_NO_TOOLTIP
-        qrsduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the QRS complex. Can range from 0.08 s to 0.16 s. ", 0));
-#endif // QT_NO_TOOLTIP
-        qrsduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
         NameLabel->setText(QApplication::translate("myMainWindowClass", " Name                                                 ", 0));
+        pwaveshow->setText(QString());
         twavepositiveness->clear();
         twavepositiveness->insertItems(0, QStringList()
          << QApplication::translate("myMainWindowClass", "Positive", 0)
@@ -1098,11 +1191,20 @@ public:
 #ifndef QT_NO_TOOLTIP
         twavepositiveness->setToolTip(QApplication::translate("myMainWindowClass", "Defines the orientation of the T wave. Can be set as positive or negative", "List box can be Positive or Negative T Wave value"));
 #endif // QT_NO_TOOLTIP
-        pwaveshow->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        qrsduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the QRS complex. Can range from 0.08 s to 0.16 s. ", 0));
+#endif // QT_NO_TOOLTIP
+        qrsduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
+        prlabel->setText(QApplication::translate("myMainWindowClass", "             PR Interval", "Do not translate"));
 #ifndef QT_NO_TOOLTIP
         swaveduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the S wave. Ranges from 0.10 s to 0.40 s", 0));
 #endif // QT_NO_TOOLTIP
         swaveduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
+        stlabel->setText(QApplication::translate("myMainWindowClass", "ST Interval", "Do not translate"));
+#ifndef QT_NO_TOOLTIP
+        prduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the PR interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.", "PR Interval (do not translate PR)"));
+#endif // QT_NO_TOOLTIP
+        prduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
         pwavepositiveness->clear();
         pwavepositiveness->insertItems(0, QStringList()
          << QApplication::translate("myMainWindowClass", "Positive", 0)
@@ -1111,17 +1213,10 @@ public:
 #ifndef QT_NO_TOOLTIP
         pwavepositiveness->setToolTip(QApplication::translate("myMainWindowClass", "Defines the orientation of the P wave. Can be set as positive or negative. Inactive when AF is checked.", "Tooltip"));
 #endif // QT_NO_TOOLTIP
-        prlabel->setText(QApplication::translate("myMainWindowClass", "             PR Interval", "Do not translate"));
 #ifndef QT_NO_TOOLTIP
-        prduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the PR interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.", "PR Interval (do not translate PR)"));
+        swaveamplitude->setToolTip(QApplication::translate("myMainWindowClass", "Defines the amplitude of the S wave. Ranges from 0.10 mV to 0.50 mV. ", 0));
 #endif // QT_NO_TOOLTIP
-        prduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
-#ifndef QT_NO_TOOLTIP
-        stduration->setToolTip(QApplication::translate("myMainWindowClass", "Defines the duration of the ST interval. Ranges from 0.08 s to 0.30 s. Inactive when AF is checked.", "PR Interval (do not translate PR)"));
-#endif // QT_NO_TOOLTIP
-        stduration->setSuffix(QApplication::translate("myMainWindowClass", " s", "seconds"));
-        stlabel->setText(QApplication::translate("myMainWindowClass", "ST Interval", "Do not translate"));
-        label_3->setText(QApplication::translate("myMainWindowClass", "Sign                             ", 0));
+        swaveamplitude->setSuffix(QApplication::translate("myMainWindowClass", " mV", "milivolts"));
         PrematureBeatsLabel->setText(QApplication::translate("myMainWindowClass", "Premature beats", 0));
 #ifndef QT_NO_TOOLTIP
         numberofsve->setToolTip(QApplication::translate("myMainWindowClass", "Defines the number of premature beats. Ranges from 1 to 99.", "Tooltip"));
@@ -1176,6 +1271,10 @@ public:
 "When AF is checked, this option is turned off.", "Tooltip for special conditions"));
 #endif // QT_NO_TOOLTIP
         labelOtherConditions->setText(QApplication::translate("myMainWindowClass", "Other conditions", 0));
+        closePreset->setText(QApplication::translate("myMainWindowClass", "Close Preset", 0));
+        Delete->setText(QApplication::translate("myMainWindowClass", "Delete", 0));
+        Save->setText(QApplication::translate("myMainWindowClass", "Save", 0));
+        SaveAs->setText(QApplication::translate("myMainWindowClass", "Save As", 0));
     } // retranslateUi
 
 };

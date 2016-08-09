@@ -56,8 +56,12 @@ public:
 public slots:
     void changePWavePositiveness(int);
     void changeTWavePositiveness(int);
+	void AF(int);
 	void selectPreset(int);
+	void closePreset();
+	void addCustomPreset();
 	void saveCustomSetting();
+	void saveAsCustomSetting();
 	void loadCustomSetting();
 	void record();
 	void startRecording();
@@ -68,7 +72,15 @@ public slots:
 	void showTwave(int);
 
 private:
+	enum presetMode{ addHMode =1,
+		   customMode = 2,
+		   predefinedMode = 3
+			};
+	presetMode currentMode;
     Ui::myMainWindowClass *ui;
+	void adHocMode();
+	void custMode();
+	void predefMode();
     // All preset ECG signals
     ECGpresetList presets;
     // Temporary preset when the user changed tabs

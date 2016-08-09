@@ -76,11 +76,11 @@ public:
 
     void setCurveData(int id, const QVector<QPointF> &data);
     //void clearCurve(int id);
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
+   //QSize minimumSizeHint() const;
+   // QSize sizeHint() const;
     inline void setHeartRate(const int &rate) { heartRate = rate; }
     QString ecgBackground();
-
+	//int heightForWidth(int w) const;
 public slots:
     void setDisplayData(bool status);
     void setEcgBackground(const bool &);

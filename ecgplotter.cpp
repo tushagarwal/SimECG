@@ -32,7 +32,8 @@
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMessageBox>
-
+#include <qdebug.h>
+//#include <>
 #include <cmath>
 
 
@@ -40,6 +41,7 @@ ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
 {
     // base_data is a vector [1, XELEMENTS] with values ranging from 0.01 to 2 in 0.01 steps
     base_data.reserve(XELEMENTS);
+	random_data.reserve(XELEMENTS);
     //double step = (double)(plotSettings.maxX - plotSettings.minX) / XELEMENTS;
     //double value = plotSettings.minX;
 	double step = 0.01;
@@ -48,6 +50,7 @@ ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
     for (int i = 0; i < XELEMENTS; i++) {
         base_data.append(value);
         value += step;
+		random_data.append(qrand());
     }
 	timer = new QTimer(this);
 	speed = 1;//default is 25mm
@@ -59,24 +62,17 @@ ECGplotter::ECGplotter(QWidget *parent) : Plotter(parent)
     twave.reserve(XELEMENTS);
     uwave.reserve(XELEMENTS);
     ecg.resize(XELEMENTS);
-
+	
     generateSignal();
 }
 
 void ECGplotter::timeout()
 {
-	//TODO: NOT WORKING
-	//scroll(10, 0);
-	//update();
-	//qDebug("Timeout");
 	if (moving) {
-		//moveBaseData(10);
 		if(speed)//25mm/s
 			plotSettings.scroll(2, 0);
 		else//50mm/s
 			plotSettings.scroll(4, 0);
-		//double step = (double)(plotSettings.maxX - plotSettings.minX) / XELEMENTS;
-		//double value = plotSettings.minX;
 		double step = 0.01;
 		double value = plotSettings.minX;
 		for (int i = 0; i < XELEMENTS; i++) {
@@ -140,27 +136,133 @@ void ECGplotter::generateSignal()
         uwave.resize(XELEMENTS);
         uwave.fill(0.0);
     }
+	if (currentECG.getAF()) {
+		double result;
+		bool flag = false;
+		bool prevFlag = true;
+		double prev = 0;
+		while (!afMiss.isEmpty() && !flag) {//Remove elements out of base data range
+			if (afMiss[0].second < base_data[0])
+				afMiss.removeFirst();
+			else
+				flag = true;
+		}
+		double start = base_data[0];
+		int i = 0;
+		if (!afMiss.isEmpty()) {
+			start = afMiss.back().first;  //afMiss[0].first;
+			i = base_data.indexOf(start); //Get Start Range
+			if (i < 0) {
+				bool found = false;
+				int a = 0;
+				while (!found && a<XELEMENTS) {
+					if (base_data[a] >= start) {
+						i = a;
+						found = true;
+					}
+					a++;
+				}
+				if (a == XELEMENTS) {
+					i = 0;
+				}
+				//Q_ASSERT(i >= 0);
+			}
+			flag = true;
+		}
+		else
+			flag = false;
 
-    // For testing only
-    // setCurveData(1, generate_Sine_wave());
-
-    // Add all matrixes into one
-    double result;
-    for (int i = 0; i < XELEMENTS; i++) {
-        result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
-        if (!currentECG.getNoiseFilter()) {
-            // Initialize pseudo random number generator
-            // Generate noise as a percentage of the signal
-             double noise = (qrand() % (int)(MAXNOISE * 10000)) / 10000.0;
-            // double noise = ((qrand() % (int)(MAXNOISE * result * 100.0)) / 100.0);
-            // Noise can be positive or negative
-            // noise -= MAXNOISE * result / 2.0;
-            // Add noise
-            // qDebug("Noise is %f", noise);
-            result += noise;
-        }
-        ecg[i] = QPointF(base_data[i], result);
-    }
+		for (; i <XELEMENTS ; i++) {
+			uint randIndex = (uint)(base_data[i] * 100.0);
+			randIndex %= XELEMENTS;
+			if (!flag) {
+				if (prevFlag && (prev < 0 && qrswave[i] > 0)) {// to prevent consecutive qrs misses
+					prevFlag = false;
+				}
+				else if (prev < 0 && qrswave[i] > 0 && (random_data[randIndex] < ((int)RAND_MAX / 2))) {
+					flag = true;
+					afMiss.append(qMakePair(base_data[i], base_data.back()));
+				}
+				//result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
+			}
+			else {
+				if (qrswave[i] < 0) {
+					afMiss.back().second = base_data[i];
+					flag = false;
+					//qDebug() << "Base Data Second" << base_data[i];
+					prevFlag = true;
+				}
+			}
+			prev = qrswave[i];
+		}
+		int curAFindex = -1;
+		double curr = -1;
+		if (!afMiss.isEmpty()) {
+			curAFindex = 0;
+			if(afMiss[0].first == base_data[0])
+				flag = true;
+		}
+		else
+			flag = false;
+		for (int i = 0; i < XELEMENTS; i++) {
+			//Add random sine waves to data
+			uint randIndex = (uint)(base_data[i] * 100.0);
+			randIndex %= XELEMENTS;
+			if(curAFindex == -1 || curAFindex>=afMiss.count())
+				result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
+			else if (flag){//in range to exclude qrs
+				if (base_data[i] <= afMiss[curAFindex].second) {//still in range
+					result = pwave[i] + swave[i] + twave[i] + uwave[i];
+				}
+				else {
+					flag = false;
+					result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
+					curAFindex++;
+				}
+			}
+			else if (base_data[i] >= afMiss[curAFindex].first) {
+				flag = true;
+				result = pwave[i] + swave[i] + twave[i] + uwave[i];
+			}
+			else {
+				result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
+			}
+			
+			if (!currentECG.getNoiseFilter()) {
+				// Initialize pseudo random number generator
+				// Generate noise as a percentage of the signal
+				double noise = (random_data[randIndex] % (int)(MAXNOISE * 10000)) / 10000.0;
+				// double noise = ((qrand() % (int)(MAXNOISE * result * 100.0)) / 100.0);
+				// Noise can be positive or negative
+				// noise -= MAXNOISE * result / 2.0;
+				// Add noise
+				// qDebug("Noise is %f", noise);
+				result += noise *(-1 * (int)(randIndex % 2));
+			}
+			ecg[i] = QPointF(base_data[i], result);
+			//prev = qrswave[i];
+		}
+	}
+	else {
+		double result;
+		for (int i = 0; i < XELEMENTS; i++) {
+			result = pwave[i] + qwave[i] + qrswave[i] + swave[i] + twave[i] + uwave[i];
+			uint randIndex = (uint)(base_data[i] * 100.0);
+			randIndex %= XELEMENTS;
+			if (!currentECG.getNoiseFilter()) {
+				// Initialize pseudo random number generator
+				// Generate noise as a percentage of the signal
+				double noise = (random_data[randIndex] % (int)(MAXNOISE * 10000)) / 10000.0;
+				// double noise = ((qrand() % (int)(MAXNOISE * result * 100.0)) / 100.0);
+				// Noise can be positive or negative
+				// noise -= MAXNOISE * result / 2.0;
+				// Add noise
+				// qDebug("Noise is %f", noise);
+				result += noise;
+			}
+			ecg[i] = QPointF(base_data[i], result);
+		}
+	}
 
     // update heart rate display
     Plotter::setHeartRate(currentECG.getHeartRate());
@@ -411,7 +513,7 @@ void ECGplotter::generate_QRS_wave()
 {
     double li = 30 / (double)currentECG.getHeartRate();
     double b = (2.0 * li) / currentECG.getDuration_QRS_wave();
-    //double qrs1 = (a_qrswave / (2.0 * b)) * (2.0 - b);
+    //double qrs1 = (currentECG.getAmplitude_QRS_wave() / (2.0 * b)) * (2.0 - b);
     double qrs1 = 0;
     // TODO: wave could be positive or negative
     //int signal = displaySettings.getPositive_QRS_wave() ? 1 : -1;

@@ -35,11 +35,13 @@ class ECGpreset
 public:
 	static QList<ECGpreset>* getCustomPresets(QString  &);
     ECGpreset();
+	ECGpreset(const ECGpreset&);//copy constructor, doesnt copy name or description
 	QDataStream & writeData(QDataStream& out) const;
 	QDataStream & readData(QDataStream& in);
 	//ECGpreset(QString &);
 	void saveXMLFile(QString &);
     // GET methods
+	inline const bool& getAF() const { return af; }
     inline const QString &getName() const { return name; }
     inline const QString &getDescription() const { return description; }
     inline const bool &isRemoveable() const { return removeable; }
@@ -82,6 +84,7 @@ public:
     inline const double &getInterval_U_wave() const { return t_uwave; }
 
     // SET methods
+	inline void setAF(const bool &temp) { af = temp; }
     inline void setName(const QString &newName) { name = newName; }
     inline void setDescription(const QString &newDescription) { description = newDescription; }
     inline void setRemoveable(const bool &newRemoveable) { removeable = newRemoveable; }
@@ -173,7 +176,7 @@ private:
     QString description;    // The long name for the signal (to be used in tooltips)
     bool removeable;        // The preset can/cannot be removed by the user
     bool disabled;          // The preset is disabled (due to lack of implementation)
-
+	bool af;				//Atrial Fibrillation
     //
     // Wave variables
     //

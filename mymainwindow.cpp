@@ -42,24 +42,28 @@ myMainWindow::myMainWindow(QWidget *parent)
     QCoreApplication::setOrganizationDomain("EMSPA");
     QCoreApplication::setApplicationName("ECG Simulator");
 
-	//To disable maximize button
-	//Qt::WindowFlags flags = windowFlags();//  Qt::WindowMaximizeButtonHint;
-	//flags &= ~Qt::WindowMaximizeButtonHint;// &~Qt::WindowCloseButtonHint;
-	//setWindowFlags(flags);
-
 	showMaximized();
+	adHocMode();
 	
 	QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	policy.setHeightForWidth(true);
 	ui->ECGplot->setSizePolicy(policy);
-
+	
+	
+	//To disable maximize button
+	/*
+	Qt::WindowFlags flags = windowFlags();//  Qt::WindowMaximizeButtonHint;
+	flags &= ~Qt::WindowMaximizeButtonHint;// &~Qt::WindowCloseButtonHint;
+	setWindowFlags(flags);
+	*/
 	//
     // Command menu signals
     //
 
 	//Save Custom Setting
 	//connect(ui->actionSave_as_Preset, SIGNAL(triggered()), this, SLOT(saveCustomSetting()));
-
+	connect(ui->Save, SIGNAL(pressed()), this, SLOT(saveCustomSetting()));
+	//connect(ui->SaveAs, SIGNAL(pressed()), this, SLOT(saveAsCustomSetting()));
 	//Load Custom Setting
 	//connect(ui->actionLoad_Training_Settings_as_Preset, SIGNAL(triggered()), this, SLOT(loadCustomSetting()));
 
@@ -87,7 +91,7 @@ myMainWindow::myMainWindow(QWidget *parent)
     //
 
 	connect(ui->AddPreset, SIGNAL(pressed()), this, SLOT(addCustomPreset()));
-
+	connect(ui->closePreset, SIGNAL(pressed()), this, SLOT(closePreset()));
 
 
     // Populates all the presets in the List Widget
@@ -137,6 +141,12 @@ myMainWindow::myMainWindow(QWidget *parent)
     connect(ui->twavepositiveness, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTWavePositiveness(int)));
 	
 	connect(ui->stduration, SIGNAL(valueChanged(double)), ui->ECGplot, SLOT(setInterval_T_wave(double)));
+	
+	//AF
+	connect(ui->atrialfibrillation, SIGNAL(stateChanged(int)), this, SLOT(AF(int)));
+	
+	
+	
 	updateControls();
     //
     // Assessment (tab)
@@ -173,11 +183,32 @@ myMainWindow::~myMainWindow()
     delete ui;
 }
 
+void myMainWindow::addCustomPreset() {
+	//Prompt for new name
 
+	//Add to Preset List
+
+	//select new preset
+
+	//goTo customMode
+	custMode();
+}
+
+void myMainWindow::closePreset() {
+	
+	ui->ECGplot->setCurrentECGPlotted(ECGpreset());
+	updateControls();
+	adHocMode();
+}
 
 void myMainWindow::saveCustomSetting() {
+	
+	//Check if all details are upto date in Map.
+	//Write map to temp file
+	
 	//open file selector
 	//QString filename;
+	/*
 	QString filename = QFileDialog::getSaveFileName(this,
 		tr("Save Custom Settings"), QString("./test"),
 		tr("Xml files (*.xml)"));
@@ -190,6 +221,18 @@ void myMainWindow::saveCustomSetting() {
 	else {
 		tempECGPreset.saveXMLFile(filename);
 	}
+	*/
+}
+
+void myMainWindow::saveAsCustomSetting() {
+	//Prompt for new name
+
+	//Add current ecg plotted to Preset List
+
+	//select new preset
+
+	//goTo customMode
+	custMode();
 }
 
 void myMainWindow::loadCustomSetting() {
@@ -201,6 +244,16 @@ void myMainWindow::loadCustomSetting() {
 	//ECGpreset temp(filename);
 	//ui->ECGplot->setCurrentECGPlotted(temp);
 	updateControls();
+}
+
+void myMainWindow::AF(int checked) {
+	if (checked == 0) {
+		ui->ECGplot->currentECG.setAF(false);
+	}
+	else {
+		ui->ECGplot->currentECG.setAF(true);
+	}
+
 }
 
 void myMainWindow::record() {
@@ -295,6 +348,13 @@ void myMainWindow::stopRecording() {
 void myMainWindow::selectPreset(int selected) {
 	const ECGpreset &temp = presets.at((const int)selected);
 	ui->ECGplot->setCurrentECGPlotted(temp);
+	
+	//Change mode of application, depending on preset is removable or not.
+	if (temp.isRemoveable())
+		custMode();
+	else
+		predefMode();
+
 	updateControls();
 }
 
@@ -312,6 +372,41 @@ void myMainWindow::on_action_About_triggered()
     dialog.setWindowTitle(QString(tr("About simECG - version ", "in about dialog title will show version number")) + BUILDVERSION);
     dialog.exec();
 }
+
+void myMainWindow::adHocMode() {
+	currentMode = addHMode;
+	ui->PresetNameLabel->setVisible(false);
+	ui->PresetNameEdit->setVisible(false);
+	ui->Delete->setEnabled(false);
+	ui->Delete->setEnabled(false);
+	ui->SaveAs->setEnabled(true);
+	ui->Save->setEnabled(false);
+	ui->closePreset->setEnabled(false);
+}
+
+void myMainWindow::custMode() {
+	currentMode = customMode;
+	ui->PresetNameLabel->setVisible(true);
+	ui->PresetNameEdit->setVisible(true);
+	ui->PresetNameEdit->setText(ui->ECGplot->currentECG.getName());
+	ui->Delete->setEnabled(true);
+	ui->SaveAs->setEnabled(true);
+	ui->Save->setEnabled(true);
+	ui->closePreset->setEnabled(true);
+}
+
+void myMainWindow::predefMode() {
+	currentMode = predefinedMode;
+	ui->PresetNameLabel->setVisible(true);
+	ui->PresetNameEdit->setVisible(true);
+	ui->PresetNameEdit->setText(ui->ECGplot->currentECG.getName());
+	ui->Delete->setEnabled(false);
+	ui->SaveAs->setEnabled(true);
+	ui->Save->setEnabled(false);
+	ui->closePreset->setEnabled(true);
+}
+
+
 
 void myMainWindow::updateControls() {
 	// heart rate
@@ -343,6 +438,8 @@ void myMainWindow::updateControls() {
 	ui->twavepositiveness->setCurrentIndex(ui->ECGplot->currentECG.getPositive_T_wave() ? 0 : 1);
 	ui->stduration->setValue(ui->ECGplot->currentECG.getInterval_T_wave());
 
+	//AF wave
+	ui->atrialfibrillation->setChecked(ui->ECGplot->currentECG.getAF());
 }
 
 // When the user moves to a new tab

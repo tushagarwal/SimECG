@@ -34,6 +34,52 @@ ECGpreset::ECGpreset()
     setCommonValues();
 }
 
+ECGpreset::ECGpreset(const ECGpreset& temp) {
+	heartRate = temp.heartRate;
+	noiseFilter = temp.noiseFilter;
+	removeable = temp.removeable;
+	af = temp.af;
+
+	//P Wave
+	showPWave = temp.showPWave;
+	a_pwave = temp.a_pwave;
+	d_pwave = temp.d_pwave;
+	t_pwave = temp.t_pwave;
+	positive_pwave = temp.positive_pwave;
+
+	//Q Wave
+	showQWave = temp.showQWave;
+	a_qwave = temp.a_qwave;
+	d_qwave = temp.d_qwave;
+	t_qwave = temp.t_qwave;
+
+	//QRS Wave
+	showQRSWave = temp.showQRSWave;
+	a_qrswave = temp.a_qrswave;
+	d_qrswave = temp.d_qrswave;
+	positive_qrswave = temp.positive_qrswave;
+
+	//S Wave
+	showSWave = temp.showSWave;
+	a_swave = temp.a_swave;
+	d_swave = temp.d_swave;
+	t_swave = temp.t_swave;
+
+	//T Wave
+	showTWave = temp.showTWave;
+	a_twave = temp.a_twave;
+	d_twave = temp.d_twave;
+	t_twave = temp.t_twave;
+	positive_twave = temp.positive_twave;
+
+	//U Wave
+	showUWave = temp.showUWave;
+	a_uwave = temp.a_uwave;
+	d_uwave = temp.d_uwave;
+	t_uwave = temp.t_uwave;
+
+}
+
 QList<ECGpreset>* ECGpreset::getCustomPresets(QString  & filename) {
 	//Construct ECGPreset from XML file
 	QXmlStreamReader Rxml;
@@ -283,7 +329,8 @@ void ECGpreset::setCommonValues()
 {
     heartRate = 70;
     noiseFilter = true;
-	removeable = false;
+	removeable = true;
+	af = false;
 	
     showPWave = true;
     a_pwave = 0.15;
@@ -331,6 +378,7 @@ QDataStream & ECGpreset::writeData(QDataStream& out) const{
 	out << description;
 	out << removeable;
 	out << disabled;
+	out << af;
 	out.writeRawData((char *)heartRate, sizeof(heartRate));
 	out << noiseFilter;
 
@@ -380,6 +428,7 @@ QDataStream & ECGpreset::readData(QDataStream& in) {
 	in >> description;
 	in >> removeable;
 	in >> disabled;
+	in >> af;
 	in.readRawData((char *)heartRate, sizeof(heartRate));
 	in >> noiseFilter;
 

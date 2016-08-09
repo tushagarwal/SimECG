@@ -42,6 +42,7 @@
 #define XELEMENTS  600
 #define XSTART       0
 #define XEND         6
+#define AFProb (RAND_MAX / 2)
 
 class ECGplotter : public Plotter
 {
@@ -113,6 +114,8 @@ private:
     // The generated ECG arrays of data
     QVector<QPointF> ecg;
     QVectorPlus base_data;
+	QVector<QPair<double,double>> afMiss;
+	QVector<int> random_data;
     QVectorPlus pwave;
     QVectorPlus qrswave;
     QVectorPlus qwave;
