@@ -18,9 +18,10 @@ HEADERS += aboutdialog.h \
            plotter.h \
            qvectorplus.h \
            version.h \
-    ecgpresetlist.h
+    ecgpresetlist.h \
+    dialog.h
 
-FORMS += aboutdialog.ui assessmentframe.ui mymainwindow.ui
+FORMS += aboutdialog.ui assessmentframe.ui mymainwindow.ui addECGDialog.ui
 
 SOURCES += aboutdialog.cpp \
            assessmentframe.cpp \
@@ -30,7 +31,8 @@ SOURCES += aboutdialog.cpp \
            mymainwindow.cpp \
            plotter.cpp \
            qvectorplus.cpp \
-    ecgpresetlist.cpp
+    ecgpresetlist.cpp \
+    dialog.cpp
 
 RESOURCES += icons.qrc
 

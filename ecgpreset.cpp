@@ -34,6 +34,7 @@ ECGpreset::ECGpreset()
     setCommonValues();
 }
 
+/*
 ECGpreset::ECGpreset(const ECGpreset& temp) {
 	heartRate = temp.heartRate;
 	noiseFilter = temp.noiseFilter;
@@ -79,6 +80,7 @@ ECGpreset::ECGpreset(const ECGpreset& temp) {
 	t_uwave = temp.t_uwave;
 
 }
+*/
 
 QList<ECGpreset>* ECGpreset::getCustomPresets(QString  & filename) {
 	//Construct ECGPreset from XML file

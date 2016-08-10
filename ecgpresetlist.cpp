@@ -135,7 +135,7 @@ void ECGpresetList::populatePresetListWidget(QListWidget *listWidget)
     while (i.hasNext()) {
         i.next();
         QListWidgetItem *newItem = new QListWidgetItem(i.key(), listWidget);
-        if (i.value().isDisabled()) {
+        if (i.value().isRemoveable()) {
             newItem->setBackground(QBrush(Qt::lightGray));
         }
 		//i.value()->setRemoveable(false);

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Form Files">
@@ -63,6 +63,9 @@
     <ClCompile Include="assessmentframe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ecgplotter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="assessmentframe.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ecgplotter.h">
@@ -127,6 +133,12 @@
     <ClCompile Include="release\moc_assessmentframe.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="debug\moc_dialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_dialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
     <ClCompile Include="debug\moc_ecgplotter.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -160,6 +172,9 @@
     <ClInclude Include="ui_aboutdialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="ui_addECGDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
     <ClInclude Include="ui_assessmentframe.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -180,13 +195,12 @@
     <None Include="simecg_pt.ts">
       <Filter>Translation Files</Filter>
     </None>
-    <None Include="debug\ffmpeg.exe" />
-    <None Include="addECGDialog.ui">
-      <Filter>Form Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="aboutdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="addECGDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="assessmentframe.ui">

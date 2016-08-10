@@ -186,6 +186,7 @@ myMainWindow::~myMainWindow()
 void myMainWindow::addCustomPreset() {
 	//Prompt for new name
 
+
 	//Add to Preset List
 
 	//select new preset
@@ -388,7 +389,7 @@ void myMainWindow::custMode() {
 	currentMode = customMode;
 	ui->PresetNameLabel->setVisible(true);
 	ui->PresetNameEdit->setVisible(true);
-	ui->PresetNameEdit->setText(ui->ECGplot->currentECG.getName());
+	ui->PresetNameEdit->setReadOnly(false);
 	ui->Delete->setEnabled(true);
 	ui->SaveAs->setEnabled(true);
 	ui->Save->setEnabled(true);
@@ -399,7 +400,7 @@ void myMainWindow::predefMode() {
 	currentMode = predefinedMode;
 	ui->PresetNameLabel->setVisible(true);
 	ui->PresetNameEdit->setVisible(true);
-	ui->PresetNameEdit->setText(ui->ECGplot->currentECG.getName());
+	ui->PresetNameEdit->setReadOnly(true);
 	ui->Delete->setEnabled(false);
 	ui->SaveAs->setEnabled(true);
 	ui->Save->setEnabled(false);
@@ -409,6 +410,11 @@ void myMainWindow::predefMode() {
 
 
 void myMainWindow::updateControls() {
+
+	//Preset Name
+	if (currentMode != addHMode)
+		ui->PresetNameEdit->setText(ui->ECGplot->currentECG.getName());
+
 	// heart rate
 	ui->heartratespinBox->setValue(ui->ECGplot->currentECG.getHeartRate());
 
