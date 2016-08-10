@@ -181,6 +181,9 @@
       <Filter>Translation Files</Filter>
     </None>
     <None Include="debug\ffmpeg.exe" />
+    <None Include="addECGDialog.ui">
+      <Filter>Form Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="aboutdialog.ui">

@@ -82,9 +82,12 @@ public:
     QFrame *HeartRateFrame;
     QGridLayout *gridLayout_2;
     QSpinBox *heartratespinBox;
+    QSpacerItem *horizontalSpacer_15;
     QLabel *PresetNameLabel;
-    QLabel *heartratelabel;
+    QSpacerItem *horizontalSpacer_16;
     QLineEdit *PresetNameEdit;
+    QLabel *heartratelabel;
+    QSpacerItem *horizontalSpacer_14;
     QFrame *WaveFrame;
     QGridLayout *waveLayout;
     QDoubleSpinBox *pwaveamplitude;
@@ -155,7 +158,7 @@ public:
     {
         if (myMainWindowClass->objectName().isEmpty())
             myMainWindowClass->setObjectName(QStringLiteral("myMainWindowClass"));
-        myMainWindowClass->resize(1229, 791);
+        myMainWindowClass->resize(1124, 791);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -426,7 +429,11 @@ public:
         heartratespinBox->setMaximum(200);
         heartratespinBox->setValue(70);
 
-        gridLayout_2->addWidget(heartratespinBox, 0, 1, 1, 1);
+        gridLayout_2->addWidget(heartratespinBox, 0, 5, 1, 1);
+
+        horizontalSpacer_15 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_15, 0, 1, 1, 1);
 
         PresetNameLabel = new QLabel(HeartRateFrame);
         PresetNameLabel->setObjectName(QStringLiteral("PresetNameLabel"));
@@ -439,16 +446,31 @@ public:
         font2.setWeight(75);
         PresetNameLabel->setFont(font2);
 
-        gridLayout_2->addWidget(PresetNameLabel, 0, 2, 1, 1);
+        gridLayout_2->addWidget(PresetNameLabel, 0, 0, 1, 1);
+
+        horizontalSpacer_16 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_16, 0, 3, 1, 1);
+
+        PresetNameEdit = new QLineEdit(HeartRateFrame);
+        PresetNameEdit->setObjectName(QStringLiteral("PresetNameEdit"));
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(PresetNameEdit->sizePolicy().hasHeightForWidth());
+        PresetNameEdit->setSizePolicy(sizePolicy3);
+        PresetNameEdit->setMinimumSize(QSize(300, 0));
+
+        gridLayout_2->addWidget(PresetNameEdit, 0, 2, 1, 1);
 
         heartratelabel = new QLabel(HeartRateFrame);
         heartratelabel->setObjectName(QStringLiteral("heartratelabel"));
         heartratelabel->setEnabled(true);
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(heartratelabel->sizePolicy().hasHeightForWidth());
-        heartratelabel->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(heartratelabel->sizePolicy().hasHeightForWidth());
+        heartratelabel->setSizePolicy(sizePolicy4);
         QFont font3;
         font3.setFamily(QStringLiteral("Sans Serif"));
         font3.setPointSize(10);
@@ -457,17 +479,11 @@ public:
         heartratelabel->setFont(font3);
         heartratelabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout_2->addWidget(heartratelabel, 0, 0, 1, 1, Qt::AlignLeft);
+        gridLayout_2->addWidget(heartratelabel, 0, 4, 1, 1, Qt::AlignLeft);
 
-        PresetNameEdit = new QLineEdit(HeartRateFrame);
-        PresetNameEdit->setObjectName(QStringLiteral("PresetNameEdit"));
-        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(PresetNameEdit->sizePolicy().hasHeightForWidth());
-        PresetNameEdit->setSizePolicy(sizePolicy4);
+        horizontalSpacer_14 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_2->addWidget(PresetNameEdit, 0, 3, 1, 1);
+        gridLayout_2->addItem(horizontalSpacer_14, 0, 6, 1, 1);
 
 
         headFrame->addWidget(HeartRateFrame);
@@ -486,8 +502,8 @@ public:
         waveLayout->setContentsMargins(0, 0, 0, 0);
         pwaveamplitude = new QDoubleSpinBox(WaveFrame);
         pwaveamplitude->setObjectName(QStringLiteral("pwaveamplitude"));
-        sizePolicy4.setHeightForWidth(pwaveamplitude->sizePolicy().hasHeightForWidth());
-        pwaveamplitude->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(pwaveamplitude->sizePolicy().hasHeightForWidth());
+        pwaveamplitude->setSizePolicy(sizePolicy3);
         pwaveamplitude->setMinimumSize(QSize(83, 23));
         pwaveamplitude->setMaximumSize(QSize(16777215, 23));
         QFont font4;
@@ -585,8 +601,8 @@ public:
 
         twaveamplitude = new QDoubleSpinBox(WaveFrame);
         twaveamplitude->setObjectName(QStringLiteral("twaveamplitude"));
-        sizePolicy4.setHeightForWidth(twaveamplitude->sizePolicy().hasHeightForWidth());
-        twaveamplitude->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(twaveamplitude->sizePolicy().hasHeightForWidth());
+        twaveamplitude->setSizePolicy(sizePolicy3);
         twaveamplitude->setMinimumSize(QSize(83, 23));
         twaveamplitude->setMaximumSize(QSize(16777215, 23));
         twaveamplitude->setFont(font4);
@@ -607,8 +623,8 @@ public:
 
         twaveduration = new QDoubleSpinBox(WaveFrame);
         twaveduration->setObjectName(QStringLiteral("twaveduration"));
-        sizePolicy4.setHeightForWidth(twaveduration->sizePolicy().hasHeightForWidth());
-        twaveduration->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(twaveduration->sizePolicy().hasHeightForWidth());
+        twaveduration->setSizePolicy(sizePolicy3);
         twaveduration->setMinimumSize(QSize(83, 23));
         twaveduration->setMaximumSize(QSize(16777215, 23));
         twaveduration->setFont(font4);
@@ -622,8 +638,8 @@ public:
 
         pwaveduration = new QDoubleSpinBox(WaveFrame);
         pwaveduration->setObjectName(QStringLiteral("pwaveduration"));
-        sizePolicy4.setHeightForWidth(pwaveduration->sizePolicy().hasHeightForWidth());
-        pwaveduration->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(pwaveduration->sizePolicy().hasHeightForWidth());
+        pwaveduration->setSizePolicy(sizePolicy3);
         pwaveduration->setMinimumSize(QSize(83, 23));
         pwaveduration->setMaximumSize(QSize(16777215, 23));
         pwaveduration->setFont(font4);
@@ -637,8 +653,8 @@ public:
 
         qrsamplitude = new QDoubleSpinBox(WaveFrame);
         qrsamplitude->setObjectName(QStringLiteral("qrsamplitude"));
-        sizePolicy4.setHeightForWidth(qrsamplitude->sizePolicy().hasHeightForWidth());
-        qrsamplitude->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(qrsamplitude->sizePolicy().hasHeightForWidth());
+        qrsamplitude->setSizePolicy(sizePolicy3);
         qrsamplitude->setMinimumSize(QSize(83, 23));
         qrsamplitude->setMaximumSize(QSize(16777215, 23));
         qrsamplitude->setFont(font4);
@@ -660,8 +676,8 @@ public:
 
         stduration = new QDoubleSpinBox(WaveFrame);
         stduration->setObjectName(QStringLiteral("stduration"));
-        sizePolicy4.setHeightForWidth(stduration->sizePolicy().hasHeightForWidth());
-        stduration->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(stduration->sizePolicy().hasHeightForWidth());
+        stduration->setSizePolicy(sizePolicy3);
         stduration->setMinimumSize(QSize(83, 23));
         stduration->setMaximumSize(QSize(16777215, 23));
         stduration->setFont(font4);
@@ -687,8 +703,8 @@ public:
         qrspositiveness = new QComboBox(WaveFrame);
         qrspositiveness->setObjectName(QStringLiteral("qrspositiveness"));
         qrspositiveness->setEnabled(false);
-        sizePolicy4.setHeightForWidth(qrspositiveness->sizePolicy().hasHeightForWidth());
-        qrspositiveness->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(qrspositiveness->sizePolicy().hasHeightForWidth());
+        qrspositiveness->setSizePolicy(sizePolicy3);
         qrspositiveness->setMinimumSize(QSize(83, 23));
         qrspositiveness->setMaximumSize(QSize(16777215, 23));
         qrspositiveness->setFont(font4);
@@ -712,8 +728,8 @@ public:
 
         twavepositiveness = new QComboBox(WaveFrame);
         twavepositiveness->setObjectName(QStringLiteral("twavepositiveness"));
-        sizePolicy4.setHeightForWidth(twavepositiveness->sizePolicy().hasHeightForWidth());
-        twavepositiveness->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(twavepositiveness->sizePolicy().hasHeightForWidth());
+        twavepositiveness->setSizePolicy(sizePolicy3);
         twavepositiveness->setMinimumSize(QSize(83, 23));
         twavepositiveness->setMaximumSize(QSize(16777215, 23));
         twavepositiveness->setFont(font4);
@@ -722,8 +738,8 @@ public:
 
         qrsduration = new QDoubleSpinBox(WaveFrame);
         qrsduration->setObjectName(QStringLiteral("qrsduration"));
-        sizePolicy4.setHeightForWidth(qrsduration->sizePolicy().hasHeightForWidth());
-        qrsduration->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(qrsduration->sizePolicy().hasHeightForWidth());
+        qrsduration->setSizePolicy(sizePolicy3);
         qrsduration->setMinimumSize(QSize(83, 23));
         qrsduration->setMaximumSize(QSize(16777215, 23));
         qrsduration->setFont(font4);
@@ -744,8 +760,8 @@ public:
 
         swaveduration = new QDoubleSpinBox(WaveFrame);
         swaveduration->setObjectName(QStringLiteral("swaveduration"));
-        sizePolicy4.setHeightForWidth(swaveduration->sizePolicy().hasHeightForWidth());
-        swaveduration->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(swaveduration->sizePolicy().hasHeightForWidth());
+        swaveduration->setSizePolicy(sizePolicy3);
         swaveduration->setMinimumSize(QSize(83, 23));
         swaveduration->setMaximumSize(QSize(16777215, 23));
         swaveduration->setFont(font4);
@@ -766,8 +782,8 @@ public:
 
         prduration = new QDoubleSpinBox(WaveFrame);
         prduration->setObjectName(QStringLiteral("prduration"));
-        sizePolicy4.setHeightForWidth(prduration->sizePolicy().hasHeightForWidth());
-        prduration->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(prduration->sizePolicy().hasHeightForWidth());
+        prduration->setSizePolicy(sizePolicy3);
         prduration->setMinimumSize(QSize(83, 23));
         prduration->setMaximumSize(QSize(16777215, 23));
         prduration->setFont(font4);
@@ -781,8 +797,8 @@ public:
 
         pwavepositiveness = new QComboBox(WaveFrame);
         pwavepositiveness->setObjectName(QStringLiteral("pwavepositiveness"));
-        sizePolicy4.setHeightForWidth(pwavepositiveness->sizePolicy().hasHeightForWidth());
-        pwavepositiveness->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(pwavepositiveness->sizePolicy().hasHeightForWidth());
+        pwavepositiveness->setSizePolicy(sizePolicy3);
         pwavepositiveness->setMinimumSize(QSize(83, 23));
         pwavepositiveness->setMaximumSize(QSize(16777215, 23));
         pwavepositiveness->setFont(font4);
@@ -791,8 +807,8 @@ public:
 
         swaveamplitude = new QDoubleSpinBox(WaveFrame);
         swaveamplitude->setObjectName(QStringLiteral("swaveamplitude"));
-        sizePolicy4.setHeightForWidth(swaveamplitude->sizePolicy().hasHeightForWidth());
-        swaveamplitude->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(swaveamplitude->sizePolicy().hasHeightForWidth());
+        swaveamplitude->setSizePolicy(sizePolicy3);
         swaveamplitude->setMinimumSize(QSize(83, 23));
         swaveamplitude->setMaximumSize(QSize(16777215, 23));
         swaveamplitude->setFont(font4);
@@ -1058,7 +1074,7 @@ public:
         QObject::connect(actionSpeed25mm, SIGNAL(triggered()), actionSpeed50mm, SLOT(toggle()));
         QObject::connect(actionSpeed50mm, SIGNAL(triggered()), actionSpeed25mm, SLOT(toggle()));
 
-        qrspositiveness->setCurrentIndex(1);
+        qrspositiveness->setCurrentIndex(0);
         specialConditionsComboBox->setCurrentIndex(1);
 
 
@@ -1181,6 +1197,7 @@ public:
 #ifndef QT_NO_TOOLTIP
         qrspositiveness->setToolTip(QApplication::translate("myMainWindowClass", "Defines the morphology of the QRS complex. Can be set as normal intarventricular conduction, intraventricular conduction disturbance with RBBB or as intraventricular conduction disturbance with LBBB. ", "Tooltip"));
 #endif // QT_NO_TOOLTIP
+        qrspositiveness->setCurrentText(QApplication::translate("myMainWindowClass", "Normal", 0));
         NameLabel->setText(QApplication::translate("myMainWindowClass", " Name                                                 ", 0));
         pwaveshow->setText(QString());
         twavepositiveness->clear();
