@@ -63,6 +63,7 @@ public:
     QLineEdit *PresetNameEdit;
     QSpacerItem *horizontalSpacer_8;
     ECGplotter *ECGplot;
+    QLabel *label_5;
     QFrame *PreferencesFrame;
     QHBoxLayout *preference;
     QRadioButton *ecgRadio;
@@ -307,6 +308,10 @@ public:
         ECGplot->setMinimumSize(QSize(900, 350));
         ECGplot->setSizeIncrement(QSize(4, 3));
         ECGplot->setCursor(QCursor(Qt::BlankCursor));
+        label_5 = new QLabel(ECGplot);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(290, 130, 591, 16));
+        label_5->setFont(font1);
 
         verticalLayout->addWidget(ECGplot);
 
@@ -1189,6 +1194,7 @@ public:
         actionLoad_preferences->setText(QApplication::translate("myMainWindowClass", "&Load preferences ...", 0));
         actionLoad_preferences->setShortcut(QString());
         PresetNameLabel->setText(QApplication::translate("myMainWindowClass", "  Preset Name", 0));
+        label_5->setText(QApplication::translate("myMainWindowClass", "Simulation iQ ECG Simulator Trial                  Simulation iQ ECG Simulator Trial", 0));
         ecgRadio->setText(QApplication::translate("myMainWindowClass", "ECG Paper", 0));
         monitorRadio->setText(QApplication::translate("myMainWindowClass", "Monitor Display", 0));
         rollingView->setText(QApplication::translate("myMainWindowClass", "Rolling View", 0));
