@@ -1,5 +1,7 @@
 #include "ecgpresetlist.h"
 #include <qpushbutton.h>
+#include <qdebug.h>
+#include <qfile.h>
 
 ECGpresetList::ECGpresetList(QObject *parent) : QObject(parent)
 {
