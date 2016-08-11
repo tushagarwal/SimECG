@@ -36,8 +36,8 @@ public:
 	static QList<ECGpreset>* getCustomPresets(QString  &);
     ECGpreset();
 	
-	//Dont need copy contructor, all primitive types
-	//ECGpreset(const ECGpreset&);//copy constructor, doesnt copy name or description
+	void resetECGpreset();//set common values
+	void copyECGpreset(const ECGpreset&);//copy ECGPreset, doesnt copy name or description
 	QDataStream & writeData(QDataStream& out) const;
 	QDataStream & readData(QDataStream& in);
 	//ECGpreset(QString &);

@@ -1,9 +1,11 @@
 #include "ecgpresetlist.h"
+#include <qpushbutton.h>
 
 ECGpresetList::ECGpresetList(QObject *parent) : QObject(parent)
 {
     ECGpreset *preset;
 
+	//Load Custom Presets from disk
     // This will add all the application defined presets
 
     preset = new ECGpreset;
@@ -135,7 +137,7 @@ void ECGpresetList::populatePresetListWidget(QListWidget *listWidget)
     while (i.hasNext()) {
         i.next();
         QListWidgetItem *newItem = new QListWidgetItem(i.key(), listWidget);
-        if (i.value().isRemoveable()) {
+        if (i.value().isDisabled()) {
             newItem->setBackground(QBrush(Qt::lightGray));
         }
 		//i.value()->setRemoveable(false);
@@ -143,13 +145,82 @@ void ECGpresetList::populatePresetListWidget(QListWidget *listWidget)
     }
 }
 
+// Fills a list widget with all the existing presets
+void ECGpresetList::populateCustomListWidget(QListWidget *listWidget, QListWidget * delList)
+{
+	QMapIterator<QString, ECGpreset > i(customList);
+	while (i.hasNext()) {
+		i.next();
+		QListWidgetItem *newItem = new QListWidgetItem(i.key(), listWidget);
+		if (i.value().isDisabled()) {
+			newItem->setBackground(QBrush(Qt::lightGray));
+		}
+		QListWidgetItem *newItem2 = new QListWidgetItem(QIcon("delete.png"),"", delList);
+		//listWidget->setItemWidget(newItem2, delButton);
+		//i.value()->setRemoveable(false);
+		newItem->setToolTip(i.value().getDescription());
+	}
+}
+
+//Fills a combo box with all the existing presets
+void ECGpresetList::populateAddPresetCombo(QComboBox * comboBox)
+{
+	QMapIterator<QString, ECGpreset > i(presetList);
+	while (i.hasNext()) {
+		i.next();
+		comboBox->addItem(i.key());
+		//comboBox->insertItem(0, i.key());
+		//comboBox->appendRow(new QStandardItem(i.key()));
+	}
+	QMapIterator<QString, ECGpreset > j(customList);
+	while (j.hasNext()) {
+		j.next();
+		//comboBox->insertItem(0, i.key());
+		comboBox->addItem(j.key());
+		//comboBox->appendRow(new QStandardItem(j.key()));
+	}
+
+}
+
+
+//Inserts ECGpreset to the map, 
+// Return Value: False:if it contains a preset with the same name
+//				 True :if it add the preset
+bool ECGpresetList::insert(ECGpreset & newPreset) {
+	//save list before returning
+	if (contains(newPreset.getName())) {
+		return false;
+	}
+	else {
+		newPreset.setDisabled(false);
+	 customList.insert(newPreset.getName(), newPreset);	
+	 //save customlist to disk
+	}
+	return true;
+}
 
 // Returns the number of ECG preset signals
-int ECGpresetList::size() const
-{
+int ECGpresetList::presetSize() const{
     return presetList.size();
 }
 
+// Returns the number of ECG preset signals
+int ECGpresetList::customSize() const {
+	return customList.size();
+}
+
+bool ECGpresetList::contains(const QString & name) {
+	return presetList.contains(name) | customList.contains(name);
+}
+
+const ECGpreset  & ECGpresetList::getECGpreset(const QString & name) {
+	if (presetList.contains(name))
+		return presetList[name];
+	else if (customList.contains(name))
+		return customList[name];
+	else
+		return ECGpreset();//Should never return this
+}
 
 // Returns the name of the ECG signal in a certain index position
 const ECGpreset &ECGpresetList::at(const int &position)
@@ -188,7 +259,7 @@ int ECGpresetList::removePreset(const QString &oldPreset)
     //Make sure that this preset is removeable and not disabled
     //Q_ASSERT(presetList.value(oldPreset)->getDisabled() == false);
     //Q_ASSERT(presetList.value(oldPreset)->getRemoveable() == true);
-    retCode = presetList.remove(oldPreset);
+    retCode = customList.remove(oldPreset);
     switch (retCode) {
         case 0 :
             qDebug("The preset is not in the presets list (and should be)");
@@ -208,7 +279,7 @@ int ECGpresetList::removePreset(const QString &oldPreset)
 int ECGpresetList::savePresets()
 {
     //TODO: Save all presets to file
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
     return 0;
 }
 
@@ -218,6 +289,6 @@ int ECGpresetList::savePresets()
 int ECGpresetList::loadPresets()
 {
     //TODO: Read all presets from file
-    Q_ASSERT(false);
+    //Q_ASSERT(false);
     return 0;
 }

@@ -27,6 +27,8 @@
 #define DIALOG_H
 
 #include <QtWidgets/QtWidgets>
+#include "ecgpresetlist.h"
+#include "mymainwindow.h"
 
 namespace Ui {
     class Dialog;
@@ -38,12 +40,26 @@ class Dialog : public QDialog {
 public:
     explicit Dialog(QWidget *parent = 0);
     virtual ~Dialog();
+	void inline setPresetList(ECGpresetList & pre) { presets = &pre; }
+	int index;
+	ECGpreset * newPreset;
+	Ui::Dialog *m_ui;
 
 protected:
-    virtual void changeEvent(QEvent *e);
+    //virtual void changeEvent(QEvent *e);
 
 private:
-    Ui::Dialog *m_ui;
+	
+	ECGpresetList * presets;
+	myMainWindow * mainParent;
+
+private slots:
+	
+	void checkbox(int);
+	void okPressed();
+	void cancelPressed();
+	void nameChanged(const QString &);
+	void comboChanged(const QString &);
 };
 
 #endif // DIALOG_H

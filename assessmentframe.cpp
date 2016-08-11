@@ -237,17 +237,17 @@ void AssessmentFrame::chooseQuestions()
     //qsrand(midnight.secsTo(QTime::currentTime()));
 
     do {
-        question1 = qrand() % answerList->size();
+        //question1 = qrand() % answerList->size();
     } while (answerList->at(question1).isDisabled());
     m_ui->radioAnswer1->setText(answerList->at(question1).getName());
 
     do {
-        question2 = qrand() % answerList->size();
+        //question2 = qrand() % answerList->size();
     } while (question2 == question1 || answerList->at(question2).isDisabled());
     m_ui->radioAnswer2->setText(answerList->at(question2).getName());
 
     do {
-        question3 = qrand() % answerList->size();
+        //question3 = qrand() % answerList->size();
     } while (question3 == question2 || question3 == question1 || answerList->at(question3).isDisabled());
     m_ui->radioAnswer3->setText(answerList->at(question3).getName());
 

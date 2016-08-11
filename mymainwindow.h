@@ -29,6 +29,7 @@
 #include "assessmentframe.h"
 #include "ecgpreset.h"
 
+
 #include <QtWidgets/QtWidgets>
 #include <QtWidgets/QAbstractButton>
 #include <QSettings>
@@ -50,26 +51,30 @@ class myMainWindow : public QMainWindow
 public:
     myMainWindow(QWidget *parent = 0);
     ~myMainWindow();
+	// All preset ECG signals
+	ECGpresetList presets;
     // TODO: Remove this
     // QList<QAbstractButton *> getPresetsButtons();
 
-public slots:
+private slots:
     void changePWavePositiveness(int);
     void changeTWavePositiveness(int);
 	void AF(int);
-	void selectPreset(int);
+	void selectPreset(const QString &);
+	void selectCustom(const QString &);
 	void closePreset();
 	void addCustomPreset();
 	void saveCustomSetting();
 	void saveAsCustomSetting();
 	void loadCustomSetting();
+	void saveImage();
 	void record();
-	void startRecording();
-	void stopRecording();
 	void showPwave(int);
 	void showQRSwave(int);
 	void showSwave(int);
 	void showTwave(int);
+
+
 
 private:
 	enum presetMode{ addHMode =1,
@@ -81,8 +86,7 @@ private:
 	void adHocMode();
 	void custMode();
 	void predefMode();
-    // All preset ECG signals
-    ECGpresetList presets;
+    
     // Temporary preset when the user changed tabs
     ECGpreset tempECGPreset;
     // The assessment frame
@@ -98,11 +102,12 @@ private:
     void loadPreferences();
     void savePreferences();
 	void updateControls();
+	void startRecording();
+	void stopRecording();
 
 private slots:
     void on_action_About_triggered();
-    void on_action_Exit_triggered();
-    //void optionsTabChanged(int);
+	void on_action_Exit_triggered();
 };
 
 #endif

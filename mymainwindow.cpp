@@ -25,12 +25,15 @@
 
 #include "mymainwindow.h"
 #include "ui_mymainwindow.h"
+#include "ui_addECGDialog.h"
 #include "aboutdialog.h"
 #include "version.h"
+#include "dialog.h"
 #include <windows.h>
 #include <signal.h>
 #include "ecgpresetlist.h"
 #include <QtWidgets/QtWidgets>
+#include <QtGlobal>
 
 myMainWindow::myMainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::myMainWindowClass)
@@ -61,12 +64,9 @@ myMainWindow::myMainWindow(QWidget *parent)
     //
 
 	//Save Custom Setting
-	//connect(ui->actionSave_as_Preset, SIGNAL(triggered()), this, SLOT(saveCustomSetting()));
 	connect(ui->Save, SIGNAL(pressed()), this, SLOT(saveCustomSetting()));
-	//connect(ui->SaveAs, SIGNAL(pressed()), this, SLOT(saveAsCustomSetting()));
-	//Load Custom Setting
-	//connect(ui->actionLoad_Training_Settings_as_Preset, SIGNAL(triggered()), this, SLOT(loadCustomSetting()));
-
+	
+	
     // ECG Calibration speed (25 or 50 mm/s)
     // TODO: Implement the connector when the method exists
 	//connect(ui->actionSpeed25mm, SIGNAL(toggled(bool)), ui->ECGplot, SLOT(setRollingSpeed(bool)));
@@ -91,13 +91,16 @@ myMainWindow::myMainWindow(QWidget *parent)
     //
 
 	connect(ui->AddPreset, SIGNAL(pressed()), this, SLOT(addCustomPreset()));
-	connect(ui->closePreset, SIGNAL(pressed()), this, SLOT(closePreset()));
-
 
     // Populates all the presets in the List Widget
     presets.populatePresetListWidget(ui->presetListWidget);
-	connect(ui->presetListWidget, SIGNAL(currentRowChanged(int)), this, SLOT(selectPreset(int)) );
-    //
+	presets.populateCustomListWidget(ui->customListWidget, ui->deleteCustomListWidget);
+	connect(ui->presetListWidget, SIGNAL(currentTextChanged(const QString &)), this, SLOT(selectPreset(const QString &)) );
+	
+	//Connect Custom list row to custom ecg
+	//connect(ui->customListWidget, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(selectCustom(QListWidgetItem *, QListWidgetItem *)));
+	connect(ui->customListWidget, SIGNAL(currentTextChanged(const QString &)), this, SLOT(selectCustom(const QString &)) );
+	//
     // Custom settings (tab)
     //
 
@@ -169,6 +172,7 @@ myMainWindow::myMainWindow(QWidget *parent)
 
 	//Start Recording
 	connect(ui->startRecording, SIGNAL(pressed()), this, SLOT(record()));
+	connect(ui->captureImage, SIGNAL(pressed()), this, SLOT(saveImage()));
 	recording = false;
 	//Stop Recording
 	//connect(ui->stopRecording, SIGNAL(pressed()), this, SLOT(stopRecording()));
@@ -185,15 +189,20 @@ myMainWindow::~myMainWindow()
 
 void myMainWindow::addCustomPreset() {
 	//Prompt for new name
-
-
-	//Add to Preset List
-
-	//select new preset
-
-	//goTo customMode
-	custMode();
+	Dialog dialog(this);
+	dialog.exec();
+	if (dialog.result() == QDialog::Accepted) {
+		ECGpreset temp = *(dialog.newPreset);
+		if (presets.contains(temp.getName())) {
+			QListWidgetItem *newItem = new QListWidgetItem(temp.getName(),ui->customListWidget);
+			QListWidgetItem *newItem2 = new QListWidgetItem(QIcon("delete.png"), "", ui->deleteCustomListWidget);
+			custMode();
+			ui->customListWidget->setCurrentItem(newItem);
+		}
+	}
 }
+
+
 
 void myMainWindow::closePreset() {
 	
@@ -257,6 +266,12 @@ void myMainWindow::AF(int checked) {
 
 }
 
+void myMainWindow::saveImage() {
+	QPixmap pixmap(ui->ECGplot->size());
+	ui->ECGplot->render(&pixmap, QPoint(), QRegion(ui->ECGplot->rect()));
+	pixmap.save("temp.png");
+}
+
 void myMainWindow::record() {
 	if (recording) {
 		stopRecording();
@@ -275,14 +290,11 @@ void myMainWindow::startRecording() {
 	if (filename.size() == 0)
 		return;
 	recFilename = filename;
-	recording = true;
 	QFile::remove(filename);
 	//Change Start Stop Buttons
-	ui->startRecording->setText("Stop Video Recording");
-	
+	ui->startRecording->setEnabled(false);
 	//setFixedSize()
 	this->setFixedSize(width(),height());
-	
 	//Set Window Flags
 	Qt::WindowFlags flags = windowFlags() | Qt::WindowStaysOnTopHint;
 	flags &= ~Qt::WindowMinimizeButtonHint & ~Qt::WindowCloseButtonHint;
@@ -298,14 +310,23 @@ void myMainWindow::startRecording() {
 	QString program = ".\\debug\\ffmpeg.exe";
 	//QString program = "\"C:\\Users\\Tushar.Agarwal\\Documents\\GitHub\\SimECG\\debug\\ffmpeg.exe\"";
 	recProcess->setProgram(program);
-	
-	int w = ui->centralWidget->width() - 16;
-	int h = ui->centralWidget->height() - 16;
-	recProcess->setNativeArguments(QString("-f gdigrab -framerate 25 -offset_x 8 -offset_y 16 -s "+QString::number(w)+"*"+QString::number(h)+" -i title=\"simECG - The OpenSource ECG simulator\" "+ filename));
+
+	int w = ui->ECGplot->width();
+	int h = ui->ECGplot->height() - 20;
+	int x_offset = (ui->ECGplotFrame->x()) + (ui->ECGplot->x());
+	int y_offset = (ui->ECGplotFrame->y()) + (ui->ECGplot->y());
+	QString argum = QString("-f gdigrab -framerate 25 -offset_x " + QString::number(x_offset) + " -offset_y " + 
+					QString::number(y_offset) + " -s " + QString::number(w) + "*" + QString::number(h) 
+					+ " -i title=\"simECG\" " + filename);
+	recProcess->setNativeArguments(argum);
 	recProcess->start();
+
+	ui->startRecording->setEnabled(true);
+	ui->startRecording->setText("Stop Video Recording");
 	
 }
 void myMainWindow::stopRecording() {
+	ui->startRecording->setEnabled(false);
 	recording = false;
 	QByteArray command("q\n");
 	recProcess->write(command);//send quit signal to ffmpeg
@@ -327,6 +348,11 @@ void myMainWindow::stopRecording() {
 		showAlert = (recProcess->exitStatus() == QProcess::CrashExit) | (recProcess->exitCode() != 0);
 	}
 
+	Qt::WindowFlags flags = windowFlags() | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint;
+	flags &= ~Qt::WindowStaysOnTopHint;
+	setWindowFlags(flags);
+	show();
+
 	if (showAlert) {
 		QMessageBox alert;
 		alert.setText("Couldn complete recording file");
@@ -336,27 +362,52 @@ void myMainWindow::stopRecording() {
 		if(recFilename!=NULL && recFilename.size()!=0)
 			QFile::remove(recFilename);//Delete file since it is unreadeable
 	}
-	
+	ui->startRecording->setEnabled(true);
 	ui->startRecording->setText("Start Video Recording");
-	
-	//Enable Minimize and close
-	Qt::WindowFlags flags = windowFlags() | Qt::WindowMinimizeButtonHint  | Qt::WindowCloseButtonHint;
-	flags &=  ~Qt::WindowStaysOnTopHint;
-	setWindowFlags(flags);
-	show();
 }
 
-void myMainWindow::selectPreset(int selected) {
-	const ECGpreset &temp = presets.at((const int)selected);
-	ui->ECGplot->setCurrentECGPlotted(temp);
-	
-	//Change mode of application, depending on preset is removable or not.
-	if (temp.isRemoveable())
-		custMode();
-	else
-		predefMode();
+void myMainWindow::selectPreset(const QString & data) {
+	if (data.count() <= 0)
+		return;
+	ui->customListWidget->setCurrentRow(-1, QItemSelectionModel::Clear);
+	//ui->customListWidget->clearSelection();
 
-	updateControls();
+	if (presets.contains(data))
+	{
+		const ECGpreset temp = presets.getECGpreset(data);
+		ui->ECGplot->setCurrentECGPlotted(temp);
+
+		//Change mode of application, depending on preset is removable or not.
+		Q_ASSERT(!temp.isRemoveable());
+		if (temp.isRemoveable())
+			custMode();
+		else
+			predefMode();
+
+		updateControls();
+	}
+}
+
+void myMainWindow::selectCustom(const QString & data) {
+	if (data.count() <= 0)
+		return;
+
+	//ui->presetListWidget->clearSelection();
+	ui->presetListWidget->setCurrentRow(-1, QItemSelectionModel::Clear);
+	if (presets.contains(data))
+	{
+		const ECGpreset temp = presets.getECGpreset(data);
+		ui->ECGplot->setCurrentECGPlotted(temp);
+		//Change mode of application, depending on preset is removable or not.
+		Q_ASSERT(temp.isRemoveable());
+		if (temp.isRemoveable())
+			custMode();
+		else
+			predefMode();
+
+		updateControls();
+	}
+	//const ECGpreset &temp = presets.at((const int)selected);
 }
 
 // When the user presses Exit on file menu
@@ -379,10 +430,9 @@ void myMainWindow::adHocMode() {
 	ui->PresetNameLabel->setVisible(false);
 	ui->PresetNameEdit->setVisible(false);
 	ui->Delete->setEnabled(false);
-	ui->Delete->setEnabled(false);
-	ui->SaveAs->setEnabled(true);
+	//ui->SaveAs->setEnabled(true);
 	ui->Save->setEnabled(false);
-	ui->closePreset->setEnabled(false);
+	//ui->closePreset->setEnabled(false);
 }
 
 void myMainWindow::custMode() {
@@ -391,9 +441,9 @@ void myMainWindow::custMode() {
 	ui->PresetNameEdit->setVisible(true);
 	ui->PresetNameEdit->setReadOnly(false);
 	ui->Delete->setEnabled(true);
-	ui->SaveAs->setEnabled(true);
+	//ui->SaveAs->setEnabled(true);
 	ui->Save->setEnabled(true);
-	ui->closePreset->setEnabled(true);
+	//ui->closePreset->setEnabled(true);
 }
 
 void myMainWindow::predefMode() {
@@ -402,9 +452,9 @@ void myMainWindow::predefMode() {
 	ui->PresetNameEdit->setVisible(true);
 	ui->PresetNameEdit->setReadOnly(true);
 	ui->Delete->setEnabled(false);
-	ui->SaveAs->setEnabled(true);
+	//ui->SaveAs->setEnabled(true);
 	ui->Save->setEnabled(false);
-	ui->closePreset->setEnabled(true);
+	//ui->closePreset->setEnabled(true);
 }
 
 

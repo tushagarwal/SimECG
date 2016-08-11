@@ -34,11 +34,14 @@ ECGpreset::ECGpreset()
     setCommonValues();
 }
 
-/*
-ECGpreset::ECGpreset(const ECGpreset& temp) {
+void ECGpreset::resetECGpreset() {
+	setCommonValues();
+}
+
+void ECGpreset::copyECGpreset(const ECGpreset& temp) {
 	heartRate = temp.heartRate;
 	noiseFilter = temp.noiseFilter;
-	removeable = temp.removeable;
+	//removeable = temp.removeable;
 	af = temp.af;
 
 	//P Wave
@@ -80,7 +83,7 @@ ECGpreset::ECGpreset(const ECGpreset& temp) {
 	t_uwave = temp.t_uwave;
 
 }
-*/
+
 
 QList<ECGpreset>* ECGpreset::getCustomPresets(QString  & filename) {
 	//Construct ECGPreset from XML file

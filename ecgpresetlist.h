@@ -5,6 +5,8 @@
 
 #include <QMap>
 #include <QListWidget>
+#include <qcombobox.h>
+#include <qstandarditemmodel.h>
 
 class ECGpresetList : public QObject
 {
@@ -12,9 +14,14 @@ class ECGpresetList : public QObject
 public:
     explicit ECGpresetList(QObject *parent = 0);
     void populatePresetListWidget(QListWidget *listWidget);
-    int size() const;
+	void populateCustomListWidget(QListWidget *listWidget, QListWidget * delList);
+	void populateAddPresetCombo(QComboBox * comboBox);
+	bool contains(const QString & name);
+	bool insert(ECGpreset &);
+    int presetSize() const;
+	int customSize() const;
     const ECGpreset &at(const int &);
-
+	const ECGpreset &getECGpreset(const QString &);
 
 signals:
 
@@ -25,6 +32,7 @@ public slots:
 private:
     // ECG presets
     QMap<QString, ECGpreset > presetList;
+	QMap<QString, ECGpreset > customList;
 
 private:
     // Save all presets to permanent storage

@@ -38,21 +38,19 @@ public:
     QSpacerItem *horizontalSpacer_3;
     QLabel *headLabel;
     QLabel *nameLabel;
-    QLabel *descriptionLabel;
     QCheckBox *checkBox;
     QLabel *ECGlabel;
     QComboBox *ECGBox;
     QLineEdit *nameEdit;
-    QLineEdit *descriptionEdit;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QStringLiteral("Dialog"));
-        Dialog->resize(391, 282);
+        Dialog->resize(393, 233);
         layoutWidget = new QWidget(Dialog);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 220, 351, 33));
+        layoutWidget->setGeometry(QRect(20, 180, 351, 33));
         hboxLayout = new QHBoxLayout(layoutWidget);
         hboxLayout->setSpacing(6);
         hboxLayout->setObjectName(QStringLiteral("hboxLayout"));
@@ -94,36 +92,28 @@ public:
         font1.setBold(true);
         font1.setWeight(75);
         nameLabel->setFont(font1);
-        descriptionLabel = new QLabel(Dialog);
-        descriptionLabel->setObjectName(QStringLiteral("descriptionLabel"));
-        descriptionLabel->setGeometry(QRect(20, 100, 71, 16));
-        descriptionLabel->setFont(font1);
         checkBox = new QCheckBox(Dialog);
         checkBox->setObjectName(QStringLiteral("checkBox"));
-        checkBox->setGeometry(QRect(20, 140, 231, 17));
+        checkBox->setGeometry(QRect(20, 110, 231, 17));
         checkBox->setFont(font1);
         ECGlabel = new QLabel(Dialog);
         ECGlabel->setObjectName(QStringLiteral("ECGlabel"));
-        ECGlabel->setGeometry(QRect(20, 170, 81, 16));
+        ECGlabel->setGeometry(QRect(20, 140, 81, 16));
         ECGlabel->setFont(font1);
         ECGBox = new QComboBox(Dialog);
         ECGBox->setObjectName(QStringLiteral("ECGBox"));
-        ECGBox->setGeometry(QRect(100, 170, 271, 22));
+        ECGBox->setGeometry(QRect(100, 140, 271, 22));
+        ECGBox->setInsertPolicy(QComboBox::InsertAlphabetically);
         nameEdit = new QLineEdit(Dialog);
         nameEdit->setObjectName(QStringLiteral("nameEdit"));
         nameEdit->setGeometry(QRect(100, 70, 271, 20));
-        descriptionEdit = new QLineEdit(Dialog);
-        descriptionEdit->setObjectName(QStringLiteral("descriptionEdit"));
-        descriptionEdit->setGeometry(QRect(100, 100, 271, 20));
-        layoutWidget->raise();
         headLabel->raise();
         nameLabel->raise();
-        descriptionLabel->raise();
         checkBox->raise();
         ECGlabel->raise();
         ECGBox->raise();
         nameEdit->raise();
-        descriptionEdit->raise();
+        layoutWidget->raise();
 
         retranslateUi(Dialog);
         QObject::connect(okButton, SIGNAL(clicked()), Dialog, SLOT(accept()));
@@ -142,11 +132,7 @@ public:
         nameLabel->setToolTip(QApplication::translate("Dialog", "The Name of the new ECG Rhythm", 0));
 #endif // QT_NO_TOOLTIP
         nameLabel->setText(QApplication::translate("Dialog", "Name", 0));
-#ifndef QT_NO_TOOLTIP
-        descriptionLabel->setToolTip(QApplication::translate("Dialog", "The Description of the new Rhythm, displayed as a tooltip.", 0));
-#endif // QT_NO_TOOLTIP
-        descriptionLabel->setText(QApplication::translate("Dialog", "Description", 0));
-        checkBox->setText(QApplication::translate("Dialog", "Do You want to copy parameters?", 0));
+        checkBox->setText(QApplication::translate("Dialog", "Copy parameters?", 0));
 #ifndef QT_NO_TOOLTIP
         ECGlabel->setToolTip(QApplication::translate("Dialog", "The set of predeefined rhythms", 0));
 #endif // QT_NO_TOOLTIP

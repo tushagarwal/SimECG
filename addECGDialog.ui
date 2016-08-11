@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
-    <height>282</height>
+    <width>393</width>
+    <height>233</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>220</y>
+     <y>180</y>
      <width>351</width>
      <height>33</height>
     </rect>
@@ -135,33 +135,11 @@
     <string>Name</string>
    </property>
   </widget>
-  <widget class="QLabel" name="descriptionLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>100</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="toolTip">
-    <string>The Description of the new Rhythm, displayed as a tooltip.</string>
-   </property>
-   <property name="text">
-    <string>Description</string>
-   </property>
-  </widget>
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>140</y>
+     <y>110</y>
      <width>231</width>
      <height>17</height>
     </rect>
@@ -173,14 +151,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Do You want to copy parameters?</string>
+    <string>Copy parameters?</string>
    </property>
   </widget>
   <widget class="QLabel" name="ECGlabel">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>170</y>
+     <y>140</y>
      <width>81</width>
      <height>16</height>
     </rect>
@@ -202,10 +180,13 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>170</y>
+     <y>140</y>
      <width>271</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="insertPolicy">
+    <enum>QComboBox::InsertAlphabetically</enum>
    </property>
   </widget>
   <widget class="QLineEdit" name="nameEdit">
@@ -218,26 +199,13 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="descriptionEdit">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>100</y>
-     <width>271</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <zorder>layoutWidget</zorder>
   <zorder>headLabel</zorder>
   <zorder>nameLabel</zorder>
-  <zorder>descriptionLabel</zorder>
   <zorder>checkBox</zorder>
   <zorder>ECGlabel</zorder>
   <zorder>ECGBox</zorder>
   <zorder>nameEdit</zorder>
-  <zorder>descriptionEdit</zorder>
-  <zorder></zorder>
+  <zorder>layoutWidget</zorder>
  </widget>
  <resources/>
  <connections>
