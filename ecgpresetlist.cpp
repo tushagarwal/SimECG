@@ -278,9 +278,21 @@ int ECGpresetList::removePreset(const QString &oldPreset)
 // Saves all presets to permanent storage
 int ECGpresetList::savePresets()
 {
-    //TODO: Save all presets to file
-    //Q_ASSERT(false);
-    return 0;
+	//QString filename = "C:/Qt/Test/st.txt";
+	QFile file(customFile);
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		qDebug() << "Could not open " << customFile;
+		return -1;
+	}
+
+	QDataStream in(&file);
+	in.setVersion(QDataStream::Qt_5_7);
+	in << customList;
+
+	file.close();
+	return 0;
 }
 
 
@@ -288,7 +300,6 @@ int ECGpresetList::savePresets()
 // Loads all presets from permanent storage
 int ECGpresetList::loadPresets()
 {
-    //TODO: Read all presets from file
-    //Q_ASSERT(false);
+	
     return 0;
 }

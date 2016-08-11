@@ -64,9 +64,6 @@ private slots:
 	void selectCustom(const QString &);
 	void closePreset();
 	void addCustomPreset();
-	void saveCustomSetting();
-	void saveAsCustomSetting();
-	void loadCustomSetting();
 	void saveImage();
 	void record();
 	void showPwave(int);

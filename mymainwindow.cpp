@@ -211,50 +211,6 @@ void myMainWindow::closePreset() {
 	adHocMode();
 }
 
-void myMainWindow::saveCustomSetting() {
-	
-	//Check if all details are upto date in Map.
-	//Write map to temp file
-	
-	//open file selector
-	//QString filename;
-	/*
-	QString filename = QFileDialog::getSaveFileName(this,
-		tr("Save Custom Settings"), QString("./test"),
-		tr("Xml files (*.xml)"));
-	if (filename.size() == 0)
-		return;
-	if (currentTab == CUSTOMTAB) {
-		ECGpreset temp = (ui->ECGplot->currentECGPlotted());
-		temp.saveXMLFile(filename);
-	}
-	else {
-		tempECGPreset.saveXMLFile(filename);
-	}
-	*/
-}
-
-void myMainWindow::saveAsCustomSetting() {
-	//Prompt for new name
-
-	//Add current ecg plotted to Preset List
-
-	//select new preset
-
-	//goTo customMode
-	custMode();
-}
-
-void myMainWindow::loadCustomSetting() {
-	QString filename = QFileDialog::getOpenFileName(this,
-		tr("Load Custom Setting"), ".",
-		tr("Xml files (*.xml)"));
-	if (filename.size() == 0)
-		return;
-	//ECGpreset temp(filename);
-	//ui->ECGplot->setCurrentECGPlotted(temp);
-	updateControls();
-}
 
 void myMainWindow::AF(int checked) {
 	if (checked == 0) {
@@ -284,12 +240,8 @@ void myMainWindow::record() {
 }
 
 void myMainWindow::startRecording() {
-	QString filename = QFileDialog::getSaveFileName(this,
-		tr("Start Record Video"), ".",
-		tr("Video Files (*.mp4)"));
-	if (filename.size() == 0)
-		return;
-	recFilename = filename;
+	recFilename = "temp.mp4";
+	QString filename = QString(recFilename);
 	QFile::remove(filename);
 	//Change Start Stop Buttons
 	ui->startRecording->setEnabled(false);
@@ -312,7 +264,7 @@ void myMainWindow::startRecording() {
 	recProcess->setProgram(program);
 
 	int w = ui->ECGplot->width();
-	int h = ui->ECGplot->height() - 20;
+	int h = ui->ECGplot->height() - 30;
 	int x_offset = (ui->ECGplotFrame->x()) + (ui->ECGplot->x());
 	int y_offset = (ui->ECGplotFrame->y()) + (ui->ECGplot->y());
 	QString argum = QString("-f gdigrab -framerate 25 -offset_x " + QString::number(x_offset) + " -offset_y " + 
@@ -361,6 +313,18 @@ void myMainWindow::stopRecording() {
 		qDebug() << "Couldnt record file";
 		if(recFilename!=NULL && recFilename.size()!=0)
 			QFile::remove(recFilename);//Delete file since it is unreadeable
+	}
+	else {
+		QString filename = QFileDialog::getSaveFileName(this,
+			tr("Save Recorded Video"), ".",
+			tr("Video Files (*.mp4)"));
+		if (filename.size() == 0)
+			return;
+		if (QFile::exists(filename)) {
+			QFile::remove(filename);
+		}
+		QFile file(recFilename);
+		file.rename(filename);
 	}
 	ui->startRecording->setEnabled(true);
 	ui->startRecording->setText("Start Video Recording");

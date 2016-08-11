@@ -33,6 +33,7 @@ private:
     // ECG presets
     QMap<QString, ECGpreset > presetList;
 	QMap<QString, ECGpreset > customList;
+	QString customFile;
 
 private:
     // Save all presets to permanent storage
